@@ -1,0 +1,703 @@
+.MainProfileContainer {
+    position: relative;
+}
+
+.MainProfileContainer .container {
+    /* padding: 40px; */
+    /* background: #FFF; */
+    border-radius: 20px;
+    position: relative;
+}
+
+.ProfileTopBanner {
+    background: url('https://wallup.net/wp-content/uploads/2016/01/290880-orange-BMW-car-German_car-BMW_M3_GTS.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 0;
+    height: 20vh;
+}
+
+
+
+.MainProfileContainer .ProfileLeftSide .ProfileDetails {
+    /* background: url(./images/main/ProfileBg.png); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #FFF;
+    height: 23vh;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.MainProfileContainer .ProfileDetails::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* background: url('./images/main/ProfileBgOverlay.png'); */
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    background-repeat: no-repeat;
+}
+
+.MainProfileContainer .ProfileDetails {
+    padding: 40px 20px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.MainProfileContainer .ProfileDetails .InnerDetails {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+
+
+.MainProfileContainer .UserEmail {
+    font-size: 14px;
+}
+
+.MainProfileContainer .UserImg img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 50%;
+    z-index: 1;
+    position: relative;
+}
+
+.MainProfileContainer .ProfileLeftSide span {
+    position: absolute;
+    left: 43%;
+    z-index: 2;
+    top: 30%;
+    font-weight: 600;
+    color: #FFF;
+    font-size: 20px;
+}
+
+.MainProfileContainer .UserName {
+    font-size: 19px;
+    font-weight: 600;
+    text-shadow: 1px 0px 20px white;
+}
+
+
+
+.MainProfileContainer .ProfileLeftSide .UserAllData {
+    margin: 10px;
+}
+
+.MainProfileContainer .ProfileLeftSide .card {
+    height: 102%;
+    background: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 5px 15px;
+}
+
+.MainProfileContainer .ProfileLeftSide button {
+    position: absolute;
+    bottom: 20px;
+    width: 95%;
+    left: 10px;
+    color: #FF0000;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px;
+    border: none;
+    background: #E5E5E5;
+    /* margin: 50px 0 5px 0; */
+    border-radius: 5px;
+}
+
+
+.MainProfileContainer .tabs-left {
+    border-bottom: none;
+}
+
+.MainProfileContainer .tabs-left>li {
+    float: none;
+    width: 100%;
+    position: relative;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 5px 0;
+    background: #e5e5e5;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.MainProfileContainer .tabs-left>li a {
+    color: #323232;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tabs-left>li.active,
+.tabs-left>li.active:hover,
+.tabs-left>li.active:focus {
+    background: #FBECE2;
+}
+
+.MainProfileContainer .tabs-left>li.active a {
+    color: #F96300;
+
+}
+
+.MainProfileContainer .nav-tabs>li>a:hover {
+    /* margin-right: 2px; */
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    /* border-radius: 4px 4px 0 0; */
+}
+
+
+
+.MainProfileContainer .grid2 {
+    display: grid;
+    gap: 2px;
+    position: relative;
+    grid-template-columns: auto auto;
+}
+
+.MainProfileContainer .grid2::after {
+    content: '';
+    position: absolute;
+    left: 45%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: #55555547;
+}
+
+.fetchTotalBids {
+    background: linear-gradient(45deg, #2BAAFF, #3E4DD9);
+    text-align: center;
+    padding: 3px;
+    font-size: 12px;
+    color: #FFF;
+    position: relative;
+    border-radius: 2px;
+}
+
+.PurchasedDetails .fetchTotalBids {
+    background: linear-gradient(45deg, #5EB264, #2E9715);
+}
+
+.fetchTotalBids::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/main/TotalBidsOverlay.png');
+    opacity: .1;
+}
+
+#ListedCars .items h6 {
+    color: #3c3c3c;
+}
+
+.fetchTotalBids .TotalBidTitle {
+    margin: 0;
+    font-size: 13px;
+    padding: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+.MainProfileContainer .head {
+    padding: 30px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.MainProfileContainer .defaultListedItems .items {
+    display: grid;
+    padding: 20px;
+    border-bottom: 1px solid #5555552b;
+    align-items: center;
+    grid-template-columns: 30% 70%;
+}
+
+.MainProfileContainer .listingDetails .items {
+    border-bottom: none;
+    position: relative;
+    padding: 10px 20px;
+}
+
+
+.MainProfileContainer .listingDetails {
+    padding: 0;
+}
+
+.MainProfileContainer .defaultListedItems {
+    padding: 0;
+    height: 40vh;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.MainProfileContainer .head h5 {
+    font-size: 15px;
+}
+
+.MainProfileContainer .head span {
+    color: #F9631E;
+}
+
+.MainProfileContainer .defaultListedItems .items p {
+    margin: 0;
+}
+
+.MainProfileContainer .defaultListedItems .items h6 {
+    font-size: 15px;
+}
+
+.MainProfileContainer .defaultListedItems .items img {
+    width: 60%;
+}
+
+.MainProfileContainer .defaultListedItems .items figure {
+    margin-bottom: 0;
+}
+
+.MainProfileContainer .ProfileRightSide .card {
+    height: 100%;
+    padding: 10px 20px;
+    position: relative;
+    background: #FFF;
+    border-radius: 20PX;
+    box-shadow: rgb(0 0 0 / 8%) 0px 5px 15px;
+}
+
+.MainProfileContainer .ProfileRightSide .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(179deg, #ff802b14, #ff802b08);
+    background-repeat: no-repeat;
+    border-radius: 20px 20px 0 0;
+    background-size: cover;
+    border-bottom: 1px solid #ff802b17;
+}
+
+.MainProfileContainer .ProfileRightSide {
+    min-height: 40vh;
+}
+
+.MainProfileContainer .RequestStatusDefault {
+    font-size: 13px;
+    padding: 4px 21px;
+    font-weight: 600;
+    display: inline;
+    border-radius: 10px;
+}
+
+.MainProfileContainer .ReviewStatus {
+    background: #ede8e8;
+    cursor: progress;
+}
+
+.MainProfileContainer .RejectStatus {
+    background: #ffb9b9;
+    color: #ff1010;
+    cursor: not-allowed;
+}
+
+.MainProfileContainer .SuccessStatus {
+    background: #28A745;
+    color: #FFF;
+    cursor: none;
+}
+
+.MainProfileContainer .row.ProfileSettingForm {
+
+    width: 70%;
+    margin: 0 auto;
+}
+
+.MainProfileContainer .ProfileSettingForm .head {
+    padding: 0;
+    justify-content: center;
+}
+
+.UserImg {
+    position: relative;
+}
+
+.MainProfileContainer .ProfileSettingForm span {
+    position: absolute;
+    left: 22px;
+    top: 24px;
+    font-weight: 600;
+    color: #FFF;
+    z-index: 2;
+    font-size: 20px;
+}
+
+.MainProfileContainer .form__field::placeholder {
+    display: block;
+}
+
+.MainProfileContainer .readonly {
+    color: #000;
+    cursor: default;
+}
+
+.MainProfileContainer #ProfileSetting button {
+    width: 100%;
+    clip-path: unset;
+}
+
+.MainProfileContainer #ProfileSetting .form__group {
+    margin-top: 20px;
+}
+
+.MainProfileContainer #ProfileSetting .form__field {
+    border-radius: 5px;
+}
+
+.MainProfileContainer #ProfileSetting .form-footer {
+    margin-top: 30px;
+}
+
+
+/* UserProfileData */
+.UserProfileData {
+    padding: 20px;
+}
+
+.UserProfileData img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: -100px;
+    border: 5px solid #fff;
+}
+
+.UserProfileData .card {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.UserProfileData p {
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.UserProfileData a {
+    color: #323232;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.UserProfileData ion-icon {
+    background: #ff802b57;
+    padding: 5px;
+    color: #555;
+    margin-right: 10px;
+    font-weight: bolder;
+    border-radius: 2px;
+    font-size: 15px;
+}
+
+
+/* UserProfileData */
+
+
+/* Responsive for Desktop */
+
+@media (max-width: 1200px) {
+    .MainProfileContainer .grid2::after {
+        left: 50%;
+    }
+
+    .MainProfileContainer .ProfileLeftSide .ProfileDetails {
+        height: 25vh;
+    }
+
+    .MainProfileContainer .ProfileTopBanner {
+        height: 20vh;
+    }
+
+    .UserProfileData .card {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+}
+
+/* Responsive for Desktop */
+
+/* Responsive for Laptop */
+@media screen and (max-width:980px) {
+
+
+    .MainProfileContainer .UserName {
+        font-size: 16px;
+
+    }
+
+    .MainProfileContainer .UserImg img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .MainProfileContainer .ProfileLeftSide span {
+
+        left: 43%;
+        top: 30%;
+        font-size: 17px;
+    }
+
+    .MainProfileContainer .ProfileRightSide .tab-content {
+        padding: 15px;
+    }
+
+
+
+    .MainProfileContainer .defaultListedItems .items {
+        grid-template-columns: 18% 82%;
+    }
+
+    .UserProfileData .card {
+        display: grid;
+        grid-template-columns: 40% 60%;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+
+    .MainProfileContainer .container {
+        max-width: 95%;
+    }
+
+    .MainProfileContainer .defaultListedItems .items {
+        grid-template-columns: 20% 80%;
+    }
+
+    .MainProfileContainer #Bidding h6 {
+        font-size: 15px;
+    }
+
+    .MainProfileContainer .defaultListedItems .items {
+        padding: 15px 20px;
+    }
+
+    .MainProfileContainer .RequestStatusDefault {
+        font-size: 12px;
+        padding: 4px 20px;
+    }
+
+
+
+}
+
+/* Responsive for Laptop */
+
+/* Responsive for Mobile */
+@media screen and (max-width:520px) {
+
+    .MainProfileContainer {
+        margin: 35px 0;
+    }
+
+    .MainProfileContainer .ProfileLeftSide .ProfileDetails {
+        height: 22vh;
+        /* display: none; */
+    }
+
+    .MainProfileContainer .container {
+        max-width: 100%;
+    }
+
+    .MainProfileContainer .ProfileLeftSide .ProfileDetails {
+        border-radius: 0 0 20px 20px;
+    }
+
+    .MainProfileContainer .defaultListedItems {
+        padding: 0 10px;
+    }
+
+    .MainProfileContainer .ProfileDetails::after {
+        border-radius: 0 0 20px 20px;
+    }
+
+    .MainProfileContainer #Bidding h6 {
+        font-size: 12px;
+    }
+
+    .MainProfileContainer .defaultListedItems .items img {
+        width: 100%;
+        grid-template-columns: 15% 85%;
+    }
+
+    .MainProfileContainer.defaultListedItems .items {
+        padding: 15px 0px;
+    }
+
+    .MainProfileContainer .RequestStatusDefault {
+        font-size: 11px;
+        padding: 5px 14px;
+    }
+
+    .MainProfileContainer .grid2::after {
+        left: 52%;
+    }
+
+    .MainProfileContainer .ProfileRightSide .tab-content {
+        height: 100%;
+    }
+
+    .MainProfileContainer #Bidding h6 {
+        font-size: 13px;
+    }
+
+    .MainProfileContainer .head {
+        padding: 20px 10px;
+    }
+
+    .MainProfileContainer .head h5 {
+        font-size: 15px;
+    }
+
+    .MainProfileContainer .tabs-left>li {
+        font-size: 12px;
+        width: auto;
+        margin: 5px 5px 5px 2px;
+    }
+
+    .MainProfileContainer .ProfileLeftSide button {
+        padding: 6px 10px;
+        font-size: 13px;
+        width: auto;
+        position: unset;
+        margin: 5px 5px 5px 2px;
+        display: none;
+    }
+
+
+    .MainProfileContainer .ProfileRightSide .tab-content {
+        margin: 10px 0;
+    }
+
+    .MainProfileContainer .tabs-left {
+        border-bottom: none;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        overflow: scroll;
+        scrollbar-width: none;
+        /* Remove scrollbar width */
+        height: 45px;
+    }
+
+    .MainProfileContainer .tabs-left>li a {
+        padding: 8px;
+        white-space: nowrap;
+    }
+
+    .ProfileRightSide {
+        margin-top: 20px;
+    }
+
+    .MainProfileContainer {
+        margin: 0;
+    }
+
+    .MainProfileContainer .container {
+        top: 0;
+        background: none;
+    }
+
+    .MainProfileContainer .ProfileTopBanner {
+        display: none;
+    }
+
+    .MainProfileContainer .row.ProfileSettingForm {
+        width: 100%;
+    }
+
+    .MainProfileContainer #ProfileSetting .form__group {
+        margin-top: 13px;
+    }
+
+    .MainProfileContainer .ProfileSettingForm span {
+        left: 15px;
+        top: 16px;
+    }
+
+
+    .MainProfileContainer .col-md-4.ProfileLeftSide {
+        padding: 6px;
+    }
+
+    .faqs img {
+        display: none;
+    }
+
+    .MainProfileContainer .ProfileRightSide .tab-content {
+        padding: 15px 15px 70px 15px;
+    }
+
+    .ProfileTopBanner {
+        height: 15vh;
+    }
+
+    .UserProfileData img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .UserProfileData .card {
+        grid-template-columns: 100%;
+    }
+
+    .MainProfileContainer .defaultListedItems .items {
+        padding: 10px 0;
+    }
+
+    .UserProfileData h1 {
+        font-size: 22px;
+    }
+
+    .UserProfileData img {
+        width: 110px;
+        height: 110px;
+        top: -85px;
+    }
+
+    .UserProfileData {
+        padding: 10px;
+    }
+
+    .UserProfileData figure {
+        margin: 0 0 2rem;
+    }
+
+    .MainProfileContainer .ProfileRightSide .card {
+        padding: 0;
+    }
+}
+
+/* Responsive for Mobile */

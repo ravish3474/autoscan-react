@@ -152,9 +152,9 @@ input[type="radio"] {
     cursor: pointer;
     display: inline-block;
     background: #FFF 1px 1px no-repeat;
-    width: 25px;
-    height: 25px;
-    border: 2px solid #0000009c;
+    width: 20px;
+    height: 20px;
+    border: 1.9px solid #0000009c;
     border-radius: 50%;
     transition: border 0.5s;
 }
@@ -200,10 +200,10 @@ input[type="radio"]+span {
 .bodyType label:before,
 .bodyType label:after {
     font-family: FontAwesome;
-    font-size: 25px;
+    font-size: 20px;
     position: absolute;
-    top: -5px;
-    left: 0;
+    top: -2px;
+    left: 0px;
     right: 0;
 }
 
@@ -217,9 +217,9 @@ input[type="radio"]+span {
     max-width: 0;
     overflow: hidden;
     opacity: 0.5;
-    font-size: 27px;
-    top: -8px;
-    left: 0px;
+    font-size: 22px;
+    top: -6px;
+    left: 3px;
     color: var(--theme-d-color);
     -webkit-transition: all 0.50s;
     -moz-transition: all 0.50s;

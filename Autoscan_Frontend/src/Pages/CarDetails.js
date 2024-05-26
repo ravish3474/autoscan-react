@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import "../style/ExploreCarDetails.css";
-
+import RecentSearch from "../components/RecentSearch";
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+// import required modules
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 function CarDetails() {
   const [car, setCar] = useState({});
   let { carId } = useParams();
-
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,15 +57,78 @@ function CarDetails() {
         <div class="container">
           <div className="row">
             <div className="col-md-8 leftSide carAllDetails">
-              <div className="card border-none bg-none"></div>
+              <div className="card border-none bg-none">
+                <Swiper
+                  style={{
+                    "--swiper-navigation-color": "#fff",
+                    "--swiper-pagination-color": "#fff",
+                  }}
+                  spaceBetween={10}
+                  navigation={true}
+                  thumbs={{ swiper: thumbsSwiper }}
+                  modules={[FreeMode, Navigation, Thumbs]}
+                  className="mySwiper2"
+                >
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_right}`}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.left_view}`}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.rear_view}`}
+                    />
+                  </SwiperSlide>
+                </Swiper>
+                <Swiper
+                  onSwiper={setThumbsSwiper}
+                  spaceBetween={10}
+                  slidesPerView={4}
+                  freeMode={true}
+                  watchSlidesProgress={true}
+                  modules={[FreeMode, Navigation, Thumbs]}
+                  className="mySwiper"
+                >
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_right}`}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.left_view}`}
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.rear_view}`}
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
             </div>
             <div className="col-md-4 rightSide carhighlightsDetails">
               <div className="card bg-none  border-none">
                 <div>
                   {car && (
                     <h5 className="card-title">
-                      {car.manufacturing_year} {car.Brand.brand_name}{" "}
-                      {car.model.model_name} {car.varient.varient_name}
+                      {car.manufacturing_year} {car.brand_id} {car.model_id}{" "}
+                      {car.varient_id}
                     </h5>
                   )}
                   <ul className="p-0">
@@ -283,6 +354,7 @@ function CarDetails() {
           </div>
         </div>
       </section>
+      <RecentSearch />
     </div>
   );
 }

@@ -17,12 +17,15 @@
     align-items: center;
 }
 
-.swiper-slide img {
+.singleCarMain .swiper-slide img {
     display: block;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     object-fit: cover;
 }
+
+
 
 .swiper {
     width: 100%;
@@ -47,24 +50,43 @@
     padding: 10px 0;
 }
 
-.mySwiper .swiper-slide {
+.singleCarMain .mySwiper .swiper-slide {
     width: 25%;
     height: 100%;
-    opacity: 0.4;
+    opacity: 0.6;
 }
 
-.mySwiper .swiper-slide-thumb-active {
+.singleCarMain .mySwiper .swiper-slide-thumb-active {
     opacity: 1;
 }
 
-.swiper-slide img {
+
+
+
+
+.singleCarMain .swiper-slide img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 60vh;
     object-fit: cover;
 }
 
+.singleCarMain .swiper-thumbs {
+    cursor: pointer;
+}
+
+.singleCarMain .swiper-thumbs img {
+    height: 15vh;
+}
+
 .singleCarMain .rightSide {
+    /* background: #F8F8F8; */
+    /* padding: 30px; */
+    border-radius: 24px;
+
+}
+
+.singleCarMain .UpperTopCard {
     background: #F8F8F8;
     padding: 30px;
     border-radius: 24px;
@@ -115,7 +137,7 @@
 
 .singleCarMain .rightSide .priceFrom {
     color: #0085DF;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
 }
 
@@ -123,7 +145,7 @@
     border: none;
     display: flex;
     justify-content: space-between;
-    height: 100%;
+    /* height: 100%; */
 }
 
 .singleCarMain .rightSide ul li {
@@ -265,8 +287,8 @@
 }
 
 #desc {
-    height: 200px;
     word-wrap: break-word;
+    margin-bottom: 20px;
 }
 
 .s-para {
@@ -277,6 +299,7 @@
 #desc .moreless-button {
     color: #F96300;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .moretext {
@@ -407,6 +430,16 @@ th {
     #ReportDoneBYAutoScan .modal-dialog {
         max-width: 80%;
     }
+
+    .singleCarMain .swiper-slide img {
+        height: 50vh;
+    }
+
+    .singleCarMain .swiper-thumbs img {
+        height: 15vh;
+    }
+
+
 }
 
 @media only screen and (max-width: 760px),
@@ -423,11 +456,11 @@ th {
     }
 
     /* Hide table headers (but not display: none;, for accessibility) */
-    thead tr {
+    /* thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
-    }
+    } */
 
     tr {
         border: 1px solid #ccc;
@@ -552,6 +585,21 @@ th {
 
 }
 
+@media screen and (max-width:920px) {
+    .leftSide {
+        left: 0;
+        position: static;
+    }
+
+    .singleCarMain .swiper-slide img {
+        height: 20vh;
+    }
+
+    .singleCarMain .swiper-thumbs img {
+        height: 10vh;
+    }
+}
+
 /* MEDIA QUERY FOR TAB */
 /* MEDIA QUERY FOR Mobile */
 @media screen and (max-width:520px) {
@@ -615,7 +663,7 @@ th {
     }
 
     .singleCarMain .rightSide {
-        padding: 40px 20px 20px 20px;
+        padding: 0;
     }
 
     .combined th,
@@ -671,3 +719,44 @@ th {
 }
 
 /* MEDIA QUERY FOR Mobile */
+
+
+.card.TotalListedBids {
+    background: #FFFFFF;
+    margin-top: 30px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.carhighlightsDetails .fetchTotalBids {
+    background: linear-gradient(45deg, #2BAAFF, #3E4DD9);
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    color: #FFF;
+    position: relative;
+    border-radius: 15px 15px 0 0;
+}
+
+.carhighlightsDetails .ListedItems {
+    padding: 0 10px;
+    border-bottom: 1px solid #bbb;
+}
+
+
+#ListedCars .items h6 {
+    color: #3c3c3c;
+}
+
+
+
+.TotalListedBids table td {
+    text-align: right;
+    border: none;
+}
+
+.TotalListedBids table th {
+    text-align: left;
+    border: none;
+
+}

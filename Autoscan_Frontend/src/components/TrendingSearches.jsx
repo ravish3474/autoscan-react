@@ -1,6 +1,6 @@
 import React from 'react';
 import TrendingSingleCard from './TrendingSingleCard'; // Import the HighlightCard component
-
+import trending2 from  "../images/cars/trending2.png"
 function TrendingSearches() {
     return (
         <section className="trendingSearches default-cars-advertise">
@@ -11,17 +11,17 @@ function TrendingSearches() {
                         <a href="buyCar.php" className="btn p-0 ">VIEW ALL</a>
                     </div>
                     <TrendingSingleCard
-                        img="http://localhost/AutoScan/images/cars/trending1.png"
+                        img={trending2}
                         title="Hyundai Creta"
                         description="₹6.37 - ₹7.54 Lakh"
                     />
                     <TrendingSingleCard
-                        img="http://localhost/AutoScan/images/cars/trending2.png"
+                         img={trending2}
                         title="Mahindra Scorpio"
                         description="₹6.37 - ₹7.54 Lakh"
                     />
                     <TrendingSingleCard
-                        img="http://localhost/AutoScan/images/cars/recent1.png"
+                        img={trending2}
                         title="BYD Seal"
                         description="₹6.37 - ₹7.54 Lakh"
                     />
