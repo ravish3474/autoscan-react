@@ -10,14 +10,17 @@ phases:
       - cd Autoscan_Admin
       - npm install -f
       - npm run build 
+      - rm -rf node_modules
       - cd ..
       - echo Installing and building Autoscan_Frontend...
       - cd Autoscan_Frontend
       - npm install -f
       - npm run build
+      - rm -rf node_modules
       - cd ..
       - echo Installing dependencies in root...
       - npm i --save
 artifacts:
   files:
-    - '**/*'
+    - 'Autoscan_Admin/build/**/*'
+    - 'Autoscan_Frontend/build/**/*'
