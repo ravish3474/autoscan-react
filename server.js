@@ -1,12 +1,11 @@
-// require("dotenv").config({ path: "./config/config.env" });
+require("dotenv").config({ path: "./config/config.env" });
 const express = require("express");
 const path = require("path");
 const app = require("./app");
 
 const PORT = process.env.PORT || 8082;
 const BASEURL2 =
-  process.env.BASEURL2 ||
-  "http://finalapp-env.eba-2hqpicun.ap-south-1.elasticbeanstalk.com";
+  process.env.BASEURL2 || "http://localhost:8082";
 
 // Serve static files from the dist folders of admin and frontend
 app.use(
