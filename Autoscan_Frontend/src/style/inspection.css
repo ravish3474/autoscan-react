@@ -1,0 +1,181 @@
+.DefaultTopBanner {
+    background: url('../images/main/top-banner.png');
+    padding: 10rem 0;
+    color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0px 4px 21px 0px #00000005 inset;
+    text-align: center;
+    position: relative;
+    background-size: cover;
+}
+
+section.MultiStepForm {
+    margin: -230px 0 50px 0;
+}
+
+.ScheduleInspectionCard {
+    background: url(../images/main/approxValueBg.png);
+    background-size: cover;
+    background-position: center;
+    border: none;
+    color: #FFF;
+    padding: 50px;
+    position: relative;
+}
+
+.ScheduleInspectionCard::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    background: url(../images/main/approxValueBgOverlay.png);
+
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    top: 10px;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.gridUpper {
+    gap: 5rem;
+    align-items: flex-start;
+}
+
+.formHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.formHead .theme {
+    color: #F96300;
+    top: 17px;
+    font-weight: 500;
+    right: 20px;
+    font-size: 14px;
+}
+
+.ScheduleInspectionCard .approxValue {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+}
+
+.ScheduleInspectionCard .card-title {
+    position: relative;
+    z-index: 2;
+}
+
+.ScheduleInspection .checkboxbutton {
+    margin: 0;
+    width: 110px;
+    height: 55px;
+}
+
+.ScheduleInspection .formFooter {
+    display: block;
+    position: relative;
+    bottom: auto;
+    margin-top: 20px;
+}
+
+
+.ScheduleInspection .formFooter a {
+    color: #303030;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.ScheduleInspection .formFooter img {
+    width: 35px;
+    height: 35px;
+}
+
+.ScheduleInspection .formFooter .next-step {
+    background: #C7C7C7;
+    width: 100%;
+    margin: 20px 0;
+    color: #FFF;
+    font-weight: 500;
+}
+
+.ScheduleInspection .checkboxbutton label,
+.ScheduleInspection .checkboxbutton input {
+    border: 1px solid #9b9b9b;
+}
+
+.ScheduleInspection .checkboxbutton label {
+    line-height: 20px;
+}
+
+#SelectMonth {
+    border: none;
+    outline: none;
+}
+
+.grid4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.ScheduleInspection .formFooter li {
+    display: flex;
+    align-items: center;
+}
+
+.ScheduleInspection .formFooter #MessOnWhatsapp {
+    position: absolute;
+    right: 0;
+    width: 25px;
+    height: 25px;
+}
+
+.ScheduleInspection .formFooter ion-icon {
+    background: linear-gradient(45deg, #25D366, #1fab53);
+    padding: 10px;
+    color: #FFF;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.ScheduleInspection .formFooter label {
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ScheduleInspection .formHead ion-icon {
+    font-size: 25px;
+    position: absolute;
+    left: -40px;
+    color: #555;
+    top: -3px;
+}
+
+.ScheduleInspection .sellDate ion-icon {
+    top: 12px;
+}
+
+.ScheduleInspection .formHead .DateIcon {
+    font-size: 22px;
+    left: -34px;
+    top: 13px;
+}
+
+@media screen and (max-width:520px) {
+    .section.MultiStepForm {
+        padding: 0;
+    }
+
+}

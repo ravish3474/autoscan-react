@@ -4,14 +4,12 @@ const router = express.Router();
 const AuthRoutes = require("./authRoutes.js");
 const UserRoutes = require("./userRoutes.js");
 
-
 const RoleRoutes = require("./roleRoutes.js");
 const BrandRoutes = require("./brandRoutes.js");
 const ModelRoutes = require("./modelRoutes.js");
 const VarientRoutes = require("./varientRoutes.js");
 const CarRoutes = require("./carRoutes.js");
-
-
+const InspectionRoutes = require("./inspectionRoutes.js");
 
 router.use("/auth", AuthRoutes);
 router.use("/user", UserRoutes);
@@ -21,7 +19,7 @@ router.use("/brand", BrandRoutes);
 router.use("/model", ModelRoutes);
 router.use("/varient", VarientRoutes);
 router.use("/car", CarRoutes);
+router.use("/inspection", InspectionRoutes);
 // router.use("/car", CarRoutes);
-
 
 module.exports = router;

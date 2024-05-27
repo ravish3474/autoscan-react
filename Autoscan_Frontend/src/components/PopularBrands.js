@@ -1,7 +1,10 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../style/PopularBrands.css";
+import "../style/PopularBrands.css"; 
+
+// Initialize Swiper core components
+ 
 
 function PopularBrands() {
   const [brands, setBrands] = useState([]);
@@ -20,6 +23,7 @@ function PopularBrands() {
 
     fetchData();
   }, []);
+
   return (
     <section className="popular-brands">
       <div className="container">
@@ -34,29 +38,32 @@ function PopularBrands() {
             spaceBetween={10}
             slidesPerView={5}
             freeMode={true}
-            watchSlidesProgress={true}
+            watchSlidesProgress={true} 
+            breakpoints={{
+              // When window width is <= 320
+              320: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              // When window width is <= 768px
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+              // When window width is <= 1024px
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 50,
+              },
+            }}
             className="mySwiper"
           >
-            {brands.map((brand) => (
-              <SwiperSlide>
-                {" "}
+            {brands.map((brand, index) => (
+              <SwiperSlide key={index}>
                 <div className="item">
                   <img
                     src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${brand.brand_img}`}
-                    alt="{brand.brand_name}"
-                    className="W100"
-                  />
-                  <h5>{brand.brand_name}</h5>
-                </div>
-              </SwiperSlide>
-            ))}
-            {brands.map((brand) => (
-              <SwiperSlide>
-                {" "}
-                <div className="item">
-                  <img
-                    src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${brand.brand_img}`}
-                    alt="{brand.brand_name}"
+                    alt={brand.brand_name}
                     className="W100"
                   />
                   <h5>{brand.brand_name}</h5>

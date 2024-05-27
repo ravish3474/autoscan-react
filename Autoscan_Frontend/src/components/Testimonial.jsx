@@ -1,51 +1,77 @@
-import React from 'react';
-import OwlCarousel from 'react-owl-carousel2';
-import Client1 from '../images/testimonial/testimonial1.jpg';
-import 'react-owl-carousel2/src/owl.carousel.css';
-import 'react-owl-carousel2/src/owl.theme.default.css';
-import '../style/PopularBrands.css'; // Import your component-specific CSS file
+import React from 'react'
+import { Swiper, SwiperSlide } from "swiper/react";
+import testimonial1 from '../images/testimonial/testimonial1.jpg';
+import { FreeMode, Pagination } from 'swiper/modules';
 
 function Testimonial() {
-    const options = {
-        items: 2,
-        loop: true,
-        autoplay: true,
-        margin: 10,
-        nav: true,
-        dots: false
-    };
-
     return (
-
         <section className="testimoial-sect">
             <div className="container">
                 <div className="row">
-                    <div className="testimonial-slider owl-carousel owl-theme owl-loaded owl-drag">
-
-                        <OwlCarousel options={options}>
-                            <div className="item">
-                                <figure className="m-0"><img src={Client1} alt="" /></figure>
-                                <div className="reviews">
-                                    <p className="clientReviews">Delighted with AS! The finance and sales teams provided
+                    <div className="testimonial-slider  ">
+                        <Swiper
+                            spaceBetween={10}
+                            slidesPerView={2}
+                            freeMode={true}
+                            watchSlidesProgress={true}
+                            breakpoints={{
+                                // When window width is <= 320
+                                320: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 20,
+                                },
+                                // When window width is <= 768px
+                                768: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 40,
+                                },
+                                // When window width is <= 1024px
+                                1024: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 50,
+                                },
+                            }}
+                            modules={[FreeMode, Pagination]}
+                            className="TestMySwiper" >
+                            <SwiperSlide> <div className="item">
+                                <img src={testimonial1} alt="" className="W100" />
+                                <div class="reviews">
+                                    <p class="clientReviews">Delighted with AS! The finance and sales teams provided
                                         fantastic support. I
                                         received the car within a day, and I'm extremely happy.</p>
-                                    <h4 className="clientName">Himanshu Pagare</h4>
+                                    <h4 class="clientName">Himanshu Pagare</h4>
                                 </div>
                             </div>
-                            <div className="item">
-                                <figure className="m-0"><img src={Client1} alt="" /></figure>
-                                <div className="reviews">
-                                    <p className="clientReviews">Delighted with AS! The finance and sales teams provided
+                            </SwiperSlide>
+                            <SwiperSlide> <div className="item">
+                                <img src={testimonial1} alt="" className="W100" />
+                                <div class="reviews">
+                                    <p class="clientReviews">Delighted with AS! The finance and sales teams provided
                                         fantastic support. I
                                         received the car within a day, and I'm extremely happy.</p>
-                                    <h4 className="clientName">Rachana Singh</h4>
+                                    <h4 class="clientName">Himanshu Pagare</h4>
                                 </div>
-                            </div></OwlCarousel>
+                            </div>
+                            </SwiperSlide>
+                            <SwiperSlide> <div className="item">
+                                <img src={testimonial1} alt="" className="W100" />
+                                <div class="reviews">
+                                    <p class="clientReviews">Delighted with AS! The finance and sales teams provided
+                                        fantastic support. I
+                                        received the car within a day, and I'm extremely happy.</p>
+                                    <h4 class="clientName">Himanshu Pagare</h4>
+                                </div>
+                            </div>
+                            </SwiperSlide>
+
+                        </Swiper>
                     </div>
                 </div>
-            </div>
+            </div >
         </section >
-    );
+
+
+    )
 }
 
-export default Testimonial;
+export default Testimonial

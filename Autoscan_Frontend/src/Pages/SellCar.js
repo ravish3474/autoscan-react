@@ -5,6 +5,9 @@ import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles
+import location from "../images/vector/Location.png";
+import carDetails from "../images/vector/Car.png";
+import carImages from "../images/vector/Picture.png";
 
 import "../style/SellCar.css"; // Import BuyCar.css
 import frontViewimg from "../images/cars/frontView.png";
@@ -17,8 +20,6 @@ function SellCar() {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
-  const [imageUrl, setImageUrl] = useState("");
-  const [imageFile, setImageFile] = useState(null);
 
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
@@ -259,11 +260,7 @@ function SellCar() {
                     aria-expanded="true"
                     aria-controls="collapseStep1"
                   >
-                    <img
-                      src="images/vector/Location.png"
-                      alt=""
-                      className="btn-img"
-                    />
+                    <img src={location} alt="" className="btn-img" />
                     Select your city
                   </button>
                   <p className="FormValues">
@@ -351,12 +348,8 @@ function SellCar() {
                     aria-expanded="false"
                     aria-controls="collapseStep2"
                   >
-                    <img
-                      src="images/vector/Car.png"
-                      alt=""
-                      className="btn-img"
-                    />{" "}
-                    Car Details
+                    <img src={carDetails} alt="" className="btn-img" /> Car
+                    Details
                   </button>
                   <p className="FormValues">
                     <span className="SelYear">Make Year |</span>{" "}
@@ -669,7 +662,7 @@ function SellCar() {
                             Ex Showroom Price
                           </label>
                         </div>
-                        <div className="form__group field">
+                        <div className="form__group field ">
                           <input
                             className="form__field"
                             type="text"
@@ -689,7 +682,7 @@ function SellCar() {
                             Selling Price
                           </label>
                         </div>
-                        <div className="form__group field">
+                        <div className="form__group field fullWidth">
                           <ReactQuill
                             value={statePayload.car_description}
                             name="car_description"
@@ -777,12 +770,8 @@ function SellCar() {
                     aria-expanded="false"
                     aria-controls="collapseStep3"
                   >
-                    <img
-                      src="images/vector/Picture.png"
-                      alt=""
-                      className="btn-img"
-                    />{" "}
-                    Car Images
+                    <img src={carImages} alt="" className="btn-img" /> Car
+                    Images
                   </button>
                   <p className="FormValues">
                     <span className="frontView">Front View |</span>{" "}

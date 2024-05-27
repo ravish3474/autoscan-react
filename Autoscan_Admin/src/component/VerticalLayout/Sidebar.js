@@ -27,8 +27,8 @@ class Sidebar extends Component {
     };
   }
 
-  toggleDropdown = dropdownId => {
-    this.setState(prevState => ({
+  toggleDropdown = (dropdownId) => {
+    this.setState((prevState) => ({
       activeDropdownId:
         prevState.activeDropdownId === dropdownId ? null : dropdownId,
     }));
@@ -100,9 +100,14 @@ class Sidebar extends Component {
                     <span>Car Management</span>
                   </Link>
                 </li>
-              
 
-               
+                <li className="mm-active">
+                  <Link to="/inspection-management">
+                    <img src={leadManagement} alt="" />
+                    <span>Inspection Management</span>
+                  </Link>
+                </li>
+
                 <li className="mm-active dropdown-list">
                   <Link to="#">
                     <img src={settings} alt="" />
@@ -116,7 +121,6 @@ class Sidebar extends Component {
                     <li>
                       <Link to="/user-list">Manage User</Link>
                     </li>
-                   
                   </ul>
                 </li>
               </ul>
@@ -133,7 +137,7 @@ Sidebar.propTypes = {
   type: PropTypes.string,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     layout: state.Layout,
   };

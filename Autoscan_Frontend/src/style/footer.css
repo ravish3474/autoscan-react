@@ -23,6 +23,10 @@
     right: 20px;
 }
 
+.footer .leftSide {
+    background: none;
+}
+
 .footer .quickLinks {
     display: flex;
     align-items: center;
@@ -115,6 +119,10 @@
         flex-direction: column;
     }
 
+    .footer {
+        padding: 10px
+    }
+
     .footer .rightSide .card {
         padding: 0;
         border: none;
@@ -134,7 +142,8 @@
     }
 
     .footer .quickLinks {
-        align-items: left;
+        align-items: left !important;
+        flex-direction: row;
     }
 }
 

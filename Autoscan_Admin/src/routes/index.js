@@ -39,6 +39,10 @@ import CarManagement from "../pages/admin/Car/carManagement";
 import AddCarManagement from "../pages/admin/Car/createCar";
 import EditCarManagement from "../pages/admin/Car/editCar";
 
+/**-inspection-management */
+import InspectionManagement from "../pages/admin/Inspection/inspectionManagement";
+import AddInspectionManagement from "../pages/admin/Inspection/createInspection";
+import EditInspectionManagement from "../pages/admin/Inspection/editInspection";
 
 const authProtectedRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="dashboard" /> },
@@ -50,32 +54,39 @@ const authProtectedRoutes = [
   { path: "/change-password", component: ChangePassword },
   { path: "/role-list", component: RoleList },
 
-    /**-role-management**/
-    { path: "/role-management", component: RoleManagement },
-    { path: "/edit-role-management/:role_id", component: EditRoleManagement },
-    { path: "/add-role-management", component: AddRoleManagement },
-    /**-brand-management**/
-    { path: "/brand-management", component: BrandManagement },
-    { path: "/edit-brand-management/:brandId", component: EditBrandManagement },
-    { path: "/add-brand-management", component: AddBrandManagement },
+  /**-role-management**/
+  { path: "/role-management", component: RoleManagement },
+  { path: "/edit-role-management/:role_id", component: EditRoleManagement },
+  { path: "/add-role-management", component: AddRoleManagement },
+  /**-brand-management**/
+  { path: "/brand-management", component: BrandManagement },
+  { path: "/edit-brand-management/:brandId", component: EditBrandManagement },
+  { path: "/add-brand-management", component: AddBrandManagement },
 
-    /**-model-management**/
-    { path: "/model-management", component: ModelManagement },
-    { path: "/edit-model-management/:modelId", component: EditModelManagement },
-    { path: "/add-model-management", component: AddModelManagement },
-    /**-varient-management**/
-    { path: "/varient-management", component: VarientManagement },
-    { path: "/edit-varient-management/:varientId", component: EditVarientManagement },
-    { path: "/add-varient-management", component: AddVarientManagement },
-    
-    /**-car-management**/
-    { path: "/car-management", component: CarManagement },
-    { path: "/edit-car-management/:carId", component: EditCarManagement },
-    { path: "/add-car-management", component: AddCarManagement },
+  /**-model-management**/
+  { path: "/model-management", component: ModelManagement },
+  { path: "/edit-model-management/:modelId", component: EditModelManagement },
+  { path: "/add-model-management", component: AddModelManagement },
+  /**-varient-management**/
+  { path: "/varient-management", component: VarientManagement },
+  {
+    path: "/edit-varient-management/:varientId",
+    component: EditVarientManagement,
+  },
+  { path: "/add-varient-management", component: AddVarientManagement },
 
-
+  /**-car-management**/
+  { path: "/car-management", component: CarManagement },
+  { path: "/edit-car-management/:carId", component: EditCarManagement },
+  { path: "/add-car-management", component: AddCarManagement },
+  /**-inspection-management**/
+  { path: "/inspection-management", component: InspectionManagement },
+  {
+    path: "/edit-inspection-management/:inspectionId",
+    component: EditInspectionManagement,
+  },
+  { path: "/add-inspection-management", component: AddInspectionManagement },
 ];
-
 
 const publicRoutes = [
   { path: "/logout", component: Logout },
@@ -83,12 +94,6 @@ const publicRoutes = [
   { path: "/forgot-password", component: ForgetPwd },
   { path: "/access-denied", component: AccessDenied },
   { path: "/reset-password", component: ResetPassword },
-
-
-  
 ];
 
-export {
-  authProtectedRoutes,
-  publicRoutes,
-};
+export { authProtectedRoutes, publicRoutes };

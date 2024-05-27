@@ -644,6 +644,12 @@ th {
         width: 65%;
     }
 
+    .container,
+    .container-md,
+    .container-sm {
+        max-width: 100%;
+    }
+
     .ActivePageHeader a {
         font-size: 15px;
         font-weight: 500;
@@ -696,7 +702,7 @@ th {
     }
 
     .default-cars-advertise .head h2 {
-        font-size: 23px;
+        font-size: 18px;
         margin: 0;
     }
 

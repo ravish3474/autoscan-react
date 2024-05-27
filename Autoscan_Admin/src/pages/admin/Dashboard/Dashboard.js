@@ -15,6 +15,7 @@ import arrow from "../../../assets/images/icon/arrow.svg";
 import calender_icon from "../../../assets/images/icon/calender.svg";
 import DatePicker from "react-datepicker";
 import plus_icon from "../../../assets/images-new/plus-icon.svg";
+import total_icon from "../../../assets/images/total-app-ico.svg";
 
 const Card = ({ imageSrc, title, value, units, link }) => (
   <div className="tabBox-wrapper">
@@ -57,23 +58,23 @@ const Dashboard = () => {
 
   const getAgendaData = async () => {
     await getTodayAgendaDetails()
-      .then(res => {
+      .then((res) => {
         setAgendaDetails(res?.data);
       })
-      .catch(err => {});
+      .catch((err) => {});
   };
 
-  const getDashboardData = async type => {
+  const getDashboardData = async (type) => {
     let payload = `?type=${type}&startDate=${startDate}&endDate=${endDate}`;
     await FetchDashboardData(payload)
-      .then(res => {
+      .then((res) => {
         if (res?.status) {
           setDashboardData(res?.data);
         } else {
           //   setError("No data available");
         }
       })
-      .catch(err => {
+      .catch((err) => {
         // toast.error(err?.response?.data?.message || "Something Went Wrong.", {
         //   position: toast.POSITION.TOP_RIGHT,
         // });
@@ -111,7 +112,6 @@ const Dashboard = () => {
       <Container fluid>
         <Row>
           <div className="inner-wrapper">
-
             <div className="tab-content" id="pills-tabContent">
               <div
                 className="tab-pane fade show active"
@@ -124,7 +124,7 @@ const Dashboard = () => {
                     <Col xl={4} lg={6} md={6}>
                       {/* Pending Applications */}
                       <Card
-                        imageSrc="../img/total-app-ico.svg"
+                        imageSrc={total_icon}
                         title={
                           <>
                             Total Leads{" "}
@@ -145,7 +145,7 @@ const Dashboard = () => {
                     <Col xl={4} lg={6} md={6}>
                       {/* Screening Test */}
                       <Card
-                        imageSrc="../img/total-app-ico.svg"
+                        imageSrc={total_icon}
                         title={
                           <>
                             Total Dealers{" "}
@@ -162,13 +162,7 @@ const Dashboard = () => {
                         link={"/screening-list"}
                       />
                     </Col>
-
-                   
                   </Row>
-
-                  
-
-                
                 </div>
               </div>
             </div>

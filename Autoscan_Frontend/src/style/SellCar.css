@@ -19,9 +19,21 @@ button.accordion-button {
     margin-right: 20px;
 }
 
+button.btn:active {
+    transform: translateY(5px);
+    border: none;
+}
+
 button.btn.next-step {
-    color: #F96300;
+    color: #FFF;
     display: block;
+    background: #FF802B;
+    border-radius: 0;
+}
+
+.btn.prev-step.me-2 {
+    background: #eee;
+    border-radius: 0;
 }
 
 .accordion-body {
@@ -96,6 +108,9 @@ select {
     opacity: 0.011;
     cursor: pointer;
     z-index: 100;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
 }
 
 .checkboxbutton input[type="radio"]:checked+label {
@@ -158,9 +173,9 @@ select {
 input[type="file"] {
     position: absolute;
     bottom: 8px;
-    left: 120px;
+    left: 130px;
     font-size: 14px;
-    width: 105px;
+    width: 75px;
 }
 
 #SuccesfullPostAdd img {
@@ -194,6 +209,10 @@ input[type="file"] {
     color: #F96300;
 }
 
+.fullWidth {
+    grid-column: span 2;
+}
+
 @media screen and (max-width:1200px) {
     .accordion-body {
         padding: 0 60px 60px 70px;
@@ -205,7 +224,12 @@ input[type="file"] {
     }
 
     .MultiStepForm .form__label {
-        top: -15px;
+        top: -8px;
+        font-size: 12px;
+    }
+
+    .MultiStepForm .form-select {
+        padding: 10px 5px 6px 10px;
     }
 
     .accordion-button {
@@ -319,7 +343,11 @@ input[type="file"] {
     }
 
     .accordion-body {
-        padding: 20px 25px 50px 40px;
+        padding: 20px 25px 60px 40px;
+    }
+
+    .accordion-body .form__field {
+        padding: 14px 5px 10px 10px;
     }
 
     .accordion-header {
@@ -327,7 +355,7 @@ input[type="file"] {
     }
 
     .accordion-body::before {
-        left: 27px;
+        left: 20px;
         background: #00000040;
     }
 

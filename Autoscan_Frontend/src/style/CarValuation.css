@@ -13,7 +13,7 @@
 }
 
 button.btn.next-step:hover {
-    color: #FF802B;
+    background: #FF802BF0;
 }
 
 section.MultiStepForm {
@@ -21,9 +21,7 @@ section.MultiStepForm {
     margin: -210px 0 40px 0;
 }
 
-button.btn.next-step {
-    color: #FFF;
-}
+
 
 @media screen and (max-width:920px) {
     .MultiStepForm .accordion_single_items {

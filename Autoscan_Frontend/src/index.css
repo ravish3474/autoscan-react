@@ -160,6 +160,21 @@ h1 {
   .default-cars-advertise img {
     height: 10rem;
   }
+
+  .recent-searches {
+    padding: 10px;
+    margin: 20px 0;
+  }
+
+  .trendingSearches .head .btn {
+    text-align: left;
+  }
+
+  .trendingSearches .head {
+
+    grid-template-columns: 1fr;
+
+  }
 }
 
 /* recent-searches sections ends here  */
@@ -315,6 +330,18 @@ h1 {
   .popular-brands .item h4 {
     font-size: 16px;
   }
+
+  .head {
+    flex-direction: column;
+  }
+
+  .popular-brands h5 {
+    font-size: 12px;
+    margin-top: 20px;
+    background: #EEE;
+    padding: 7px;
+    border-radius: 2px;
+  }
 }
 
 
@@ -431,6 +458,7 @@ h1 {
 
 .testimoial-sect .reviews .clientReviews {
   font-size: 16px;
+  text-align: left;
   font-weight: 500;
 }
 
@@ -446,6 +474,7 @@ h1 {
 
   .testimoial-sect .reviews .clientReviews {
     font-size: 12px;
+
   }
 
   .testimoial-sect .reviews {
@@ -456,13 +485,33 @@ h1 {
     font-size: 15px;
   }
 
-  .testimoial-sect .owl-item img {
-    width: 150px;
-    height: 25vh;
+  .testimoial-sect .item img {
+    height: 20vh;
+  }
+
+  .testimoial-sect .swiper-wrapper {
+    height: auto;
   }
 
   .testimoial-sect .item {
-    margin: 20px 0;
-    height: 25vh;
+    margin: 0;
+    height: auto;
+  }
+
+  .testimoial-sect .swiper-slide {
+    border-radius: 40px;
+
+  }
+
+  .testimoial-sect .swiper-horizontal {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: auto;
+
+  }
+
+  .DefaultTopBanner {
+    padding: 8rem 0;
   }
 }

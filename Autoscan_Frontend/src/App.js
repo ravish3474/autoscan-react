@@ -8,7 +8,7 @@ import CarDetails from "./Pages/CarDetails";
 import CarValuation from "./Pages/CarValuation";
 import ListedCarsDetails from "./Pages/ListedCarsDetails";
 import Profile from "./Pages/Profile";
-import Inspection from "./components/Inspection";
+import Inspection from "./Pages/Inspection";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import LoginModal from "./components/modals/LoginModal";
