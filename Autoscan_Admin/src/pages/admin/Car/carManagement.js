@@ -88,7 +88,7 @@ const carManagement = () => {
     { dataField: "Brand.brand_name", text: "Brand Name" },
     { dataField: "model.model_name", text: "Model Name" },
     { dataField: "varient.varient_name", text: "Varient Name" },
-    { dataField: "registration_state", text: "registration_state" },
+    { dataField: "registration_state", text: "Registration State" },
     { dataField: "car_location", text: "Car location" },
     { dataField: "manufacturing_year", text: "Manufacturing Year" },
     { dataField: "ex_showroom", text: "Ex Showroom Price" },
@@ -218,6 +218,7 @@ const carManagement = () => {
     let searchItem = JSON.stringify({
       brand_name: el?.Brand.brand_name?.toLowerCase(),
       model_name: el?.model.model_name?.toLowerCase() || "",
+      varient_name: el?.varient.varient_name?.toLowerCase() || "",
     });
     if (searchItem?.includes(query_text)) {
       return true;
@@ -285,7 +286,7 @@ const carManagement = () => {
                           },
                           {
                             key: "registration_state",
-                            label: "registration_state",
+                            label: "Registration State",
                           },
                           {
                             key: "car_location",

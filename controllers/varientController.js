@@ -4,14 +4,64 @@ const { Model } = require("../models/Model");
 const { formatToJSON } = require("../helper/commonMethods");
 
 // Define associations
-
-
-const getAllVarients = async (req, res) => {
+const getAllVarientPagination = async (req, res) => {
   Varient.belongsTo(Brand, {
-    foreignKey: 'brand_id'
+    foreignKey: "brand_id",
   });
   Varient.belongsTo(Model, {
-    foreignKey: 'model_id'
+    foreignKey: "model_id",
+  });
+
+  try {
+    const page = parseInt(req.query.page);
+    const pageSize = parseInt(req.query.pageSize);
+
+    // Calculate the start and end indexes for the requested page
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+    let varient = formatToJSON(
+      await Varient.findAll({
+        include: [
+          {
+            model: Brand,
+            key: "id",
+            attributes: ["brand_name"],
+          },
+          {
+            model: Model,
+            key: "id",
+            attributes: ["model_name"],
+          },
+        ],
+        where: {
+          is_deleted: 0,
+        },
+        order: [["id", "DESC"]],
+      })
+    );
+    const paginatedVarients = varient.slice(startIndex, endIndex);
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(varient?.length / pageSize);
+
+    return res.status(200).json({
+      success: true,
+      varient: paginatedVarients,
+      total_counts: varient?.length || 0,
+      totalPages: totalPages,
+      msg: "Varients fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching Varients:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+const getAllVarients = async (req, res) => {
+  Varient.belongsTo(Brand, {
+    foreignKey: "brand_id",
+  });
+  Varient.belongsTo(Model, {
+    foreignKey: "model_id",
   });
 
   try {
@@ -21,27 +71,23 @@ const getAllVarients = async (req, res) => {
           include: [
             {
               model: Brand,
-              key: 'id',
-              attributes: ['brand_name'],
+              key: "id",
+              attributes: ["brand_name"],
             },
             {
               model: Model,
-              key: 'id',
-              attributes: ['model_name'],
+              key: "id",
+              attributes: ["model_name"],
             },
           ],
-          attributes: [
-            'id',
-            'varient_name',
-            'status',
-          ],
+          attributes: ["id", "varient_name", "status"],
           where: {
             is_deleted: 0,
           },
         })
       )
     );
-    varients = varients.map(item => ({
+    varients = varients.map((item) => ({
       id: item.id,
       brand: item.Brand?.brand_name,
       model: item.model?.model_name,
@@ -55,7 +101,25 @@ const getAllVarients = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
+const getVarientBymodelId = async (req, res) => {
+  try {
+    const varientData = await Varient.findAll({
+      where: { model_id: req.params?.modelId, is_deleted: 0 },
+    });
+    return res.status(200).json({
+      success: true,
+      varientData,
+      allVarients: varientData,
+      msg: "Model fetched successfully",
+    });
+  } catch (error) {
+    console.log("Error (while fetching Varient):::", error);
+    return res.status(404).json({
+      success: false,
+      msg: "Unable to fetch Varient",
+    });
+  }
+};
 const getVarientById = async (req, res) => {
   try {
     let varientData = formatToJSON(
@@ -83,7 +147,7 @@ const fetchVarient = async (req, res) => {
       {
         attributes: ["id", "varient_name"],
       },
-      { where: { is_deleted: 0,status:1 } }
+      { where: { is_deleted: 0, status: 1 } }
     );
 
     return res.status(200).json({
@@ -105,8 +169,7 @@ const fetchactiveVarient = async (req, res) => {
       where: {
         status: 1,
       },
-    }
-    );
+    });
 
     return res.status(200).json({
       success: true,
@@ -124,10 +187,7 @@ const fetchactiveVarient = async (req, res) => {
 
 const createVarient = async (req, res) => {
   try {
-
-    let {
-      brand_id,model_id,varient_name,status
-    } = req.body;
+    let { brand_id, model_id, varient_name, status } = req.body;
 
     let existingVarient = await Varient.findOne({
       where: { varient_name },
@@ -139,16 +199,15 @@ const createVarient = async (req, res) => {
         msg: "Varient already exists. Unable to create a new varient.",
       });
     }
-    
+
     let varientObj = {};
-    varientObj['brand_id'] = brand_id;
-    varientObj['model_id'] = model_id;
-    varientObj['varient_name'] = varient_name;
-    varientObj['status'] = status;
-    let newVarient = await Varient.create(
-      {
-        ...varientObj,
-      });
+    varientObj["brand_id"] = brand_id;
+    varientObj["model_id"] = model_id;
+    varientObj["varient_name"] = varient_name;
+    varientObj["status"] = status;
+    let newVarient = await Varient.create({
+      ...varientObj,
+    });
 
     return res.status(200).json({
       success: true,
@@ -168,13 +227,11 @@ const updateVarient = async (req, res) => {
   try {
     let { id } = req.params;
     let varientObj = {};
-    let {
-        brand_id,model_id,varient_name,status
-    } = req.body;
+    let { brand_id, model_id, varient_name, status } = req.body;
 
-    varientObj['brand_id'] = brand_id;
-    varientObj['model_id'] = model_id;
-    varientObj['varient_name'] = varient_name;
+    varientObj["brand_id"] = brand_id;
+    varientObj["model_id"] = model_id;
+    varientObj["varient_name"] = varient_name;
     varientObj["status"] = status;
 
     let updatedVarient = await Varient.update(
@@ -260,6 +317,8 @@ const deleteVarientById = async (req, res) => {
 };
 
 module.exports = {
+  getAllVarientPagination,
+  getVarientBymodelId,
   getAllVarients,
   togglestatus,
   createVarient,

@@ -11,7 +11,7 @@ if (process.env.MEDIA_LOCATION_S3 == "true") {
 } else {
   fileUpload = require("../middlewares/fileUpload");
 }
-router.get("/list", brandController.getAlBrandPagination);
+router.get("/list", brandController.getAllBrandPagination);
 router.get("/brand-list", brandController.getAllBrands);
 router.post("/create-brand", fileUpload.any(), brandController.createNewBrand);
 router.get("/fetch-brandbyid/:brandId", brandController.getBrandById);

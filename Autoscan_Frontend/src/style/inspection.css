@@ -56,7 +56,7 @@ section.MultiStepForm {
     color: #F96300;
     top: 17px;
     font-weight: 500;
-    right: 20px;
+    right: 24px;
     font-size: 14px;
 }
 
@@ -163,8 +163,23 @@ section.MultiStepForm {
     top: -3px;
 }
 
+.ScheduleInspection input#whatsapp_update {
+    position: absolute;
+    right: 0;
+    width: 25px;
+    height: 25px;
+}
+
 .ScheduleInspection .sellDate ion-icon {
     top: 12px;
+}
+
+.form__group.field.formHead.relative.sellDate .form__label {
+    cursor: pointer;
+}
+
+.form__group.field.formHead.relative.sellDate .input:focus-visible {
+    box-shadow: none;
 }
 
 .ScheduleInspection .formHead .DateIcon {
@@ -173,9 +188,102 @@ section.MultiStepForm {
     top: 13px;
 }
 
+.formHead.sellDate input {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    padding: 0 20px;
+}
+
+.formHead .theme {
+    right: 0;
+}
+
+#inspection_date:active:focus-visible:focus-within {
+    box-shadow: none;
+    border: none;
+}
+
+.ui-datepicker {
+    z-index: 1000 !important;
+}
+
+.accordion-item {
+    /* Your tab styles */
+    transition: background-color 0.3s ease;
+}
+
+.accordion-item.active {
+    /* Styles for active tab */
+    background-color: red;
+    /* Example color change */
+}
+
 @media screen and (max-width:520px) {
     .section.MultiStepForm {
         padding: 0;
     }
 
+    .ScheduleInspection .checkboxbutton {
+        width: auto;
+    }
+
+    .ScheduleInspection .checkboxbutton label {
+        line-height: 15px;
+    }
+
+    .ScheduleInspectionCard {
+        padding: 22px;
+    }
+
+    .ScheduleInspectionCard .approxValue {
+        font-size: 18px;
+    }
+
+    #collapseStep3 .gridUpper {
+        gap: 2rem;
+    }
+
+    .ScheduleInspection .formFooter label {
+
+        font-size: 12px;
+    }
+
+    .ScheduleInspection .formHead ion-icon {
+        left: -32px;
+        background: #FFF;
+        z-index: 1;
+    }
+
+    .ScheduleInspection input#whatsapp_update {
+
+        right: -12px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .ScheduleInspection .TimeDiv .checkboxbutton {
+
+        height: 75px;
+    }
+
+    .ScheduleInspection .sellDate .formInputTitle {
+        position: relative;
+        z-index: 1;
+        top: 10px;
+    }
+
+    .ScheduleInspection .formFooter ion-icon {
+
+        padding: 10px;
+        font-size: 15px;
+        position: absolute;
+        left: -35px;
+        border-radius: 50%;
+    }
+
+    .formHead .theme {
+        right: -6px;
+        top: 10px;
+    }
 }

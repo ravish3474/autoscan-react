@@ -153,55 +153,19 @@
       });
     </script>
 
-    <!-- owlCarousel Js  -->
-    <!-- popular-brands-slider -->
-    <script>
-      $(".popular-brands-slider").owlCarousel({
-        loop: true,
-        nav: true,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-          0: {
-            items: 2,
-          },
-          600: {
-            items: 3,
-          },
-          1000: {
-            items: 5,
-          },
-        },
-      });
-    </script>
-    <!-- popular-brands-slider -->
-    <!-- testimonial-slider  -->
-    <script>
-      $(".testimonial-slider").owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: true,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-          0: {
-            items: 1,
-          },
-          600: {
-            items: 2,
-          },
-          1000: {
-            items: 2,
-          },
-        },
-      });
-    </script>
-    <!-- testimonial-slider -->
-
     <!-- <script src="/src/js/main.js"></script> -->
 
-    <script src="/src/js/multiStepForm.js"></script>
+    <script>
+      $(function () {
+        $("#inspection_date").datepicker({
+          dateFormat: "dd-M-yy",
+          minDate: 1,
+        });
+
+        $(".onclick").on("click", function () {
+          $("#inspection_date").focus();
+        });
+      });
+    </script>
   </body>
 </html>

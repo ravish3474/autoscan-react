@@ -1,24 +1,7 @@
 const { Brand } = require("../models/Brand");
 const { formatToJSON } = require("../helper/commonMethods");
 
-
-const getAllBrands = async (req, res) => {
-  try {
-    const brands =  await Brand.findAll({
-      where: { is_deleted: 0 },
-    });
-    return res.status(200).json({
-      success: true,
-      allBrands: brands,
-      total_counts: brands?.length || 0,
-      msg: "Brand fetched successfully",
-    });
-  } catch (error) {
-    console.error("Error fetching Brand:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-const getAlBrandPagination = async (req, res) => {
+const getAllBrandPagination = async (req, res) => {
   try {
     const page = parseInt(req.query.page);
     const pageSize = parseInt(req.query.pageSize);
@@ -28,10 +11,12 @@ const getAlBrandPagination = async (req, res) => {
     const endIndex = page * pageSize;
     let brand = formatToJSON(
       await Brand.findAll({
-        where: { is_deleted: 0 },
+        where: {
+          is_deleted: 0,
+        },
+        order: [["id", "DESC"]],
       })
     );
-
     const paginatedBrands = brand.slice(startIndex, endIndex);
 
     // Calculate the total number of pages
@@ -49,6 +34,23 @@ const getAlBrandPagination = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const getAllBrands = async (req, res) => {
+  try {
+    const brands = await Brand.findAll({
+      where: { is_deleted: 0 },
+    });
+    return res.status(200).json({
+      success: true,
+      allBrands: brands,
+      total_counts: brands?.length || 0,
+      msg: "Brand fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching Brand:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const getBrandById = async (req, res) => {
   try {
     let brandData = formatToJSON(
@@ -74,7 +76,7 @@ const fetchBrand = async (req, res) => {
   try {
     let allBrands = await Brand.findAll(
       {
-        attributes: ["id", "brand_name","brand_img"],
+        attributes: ["id", "brand_name", "brand_img"],
       },
       { where: { is_deleted: 0 } }
     );
@@ -98,8 +100,7 @@ const fetchactiveBrand = async (req, res) => {
       where: {
         status: 1,
       },
-    }
-    );
+    });
 
     return res.status(200).json({
       success: true,
@@ -117,10 +118,7 @@ const fetchactiveBrand = async (req, res) => {
 
 const createNewBrand = async (req, res) => {
   try {
-
-    let {
-      brand_name,status
-    } = req.body;
+    let { brand_name, status } = req.body;
 
     let existingBrand = await Brand.findOne({
       where: { brand_name },
@@ -132,37 +130,32 @@ const createNewBrand = async (req, res) => {
         msg: "Brand already exists. Unable to create a new brand.",
       });
     }
-    
+
     let userObj = {};
-    userObj['brand_name'] = brand_name;
-    userObj['status'] = status;
-    if(req.files && req.files?.length > 0)
-    {
-        req.files?.forEach(item => {
-            if (item && item !== undefined) 
-            {
-              console.log(item);
-                if (process.env.MEDIA_LOCATION_S3 === "true") {  
-                    if (item.location) {  
-                      userObj[item.fieldname] = item.key;                       
-                    }            
-                } 
-                else {
-                    if (item.path) {  
-                      userObj[item.fieldname] = item.path;  
-                    }            
-                }            
-            } 
-            else if (req.body.image === "null") {  
-                //incase user wants to remove its image  
-                userObj[item.fieldname] = "";  
+    userObj["brand_name"] = brand_name;
+    userObj["status"] = status;
+    if (req.files && req.files?.length > 0) {
+      req.files?.forEach((item) => {
+        if (item && item !== undefined) {
+          console.log(item);
+          if (process.env.MEDIA_LOCATION_S3 === "true") {
+            if (item.location) {
+              userObj[item.fieldname] = item.key;
             }
-        })
-    }
-    let newBrand = await Brand.create(
-      {
-        ...userObj,
+          } else {
+            if (item.path) {
+              userObj[item.fieldname] = item.path;
+            }
+          }
+        } else if (req.body.image === "null") {
+          //incase user wants to remove its image
+          userObj[item.fieldname] = "";
+        }
       });
+    }
+    let newBrand = await Brand.create({
+      ...userObj,
+    });
 
     return res.status(200).json({
       success: true,
@@ -182,9 +175,7 @@ const updateBrandById = async (req, res) => {
   try {
     let { id } = req.params;
     let brandObj = {};
-    let {
-      brand_name,status
-    } = req.body;
+    let { brand_name, status } = req.body;
 
     brandObj["brand_name"] = brand_name;
     brandObj["status"] = status;
@@ -272,8 +263,8 @@ const deleteBrandById = async (req, res) => {
 };
 
 module.exports = {
+  getAllBrandPagination,
   getAllBrands,
-  getAlBrandPagination,
   togglestatus,
   createNewBrand,
   fetchBrand,

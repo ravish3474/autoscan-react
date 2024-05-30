@@ -36,6 +36,7 @@ const getAllCars = async (req, res) => {
       where: {
         is_deleted: 0,
       },
+      order: [["id", "DESC"]],
     });
     return res.status(200).json({
       success: true,
@@ -48,7 +49,7 @@ const getAllCars = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-const getAlCarPagination = async (req, res) => {
+const getAllCarPagination = async (req, res) => {
   Car.belongsTo(Brand, {
     foreignKey: "brand_id",
   });
@@ -87,6 +88,7 @@ const getAlCarPagination = async (req, res) => {
         where: {
           is_deleted: 0,
         },
+        order: [["id", "DESC"]],
       })
     );
     const paginatedCars = car.slice(startIndex, endIndex);
@@ -137,6 +139,7 @@ const getCarById = async (req, res) => {
           },
         ],
         where: { id: req.params?.id, is_deleted: 0 },
+        order: [["id", "DESC"]],
       })
     );
     return res.status(200).json({
@@ -159,7 +162,7 @@ const fetchCar = async (req, res) => {
       {
         attributes: ["id", "car_id", "car_img"],
       },
-      { where: { is_deleted: 0 } }
+      { where: { is_deleted: 0 }, order: [["id", "DESC"]] }
     );
 
     return res.status(200).json({
@@ -362,7 +365,7 @@ const deleteCarById = async (req, res) => {
 };
 
 module.exports = {
-  getAlCarPagination,
+  getAllCarPagination,
   getAllCars,
   togglestatus,
   createCar,

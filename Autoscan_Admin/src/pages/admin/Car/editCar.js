@@ -4,12 +4,12 @@ import Select from "react-select";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import ButtonLoader from "../../../component/Common/ButtonLoader";
-import { Link, useHistory,useParams  } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import left_chevron from "../../../assets/images-new/left-chevron.svg";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles
-const EditCar = props => {
+const EditCar = (props) => {
   const history = useHistory();
   let { carId } = useParams();
   const [errors, setErrors] = useState({});
@@ -20,13 +20,12 @@ const EditCar = props => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(null);
 
-
   const [frontView, setFrontView] = useState(null);
-const [frontRight, setFrontRight] = useState(null);
-const [leftView, setLeftView] = useState(null);
-const [rearView, setRearView] = useState(null);
-const [odometer, setOdometer] = useState(null);
-const [chessis, setChessis] = useState(null);
+  const [frontRight, setFrontRight] = useState(null);
+  const [leftView, setLeftView] = useState(null);
+  const [rearView, setRearView] = useState(null);
+  const [odometer, setOdometer] = useState(null);
+  const [chessis, setChessis] = useState(null);
   const [statePayload, setStatePayload] = useState({
     model_id: "",
     brand_id: "",
@@ -51,29 +50,29 @@ const [chessis, setChessis] = useState(null);
     status: "",
   });
 
-  const handleInput = event => {
+  const handleInput = (event) => {
     const { name, value } = event.target;
 
-    setStatePayload(prevState => ({
+    setStatePayload((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleBrandSelection = brandId => {
-    setStatePayload(prevState => ({
+  const handleBrandSelection = (brandId) => {
+    setStatePayload((prevState) => ({
       ...prevState,
       brand_id: brandId,
     }));
   };
-  const handleModelSelection = modelId => {
-    setStatePayload(prevState => ({
+  const handleModelSelection = (modelId) => {
+    setStatePayload((prevState) => ({
       ...prevState,
       model_id: modelId,
     }));
   };
-  const handleVarientSelection = varientId => {
-    setStatePayload(prevState => ({
+  const handleVarientSelection = (varientId) => {
+    setStatePayload((prevState) => ({
       ...prevState,
       varient_id: varientId,
     }));
@@ -81,7 +80,7 @@ const [chessis, setChessis] = useState(null);
   const handleImageFileChange = (e, fieldName) => {
     const file = e.target.files[0];
     const fieldValue = e.target.value;
-  
+
     if (fieldName === "front_view") {
       setFrontView(file);
     } else if (fieldName === "front_right") {
@@ -95,17 +94,17 @@ const [chessis, setChessis] = useState(null);
     } else if (fieldName === "chessis") {
       setChessis(file);
     }
-  
-    setStatePayload(prevState => ({
+
+    setStatePayload((prevState) => ({
       ...prevState,
       [fieldName]: fieldValue,
     }));
   };
 
-  const createNewCar = payload => {
+  const createNewCar = (payload) => {
     const formData = new FormData();
 
-    Object.keys(payload).forEach(key => {
+    Object.keys(payload).forEach((key) => {
       if (key === "front_view" && payload[key]) {
         formData.append("front_view", payload[key]);
       } else if (key === "front_right" && payload[key]) {
@@ -122,27 +121,26 @@ const [chessis, setChessis] = useState(null);
         formData.append(key, payload[key]);
       }
     });
-  
+
     axios
-    .patch(
-      `${process.env.REACT_APP_API_URL}/brand/update-Car/${carId}`,
-      payload,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-      .then(res => {
+      .patch(
+        `${process.env.REACT_APP_API_URL}/car/update-Car/${carId}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
         setIsLoading(false);
         console.log(res);
-       
-          toast.success(res.data?.msg || "Car Created successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
 
-          history.push("/car-management");
-        
+        toast.success(res.data?.msg || "Car Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
+        history.push("/car-management");
       })
       .catch(function (error) {
         toast.error(
@@ -158,14 +156,13 @@ const [chessis, setChessis] = useState(null);
     // console.log('user',userId);
     axios
       .get(`${process.env.REACT_APP_API_URL}/car/fetch-Car/${carId}`)
-      .then(response => {
+      .then((response) => {
         const { success, car } = response.data;
         if (success) {
           setStatePayload(car);
-
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
 
   useEffect(() => {
@@ -174,28 +171,26 @@ const [chessis, setChessis] = useState(null);
     return () => {};
   }, []);
 
-  const handleSubmit = event => {
-  
+  const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
     setIsLoading(true);
     let errorObj = {};
 
     // Catching and setting errors;
-    let { car_description,status } = statePayload;
-  
+    let { car_description, status } = statePayload;
 
     if (!car_description) {
       errorObj["car_name"] = "Please choose a valid car_name!";
     }
-    
+
     if (!status) {
       errorObj["status"] = "Please choose a valid status!";
     }
 
     // Setting the error object if any errors are present;
     if (Object.keys(errorObj)?.length > 0) {
-      setErrors(prevState => ({
+      setErrors((prevState) => ({
         ...prevState,
         ...errorObj,
       }));
@@ -220,15 +215,14 @@ const [chessis, setChessis] = useState(null);
     createNewCar(payload);
   };
 
-
   const fetchBrandData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
-      .then(response => {
+      .then((response) => {
         const { success, allBrands } = response.data;
         if (success) {
           const { allBrands } = response.data;
-          let data = allBrands?.map(item => ({
+          let data = allBrands?.map((item) => ({
             id: item?.id,
             label: item?.brand_name,
             value: item?.brand_name,
@@ -236,16 +230,16 @@ const [chessis, setChessis] = useState(null);
           setBrands(data);
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
   const fetchModelData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/model/fetch-model`)
-      .then(response => {
+      .then((response) => {
         const { success, allModels } = response.data;
         if (success) {
           const { allModels } = response.data;
-          let data = allModels?.map(item => ({
+          let data = allModels?.map((item) => ({
             id: item?.id,
             label: item?.model_name,
             value: item?.model_name,
@@ -253,16 +247,16 @@ const [chessis, setChessis] = useState(null);
           setModels(data);
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
   const fetchVarientData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/varient/fetch-varient`)
-      .then(response => {
+      .then((response) => {
         const { success, allVarients } = response.data;
         if (success) {
           const { allVarients } = response.data;
-          let data = allVarients?.map(item => ({
+          let data = allVarients?.map((item) => ({
             id: item?.id,
             label: item?.varient_name,
             value: item?.varient_name,
@@ -270,7 +264,7 @@ const [chessis, setChessis] = useState(null);
           setVarients(data);
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
   useEffect(() => {
     fetchBrandData();
@@ -279,9 +273,6 @@ const [chessis, setChessis] = useState(null);
 
     return () => {};
   }, []);
-
-
-
 
   return (
     <div className="dashboard-wrapper">
@@ -316,7 +307,7 @@ const [chessis, setChessis] = useState(null);
           <Col lg={12}>
             <div className="filter-card-form card-shadow contact-form mt-3">
               <Row>
-              <Col xl={4} lg={4} md={6}>
+                <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
                       Brand<sup>*</sup>
@@ -326,13 +317,13 @@ const [chessis, setChessis] = useState(null);
                       name="brand_id"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                      onChange={e => handleBrandSelection(e.target?.value)}
+                      onChange={(e) => handleBrandSelection(e.target?.value)}
                     >
                       <option selected disabled>
                         Select Brand
                       </option>
                       {brands &&
-                        brands.map(el => {
+                        brands.map((el) => {
                           return (
                             <option key={el?.value} value={el?.id}>
                               {el?.label}
@@ -341,27 +332,30 @@ const [chessis, setChessis] = useState(null);
                         })}
                     </select>
                     {errors?.brand_id && (
-                      <small className="text-danger"> {errors?.brand_id} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.brand_id}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Model<sup>*</sup>
+                      Model<sup>*</sup>
                     </Form.Label>
                     <select
                       type="select"
                       name="model_id"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                      onChange={e => handleModelSelection(e.target?.value)}
+                      onChange={(e) => handleModelSelection(e.target?.value)}
                     >
                       <option selected disabled>
                         Select Model
                       </option>
                       {models &&
-                        models.map(el => {
+                        models.map((el) => {
                           return (
                             <option key={el?.value} value={el?.id}>
                               {el?.label}
@@ -370,28 +364,31 @@ const [chessis, setChessis] = useState(null);
                         })}
                     </select>
                     {errors?.model_id && (
-                      <small className="text-danger"> {errors?.model_id} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.model_id}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
-                
+
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Varient<sup>*</sup>
+                      Varient<sup>*</sup>
                     </Form.Label>
                     <select
                       type="select"
                       name="varient_id"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                      onChange={e => handleVarientSelection(e.target?.value)}
+                      onChange={(e) => handleVarientSelection(e.target?.value)}
                     >
                       <option selected disabled>
                         Select Varient
                       </option>
                       {varients &&
-                        varients.map(el => {
+                        varients.map((el) => {
                           return (
                             <option key={el?.value} value={el?.id}>
                               {el?.label}
@@ -400,7 +397,10 @@ const [chessis, setChessis] = useState(null);
                         })}
                     </select>
                     {errors?.varient_id && (
-                      <small className="text-danger"> {errors?.varient_id} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.varient_id}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
@@ -430,45 +430,37 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Ownership<sup>*</sup>
+                      Ownership<sup>*</sup>
                     </Form.Label>
                     <select
                       type="select"
                       name="ownership"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                       onChange={handleInput}
+                      onChange={handleInput}
                     >
                       <option selected disabled>
                         Select Ownership
                       </option>
-                     
-                            <option value="First Owner">
-                              First Owner
-                            </option>
-                            <option value="Second Owner">
-                            Second Owner
-                            </option>
-                            <option value="Third Owner">
-                              Third Owner
-                            </option>
-                            <option value="Fourth Owner">
-                            Fourth Owner
-                            </option>
-                            <option value="Unregistered">
-                            Unregistered
-                            </option>
-                        
+
+                      <option value="First Owner">First Owner</option>
+                      <option value="Second Owner">Second Owner</option>
+                      <option value="Third Owner">Third Owner</option>
+                      <option value="Fourth Owner">Fourth Owner</option>
+                      <option value="Unregistered">Unregistered</option>
                     </select>
                     {errors?.ownership && (
-                      <small className="text-danger"> {errors?.ownership} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.ownership}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Manufacturing Year
+                      Manufacturing Year
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -491,7 +483,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Registration Year
+                      Registration Year
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -514,7 +506,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Registration State
+                      Registration State
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -537,7 +529,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Car Location
+                      Car Location
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -560,7 +552,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Registration Number
+                      Registration Number
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -583,7 +575,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Insurance Validity
+                      Insurance Validity
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -606,7 +598,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Ex Showroom Price
+                      Ex Showroom Price
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -629,7 +621,7 @@ const [chessis, setChessis] = useState(null);
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Price
+                      Price
                       <sup>
                         <sup>*</sup>
                       </sup>
@@ -642,189 +634,213 @@ const [chessis, setChessis] = useState(null);
                       onChange={handleInput}
                     />
                     {errors.price && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors.price}{" "}
-                      </small>
+                      <small className="text-danger"> {errors.price} </small>
                     )}
                   </Form.Group>
                 </Col>
 
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Front View Image.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="front_view"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={e => handleImageFileChange(e, "front_view")}
-              />
-              {errors?.front_view && (
-                <small className="text-danger"> {errors?.front_view} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.front_view && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.front_view}
-                    alt="Selected Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Front View Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="front_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "front_view")}
+                    />
+                    {errors?.front_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.front_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.front_view && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.front_view}
+                          alt="Selected Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Front Right Corner.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="front_right"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={e => handleImageFileChange(e, "front_right")}
-              />
-              {errors?.front_right && (
-                <small className="text-danger"> {errors?.front_right} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.front_right && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.front_right}
-                    alt="Selected Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Front Right Corner.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="front_right"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "front_right")}
+                    />
+                    {errors?.front_right && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.front_right}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.front_right && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.front_right}
+                          alt="Selected Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Left View Image.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="left_view"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={e => handleImageFileChange(e, "left_view")}
-              />
-              {errors?.left_view && (
-                <small className="text-danger"> {errors?.left_view} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.left_view && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.left_view}
-                    alt="Selected Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Left View Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="left_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "left_view")}
+                    />
+                    {errors?.left_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.left_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.left_view && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.left_view}
+                          alt="Selected Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Rear View Image.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="rear_view"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={e => handleImageFileChange(e, "rear_view")}
-              />
-              {errors?.rear_view && (
-                <small className="text-danger"> {errors?.rear_view} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.rear_view && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.rear_view}
-                    alt="Selected Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Rear View Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="rear_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "rear_view")}
+                    />
+                    {errors?.rear_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.rear_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.rear_view && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.rear_view}
+                          alt="Selected Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Odometer Image.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="odometer"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={e => handleImageFileChange(e, "odometer")}
-              />
-              {errors?.odometer && (
-                <small className="text-danger"> {errors?.odometer} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.odometer && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.odometer}
-                    alt="Selected odometer Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Odometer Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="odometer"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "odometer")}
+                    />
+                    {errors?.odometer && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.odometer}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.odometer && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.odometer}
+                          alt="Selected odometer Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Chessis Image.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="chessis"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={e => handleImageFileChange(e, "chessis")}
-              />
-              {errors?.chessis && (
-                <small className="text-danger"> {errors?.chessis} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.chessis && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.chessis}
-                    alt="Select chessis Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Chessis Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="chessis"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "chessis")}
+                    />
+                    {errors?.chessis && (
+                      <small className="text-danger"> {errors?.chessis} </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.chessis && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.chessis}
+                          alt="Select chessis Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
-              
+
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -835,19 +851,14 @@ const [chessis, setChessis] = useState(null);
                       name="status"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                       onChange={handleInput}
+                      onChange={handleInput}
                     >
                       <option selected disabled>
                         Select Status
                       </option>
-                     
-                            <option value="1">
-                              Active
-                            </option>
-                            <option value="0">
-                              Deactive
-                            </option>
-                        
+
+                      <option value="1">Active</option>
+                      <option value="0">Deactive</option>
                     </select>
                     {errors?.status && (
                       <small className="text-danger"> {errors?.status} </small>
@@ -855,62 +866,62 @@ const [chessis, setChessis] = useState(null);
                   </Form.Group>
                 </Col>
                 <Col lg={12}>
-                      <Form.Group
-                        className="mb-3 d-flex flex-column"
-                        controlId="formBasicSMS"
-                      >
-                        <Form.Label>
-                        Car Description<sup>*</sup>
-                        </Form.Label>
-                        <ReactQuill
-                          value={statePayload.car_description}
-                          name="car_description"
-                          onChange={(value) =>
-                            setStatePayload({
-                              ...statePayload,
-                              car_description: value,
-                            })
-                          }
-                          modules={{
-                            toolbar: [
-                              [{ header: "1" }, { header: "2" }, { font: [] }],
-                              [{ size: [] }],
-                              [
-                                "bold",
-                                "italic",
-                                "underline",
-                                "strike",
-                                "blockquote",
-                              ],
-                              [
-                                { list: "ordered" },
-                                { list: "bullet" },
-                                { indent: "-1" },
-                                { indent: "+1" },
-                              ],
-                              ["link", "image", "video"],
-                              ["clean"],
-                            ],
-                          }}
-                          formats={[
-                            "header",
-                            "font",
-                            "size",
+                  <Form.Group
+                    className="mb-3 d-flex flex-column"
+                    controlId="formBasicSMS"
+                  >
+                    <Form.Label>
+                      Car Description<sup>*</sup>
+                    </Form.Label>
+                    <ReactQuill
+                      value={statePayload.car_description}
+                      name="car_description"
+                      onChange={(value) =>
+                        setStatePayload({
+                          ...statePayload,
+                          car_description: value,
+                        })
+                      }
+                      modules={{
+                        toolbar: [
+                          [{ header: "1" }, { header: "2" }, { font: [] }],
+                          [{ size: [] }],
+                          [
                             "bold",
                             "italic",
                             "underline",
                             "strike",
                             "blockquote",
-                            "list",
-                            "bullet",
-                            "indent",
-                            "link",
-                            "image",
-                            "video",
-                          ]}
-                        />
-                      </Form.Group>
-                    </Col>
+                          ],
+                          [
+                            { list: "ordered" },
+                            { list: "bullet" },
+                            { indent: "-1" },
+                            { indent: "+1" },
+                          ],
+                          ["link", "image", "video"],
+                          ["clean"],
+                        ],
+                      }}
+                      formats={[
+                        "header",
+                        "font",
+                        "size",
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strike",
+                        "blockquote",
+                        "list",
+                        "bullet",
+                        "indent",
+                        "link",
+                        "image",
+                        "video",
+                      ]}
+                    />
+                  </Form.Group>
+                </Col>
               </Row>
 
               <Form.Group className="cta text-center d-flex justify-content-center mt-4">
@@ -928,7 +939,7 @@ const [chessis, setChessis] = useState(null);
                   title="Cancel"
                   variant="secondary"
                   type="submit"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     window.location.href = "/car-management";
                   }}

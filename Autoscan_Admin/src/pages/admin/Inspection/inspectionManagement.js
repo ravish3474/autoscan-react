@@ -36,7 +36,9 @@ const inspectionManagement = () => {
   }, [currentPage]);
   const handleToggleStatus = async (inspectionId) => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/inspection/toggle-status/${inspectionId}`)
+      .post(
+        `${process.env.REACT_APP_API_URL}/inspection/toggle-status/${inspectionId}`
+      )
       .then((response) => {
         const { inspection } = response?.data;
         setInspectionsData((previnspections) =>
@@ -58,7 +60,9 @@ const inspectionManagement = () => {
   const handleInspectionDelete = (inspectionId) => {
     if (window.confirm("Are you sure you want to delete this Inspection?")) {
       axios
-        .delete(`${process.env.REACT_APP_API_URL}/inspection/delete-inspection/${inspectionId}`)
+        .delete(
+          `${process.env.REACT_APP_API_URL}/inspection/delete-inspection/${inspectionId}`
+        )
         .then((response) => {
           let { success } = response.data;
           if (success) {
@@ -88,8 +92,8 @@ const inspectionManagement = () => {
     { dataField: "Brand.brand_name", text: "Brand Name" },
     { dataField: "model.model_name", text: "Model Name" },
     { dataField: "varient.varient_name", text: "Varient Name" },
-    { dataField: "registration_state", text: "registration_state" },
-    { dataField: "car_location", text: "Inspection location" },
+    { dataField: "registration_state", text: "Registration State" },
+    { dataField: "car_location", text: "Car location" },
     { dataField: "manufacturing_year", text: "Manufacturing Year" },
     { dataField: "ex_showroom", text: "Ex Showroom Price" },
     {
@@ -218,6 +222,7 @@ const inspectionManagement = () => {
     let searchItem = JSON.stringify({
       brand_name: el?.Brand.brand_name?.toLowerCase(),
       model_name: el?.model.model_name?.toLowerCase() || "",
+      varient_name: el?.varient.varient_name?.toLowerCase() || "",
     });
     if (searchItem?.includes(query_text)) {
       return true;
@@ -285,11 +290,11 @@ const inspectionManagement = () => {
                           },
                           {
                             key: "registration_state",
-                            label: "registration_state",
+                            label: "Registration State",
                           },
                           {
                             key: "car_location",
-                            label: "Inspection location",
+                            label: "Car location",
                           },
                           {
                             key: "manufacturing_year",

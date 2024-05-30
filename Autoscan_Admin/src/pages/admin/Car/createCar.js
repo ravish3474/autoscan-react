@@ -59,25 +59,6 @@ const CreateCar = (props) => {
     }));
   };
 
-  const handleBrandSelection = (brandId) => {
-    setStatePayload((prevState) => ({
-      ...prevState,
-      brand_id: brandId,
-    }));
-  };
-  const handleModelSelection = (modelId) => {
-    setStatePayload((prevState) => ({
-      ...prevState,
-      model_id: modelId,
-    }));
-  };
-  const handleVarientSelection = (varientId) => {
-    setStatePayload((prevState) => ({
-      ...prevState,
-      varient_id: varientId,
-    }));
-  };
-
   const handleImageFileChange = (e, fieldName) => {
     const files = e.target.files[0];
 
@@ -205,51 +186,66 @@ const CreateCar = (props) => {
           let data = allBrands?.map((item) => ({
             id: item?.id,
             label: item?.brand_name,
-            value: item?.brand_name,
+            value: item?.id,
           }));
           setBrands(data);
         }
       })
       .catch((err) => console.log("Error:::", err));
   };
-  const fetchModelData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/model/fetch-model`)
-      .then((response) => {
-        const { success, allModels } = response.data;
-        if (success) {
-          const { allModels } = response.data;
-          let data = allModels?.map((item) => ({
-            id: item?.id,
-            label: item?.model_name,
-            value: item?.model_name,
-          }));
-          setModels(data);
-        }
-      })
-      .catch((err) => console.log("Error:::", err));
+  const handleBrandSelection = async (brandId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/model/fetch-model-by-brand/${brandId}`
+      );
+      const { success, allmodels } = response.data;
+      if (success) {
+        const modelOptions = allmodels.map((item) => ({
+          id: item.id,
+          label: item.model_name,
+          value: item.id,
+        }));
+        setModels(modelOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setStatePayload((prevState) => ({
+      ...prevState,
+      brand_id: brandId,
+    }));
   };
-  const fetchVarientData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/varient/fetch-varient`)
-      .then((response) => {
-        const { success, allVarients } = response.data;
-        if (success) {
-          const { allVarients } = response.data;
-          let data = allVarients?.map((item) => ({
-            id: item?.id,
-            label: item?.varient_name,
-            value: item?.varient_name,
-          }));
-          setVarients(data);
-        }
-      })
-      .catch((err) => console.log("Error:::", err));
+
+  const handleModelSelection = async (modelId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
+      );
+      const { success, allVarients } = response.data;
+      if (success) {
+        const varientOptions = allVarients.map((item) => ({
+          id: item.id,
+          label: item.varient_name,
+          value: item.id,
+        }));
+        setVarients(varientOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setStatePayload((prevState) => ({
+      ...prevState,
+      model_id: modelId,
+    }));
+  };
+  const handleVarientSelection = (varientId) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      varient_id: varientId,
+    }));
   };
   useEffect(() => {
     fetchBrandData();
-    fetchModelData();
-    fetchVarientData();
 
     return () => {};
   }, []);

@@ -1,11 +1,53 @@
 const { Model } = require("../models/Model");
 const { Brand } = require("../models/Brand");
 const { formatToJSON } = require("../helper/commonMethods");
+const getAllModelPagination = async (req, res) => {
+  Model.belongsTo(Brand, {
+    foreignKey: "brand_id",
+  });
+  try {
+    const page = parseInt(req.query.page);
+    const pageSize = parseInt(req.query.pageSize);
 
+    // Calculate the start and end indexes for the requested page
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+    let model = formatToJSON(
+      await Model.findAll({
+        include: [
+          {
+            model: Brand,
+            key: "id",
+            attributes: ["brand_name"],
+          },
+        ],
+        where: {
+          is_deleted: 0,
+        },
+        order: [["id", "DESC"]],
+      })
+    );
+    const paginatedModels = model.slice(startIndex, endIndex);
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(model?.length / pageSize);
+
+    return res.status(200).json({
+      success: true,
+      model: paginatedModels,
+      total_counts: model?.length || 0,
+      totalPages: totalPages,
+      msg: "Models fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching Models:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 const getAllModels = async (req, res) => {
   Model.belongsTo(Brand, {
-    foreignKey: 'brand_id'
-});
+    foreignKey: "brand_id",
+  });
   try {
     let models = JSON.parse(
       JSON.stringify(
@@ -13,16 +55,11 @@ const getAllModels = async (req, res) => {
           include: [
             {
               model: Brand,
-              key: 'id',
-              attributes: ['brand_name'],
+              key: "id",
+              attributes: ["brand_name"],
             },
           ],
-          attributes: [
-            'id',
-            'model_name',
-            'model_year',
-            'status',
-          ],
+          attributes: ["id", "model_name", "model_year", "status"],
           where: {
             is_deleted: 0,
           },
@@ -30,7 +67,7 @@ const getAllModels = async (req, res) => {
       )
     );
 
-    models = models.map(item => ({
+    models = models.map((item) => ({
       id: item.id,
       brand_name: item.Brand?.brand_name,
       model_name: item.model_name,
@@ -54,6 +91,26 @@ const getModelById = async (req, res) => {
     return res.status(200).json({
       success: true,
       model: modelData,
+      msg: "Model fetched successfully",
+    });
+  } catch (error) {
+    console.log("Error (while fetching Model):::", error);
+    return res.status(404).json({
+      success: false,
+      msg: "Unable to fetch Model",
+    });
+  }
+};
+
+const getModelByBrandId = async (req, res) => {
+  try {
+    const modelData = await Model.findAll({
+      where: { brand_id: req.params?.brandId, is_deleted: 0 },
+    });
+    return res.status(200).json({
+      success: true,
+      modelData,
+      allmodels: modelData,
       msg: "Model fetched successfully",
     });
   } catch (error) {
@@ -93,8 +150,7 @@ const fetchactiveModel = async (req, res) => {
       where: {
         status: 1,
       },
-    }
-    );
+    });
 
     return res.status(200).json({
       success: true,
@@ -112,10 +168,7 @@ const fetchactiveModel = async (req, res) => {
 
 const createModel = async (req, res) => {
   try {
-
-    let {
-      brand_id,model_name,model_year,status
-    } = req.body;
+    let { brand_id, model_name, model_year, status } = req.body;
 
     let existingModel = await Model.findOne({
       where: { model_name },
@@ -127,16 +180,15 @@ const createModel = async (req, res) => {
         msg: "Model already exists. Unable to create a new model.",
       });
     }
-    
+
     let modelObj = {};
-    modelObj['brand_id'] = brand_id;
-    modelObj['model_name'] = model_name;
-    modelObj['model_year'] = model_year;
-    modelObj['status'] = status;
-    let newModel = await Model.create(
-      {
-        ...modelObj,
-      });
+    modelObj["brand_id"] = brand_id;
+    modelObj["model_name"] = model_name;
+    modelObj["model_year"] = model_year;
+    modelObj["status"] = status;
+    let newModel = await Model.create({
+      ...modelObj,
+    });
 
     return res.status(200).json({
       success: true,
@@ -156,13 +208,11 @@ const updateModel = async (req, res) => {
   try {
     let { id } = req.params;
     let modelObj = {};
-    let {
-        brand_id,model_name,model_year,status
-    } = req.body;
+    let { brand_id, model_name, model_year, status } = req.body;
 
-    modelObj['brand_id'] = brand_id;
-    modelObj['model_name'] = model_name;
-    modelObj['model_year'] = model_year;
+    modelObj["brand_id"] = brand_id;
+    modelObj["model_name"] = model_name;
+    modelObj["model_year"] = model_year;
     modelObj["status"] = status;
 
     let updatedModel = await Model.update(
@@ -248,6 +298,8 @@ const deleteModelById = async (req, res) => {
 };
 
 module.exports = {
+  getAllModelPagination,
+  getModelByBrandId,
   getAllModels,
   togglestatus,
   createModel,

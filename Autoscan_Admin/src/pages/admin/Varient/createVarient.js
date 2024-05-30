@@ -7,7 +7,7 @@ import ButtonLoader from "../../../component/Common/ButtonLoader";
 import { Link, useHistory } from "react-router-dom";
 import left_chevron from "../../../assets/images-new/left-chevron.svg";
 import { toast } from "react-toastify";
-const CreateVarient = props => {
+const CreateVarient = (props) => {
   const history = useHistory();
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -20,46 +20,82 @@ const CreateVarient = props => {
     status: "",
   });
 
-  const handleInput = event => {
+  const handleInput = (event) => {
     const { name, value } = event.target;
 
-    setStatePayload(prevState => ({
+    setStatePayload((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-  const handleBrandSelection = brandId => {
-    setStatePayload(prevState => ({
+  const handleBrandSelection = async (brandId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/model/fetch-model-by-brand/${brandId}`
+      );
+      const { success, allmodels } = response.data;
+      if (success) {
+        const modelOptions = allmodels.map((item) => ({
+          id: item.id,
+          label: item.model_name,
+          value: item.id,
+        }));
+        setModels(modelOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setStatePayload((prevState) => ({
       ...prevState,
       brand_id: brandId,
     }));
   };
-  const handleModelSelection = modelId => {
-    setStatePayload(prevState => ({
+
+  const handleModelSelection = async (modelId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
+      );
+      const { success, allVarients } = response.data;
+      if (success) {
+        const varientOptions = allVarients.map((item) => ({
+          id: item.id,
+          label: item.varient_name,
+          value: item.id,
+        }));
+        setVarients(varientOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setStatePayload((prevState) => ({
       ...prevState,
       model_id: modelId,
     }));
   };
 
-  const createNewVarient = payload => {
+  const createNewVarient = (payload) => {
     console.log("payload");
     console.log(payload);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/varient/create-varient`, payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(res => {
+      .post(
+        `${process.env.REACT_APP_API_URL}/varient/create-varient`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
         setIsLoading(false);
         console.log(res);
-       
-          toast.success(res.data?.msg || "Varient Created successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
 
-          history.push("/varient-management");
-        
+        toast.success(res.data?.msg || "Varient Created successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
+        history.push("/varient-management");
       })
       .catch(function (error) {
         toast.error(
@@ -72,16 +108,14 @@ const CreateVarient = props => {
       });
   };
 
-  const handleSubmit = event => {
-  
+  const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
     setIsLoading(true);
     let errorObj = {};
 
     // Catching and setting errors;
-    let {brand_id,model_id,varient_name,status } = statePayload;
-  
+    let { brand_id, model_id, varient_name, status } = statePayload;
 
     if (!brand_id) {
       errorObj["brand_id"] = "Please choose a valid Brand!";
@@ -98,13 +132,11 @@ const CreateVarient = props => {
 
     // Setting the error object if any errors are present;
     if (Object.keys(errorObj)?.length > 0) {
-      setErrors(prevState => ({
+      setErrors((prevState) => ({
         ...prevState,
         ...errorObj,
       }));
-    }
-    else
-    {
+    } else {
       let payload = new FormData();
       payload.append("brand_id", statePayload?.brand_id);
       payload.append("model_id", statePayload?.model_id);
@@ -113,17 +145,16 @@ const CreateVarient = props => {
       // Calling the api and saving data;
       createNewVarient(payload);
     }
- 
   };
 
   const fetchBrandData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
-      .then(response => {
+      .then((response) => {
         const { success, allBrands } = response.data;
         if (success) {
           const { allBrands } = response.data;
-          let data = allBrands?.map(item => ({
+          let data = allBrands?.map((item) => ({
             id: item?.id,
             label: item?.brand_name,
             value: item?.brand_name,
@@ -131,16 +162,16 @@ const CreateVarient = props => {
           setBrands(data);
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
   const fetchModelData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/model/fetch-model`)
-      .then(response => {
+      .then((response) => {
         const { success, allModels } = response.data;
         if (success) {
           const { allModels } = response.data;
-          let data = allModels?.map(item => ({
+          let data = allModels?.map((item) => ({
             id: item?.id,
             label: item?.model_name,
             value: item?.model_name,
@@ -148,7 +179,7 @@ const CreateVarient = props => {
           setModels(data);
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
   useEffect(() => {
     fetchBrandData();
@@ -156,7 +187,6 @@ const CreateVarient = props => {
 
     return () => {};
   }, []);
-
 
   return (
     <div className="dashboard-wrapper">
@@ -191,7 +221,7 @@ const CreateVarient = props => {
           <Col lg={12}>
             <div className="filter-card-form card-shadow contact-form mt-3">
               <Row>
-              <Col xl={4} lg={4} md={6}>
+                <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
                       Brand<sup>*</sup>
@@ -201,13 +231,13 @@ const CreateVarient = props => {
                       name="brand_id"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                      onChange={e => handleBrandSelection(e.target?.value)}
+                      onChange={(e) => handleBrandSelection(e.target?.value)}
                     >
                       <option selected disabled>
                         Select Brand
                       </option>
                       {brands &&
-                        brands.map(el => {
+                        brands.map((el) => {
                           return (
                             <option key={el?.value} value={el?.id}>
                               {el?.label}
@@ -216,27 +246,30 @@ const CreateVarient = props => {
                         })}
                     </select>
                     {errors?.brand_id && (
-                      <small className="text-danger"> {errors?.brand_id} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.brand_id}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                    Model<sup>*</sup>
+                      Model<sup>*</sup>
                     </Form.Label>
                     <select
                       type="select"
                       name="model_id"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                      onChange={e => handleModelSelection(e.target?.value)}
+                      onChange={(e) => handleModelSelection(e.target?.value)}
                     >
                       <option selected disabled>
                         Select Model
                       </option>
                       {models &&
-                        models.map(el => {
+                        models.map((el) => {
                           return (
                             <option key={el?.value} value={el?.id}>
                               {el?.label}
@@ -245,7 +278,10 @@ const CreateVarient = props => {
                         })}
                     </select>
                     {errors?.model_id && (
-                      <small className="text-danger"> {errors?.model_id} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.model_id}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
@@ -272,8 +308,7 @@ const CreateVarient = props => {
                     )}
                   </Form.Group>
                 </Col>
-               
-               
+
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -284,17 +319,13 @@ const CreateVarient = props => {
                       name="status"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                       onChange={handleInput}
+                      onChange={handleInput}
                     >
                       <option selected disabled>
                         Select Status
                       </option>
-                        <option value="1">
-                          Active
-                        </option>
-                        <option value="0">
-                          Deactive
-                        </option>
+                      <option value="1">Active</option>
+                      <option value="0">Deactive</option>
                     </select>
                     {errors?.status && (
                       <small className="text-danger"> {errors?.status} </small>
@@ -318,7 +349,7 @@ const CreateVarient = props => {
                   title="Cancel"
                   variant="secondary"
                   type="submit"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     window.location.href = "/varient-management";
                   }}

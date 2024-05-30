@@ -11,7 +11,7 @@ if (process.env.MEDIA_LOCATION_S3 === "true") {
   fileUpload = require("../middlewares/fileUpload");
 }
 
-router.get("/list", carController.getAlCarPagination);
+router.get("/list", carController.getAllCarPagination);
 router.get("/Car-list", carController.getAllCars);
 router.get("/fetch-Car", carController.fetchCar);
 router.get("/fetch-activeCar", carController.fetchactiveCar);

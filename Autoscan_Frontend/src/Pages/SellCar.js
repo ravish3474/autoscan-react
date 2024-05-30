@@ -1,7 +1,7 @@
 // SellCar.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles
@@ -15,12 +15,27 @@ import FrontRightCorner from "../images/cars/FrontRightCorner.png";
 import LeftView from "../images/cars/LeftView.png";
 import Rearview from "../images/cars/Rearview.png";
 function SellCar() {
+  // MultiStep start here
+
+  const [activeStep, setActiveStep] = useState(1);
+
+  const handleNext = () => {
+    setActiveStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure activeStep does not exceed the total number of steps
+  };
+
+  const handlePrev = () => {
+    setActiveStep((prevStep) => Math.max(prevStep - 1, 1)); // Ensure activeStep does not go below 1
+  };
+
+  const handleHeaderClick = (step) => {
+    setActiveStep(step); // Set activeStep directly when clicking on the accordion header
+  };
+
+  // multiStep ends here
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
-
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
   const [leftView, setLeftView] = useState([]);
@@ -58,13 +73,63 @@ function SellCar() {
       [name]: value,
     }));
   };
-  const handleBrandSelection = (brandId) => {
+  const fetchBrandData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
+      .then((response) => {
+        const { success} = response.data;
+        if (success) {
+          const { allBrands } = response.data;
+          let data = allBrands?.map((item) => ({
+            id: item?.id,
+            label: item?.brand_name,
+            value: item?.id,
+          }));
+          setBrands(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
+  const handleBrandSelection = async (brandId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/model/fetch-model-by-brand/${brandId}`
+      );
+      const { success, allmodels } = response.data;
+      if (success) {
+        const modelOptions = allmodels.map((item) => ({
+          id: item.id,
+          label: item.model_name,
+          value: item.id,
+        }));
+        setModels(modelOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setStatePayload((prevState) => ({
       ...prevState,
       brand_id: brandId,
     }));
   };
-  const handleModelSelection = (modelId) => {
+
+  const handleModelSelection = async (modelId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
+      );
+      const { success, allVarients } = response.data;
+      if (success) {
+        const varientOptions = allVarients.map((item) => ({
+          id: item.id,
+          label: item.varient_name,
+          value: item.id,
+        }));
+        setVarients(varientOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setStatePayload((prevState) => ({
       ...prevState,
       model_id: modelId,
@@ -109,7 +174,6 @@ function SellCar() {
         },
       })
       .then((res) => {
-        setIsLoading(false);
         console.log(res);
 
         toast.success("Car Created successfully");
@@ -122,7 +186,6 @@ function SellCar() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
-    setIsLoading(true);
 
     let payload = new FormData();
     payload.append("model_id", statePayload?.model_id);
@@ -162,62 +225,8 @@ function SellCar() {
 
     createNewCar(payload);
   };
-  const fetchBrandData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
-      .then((response) => {
-        const { success, allBrands } = response.data;
-        if (success) {
-          const { allBrands } = response.data;
-          let data = allBrands?.map((item) => ({
-            id: item?.id,
-            label: item?.brand_name,
-            value: item?.brand_name,
-          }));
-          setBrands(data);
-        }
-      })
-      .catch((err) => console.log("Error:::", err));
-  };
-  const fetchModelData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/model/fetch-model`)
-      .then((response) => {
-        const { success, allModels } = response.data;
-        if (success) {
-          const { allModels } = response.data;
-          let data = allModels?.map((item) => ({
-            id: item?.id,
-            label: item?.model_name,
-            value: item?.model_name,
-          }));
-          setModels(data);
-        }
-      })
-      .catch((err) => console.log("Error:::", err));
-  };
-  const fetchVarientData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/varient/fetch-varient`)
-      .then((response) => {
-        const { success, allVarients } = response.data;
-        if (success) {
-          const { allVarients } = response.data;
-          let data = allVarients?.map((item) => ({
-            id: item?.id,
-            label: item?.varient_name,
-            value: item?.varient_name,
-          }));
-          setVarients(data);
-        }
-      })
-      .catch((err) => console.log("Error:::", err));
-  };
   useEffect(() => {
     fetchBrandData();
-    fetchModelData();
-    fetchVarientData();
-
     return () => {};
   }, []);
   return (
@@ -253,11 +262,12 @@ function SellCar() {
               <div className="accordion-item">
                 <h2 className="accordion-header" id="headingStep1">
                   <button
-                    className="accordion-button"
+                    className={`accordion-button ${
+                      activeStep === 1 ? "" : "collapsed"
+                    }`}
                     type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseStep1"
-                    aria-expanded="true"
+                    onClick={() => handleHeaderClick(1)}
+                    aria-expanded={activeStep === 1}
                     aria-controls="collapseStep1"
                   >
                     <img src={location} alt="" className="btn-img" />
@@ -270,7 +280,9 @@ function SellCar() {
                 </h2>
                 <div
                   id="collapseStep1"
-                  className="accordion-collapse collapse show"
+                  className={`accordion-collapse collapse ${
+                    activeStep === 1 ? "show" : ""
+                  }`}
                   aria-labelledby="headingStep1"
                   data-bs-parent="#accordionSteps"
                 >
@@ -328,7 +340,7 @@ function SellCar() {
                         <button
                           type="button"
                           className="btn next-step"
-                          data-bs-target="#collapseStep2"
+                          onClick={handleNext}
                         >
                           Next
                         </button>
@@ -341,11 +353,12 @@ function SellCar() {
               <div className="accordion-item" id="step2Accordion">
                 <h2 className="accordion-header" id="headingStep2">
                   <button
-                    className="accordion-button collapsed"
+                    className={`accordion-button ${
+                      activeStep === 2 ? "" : "collapsed"
+                    }`}
                     type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseStep2"
-                    aria-expanded="false"
+                    onClick={() => handleHeaderClick(2)}
+                    aria-expanded={activeStep === 2}
                     aria-controls="collapseStep2"
                   >
                     <img src={carDetails} alt="" className="btn-img" /> Car
@@ -365,7 +378,9 @@ function SellCar() {
                 </h2>
                 <div
                   id="collapseStep2"
-                  className="accordion-collapse collapse"
+                  className={`accordion-collapse collapse ${
+                    activeStep === 2 ? "show" : ""
+                  }`}
                   aria-labelledby="headingStep2"
                   data-bs-parent="#accordionSteps"
                 >
@@ -742,14 +757,14 @@ function SellCar() {
                           <button
                             type="button"
                             className="btn prev-step me-2"
-                            data-bs-target="#collapseStep1"
+                            onClick={handlePrev}
                           >
                             Previous
                           </button>
                           <button
                             type="button"
                             className="btn  next-step"
-                            data-bs-target="#collapseStep3"
+                            onClick={handleNext}
                           >
                             Next
                           </button>
@@ -763,11 +778,12 @@ function SellCar() {
               <div className="accordion-item">
                 <h2 className="accordion-header" id="headingStep3">
                   <button
-                    className="accordion-button collapsed"
+                    className={`accordion-button ${
+                      activeStep === 3 ? "" : "collapsed"
+                    }`}
                     type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseStep3"
-                    aria-expanded="false"
+                    onClick={() => handleHeaderClick(3)}
+                    aria-expanded={activeStep === 3}
                     aria-controls="collapseStep3"
                   >
                     <img src={carImages} alt="" className="btn-img" /> Car
@@ -784,7 +800,9 @@ function SellCar() {
                 </h2>
                 <div
                   id="collapseStep3"
-                  className="accordion-collapse collapse"
+                  className={`accordion-collapse collapse ${
+                    activeStep === 3 ? "show" : ""
+                  }`}
                   aria-labelledby="headingStep3"
                   data-bs-parent="#accordionSteps"
                 >
@@ -899,7 +917,7 @@ function SellCar() {
                         <button
                           type="button"
                           className="btn prev-step me-2"
-                          data-bs-target="#collapseStep2"
+                          onClick={handlePrev}
                         >
                           Previous
                         </button>

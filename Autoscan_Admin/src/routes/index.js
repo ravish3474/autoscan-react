@@ -38,11 +38,12 @@ import EditVarientManagement from "../pages/admin/Varient/editVarient";
 import CarManagement from "../pages/admin/Car/carManagement";
 import AddCarManagement from "../pages/admin/Car/createCar";
 import EditCarManagement from "../pages/admin/Car/editCar";
-
+import ViewCarManagement from "../pages/admin/Car/viewCar";
 /**-inspection-management */
 import InspectionManagement from "../pages/admin/Inspection/inspectionManagement";
 import AddInspectionManagement from "../pages/admin/Inspection/createInspection";
 import EditInspectionManagement from "../pages/admin/Inspection/editInspection";
+import ViewInspectionManagement from "../pages/admin/Inspection/viewInspection";
 
 const authProtectedRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="dashboard" /> },
@@ -79,6 +80,7 @@ const authProtectedRoutes = [
   { path: "/car-management", component: CarManagement },
   { path: "/edit-car-management/:carId", component: EditCarManagement },
   { path: "/add-car-management", component: AddCarManagement },
+  { path: "/view-car/:carId", component: ViewCarManagement },
   /**-inspection-management**/
   { path: "/inspection-management", component: InspectionManagement },
   {
@@ -86,6 +88,10 @@ const authProtectedRoutes = [
     component: EditInspectionManagement,
   },
   { path: "/add-inspection-management", component: AddInspectionManagement },
+  {
+    path: "/view-inspection/:inspectionId",
+    component: ViewInspectionManagement,
+  },
 ];
 
 const publicRoutes = [

@@ -101,10 +101,10 @@ const brandManagement = () => {
       },
     },
     {
-      dataField: "createdAt",
+      dataField: "updatedAt",
       text: "Date",
       formatter: (cell, row) => {
-        return moment(row?.createdAt).format("DD-MM-YYYY");
+        return moment(row?.updatedAt).format("DD-MM-YYYY");
       },
     },
     {
@@ -191,9 +191,9 @@ const brandManagement = () => {
     let csvBrandData = [];
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/brand/brand-list `
+        `${process.env.REACT_APP_API_URL}/brand/brand-list`
       );
-      csvBrandData = response?.data?.allBrands;
+      csvBrandData = response?.data?.brand;
     } catch (error) {
       console.error("Error fetching role data:", error);
     }
@@ -225,7 +225,6 @@ const brandManagement = () => {
     let query_text = query?.toLowerCase();
     let searchItem = JSON.stringify({
       brand_name: el?.brand_name?.toLowerCase(),
-      subject: el?.subject?.toLowerCase() || "",
     });
     if (searchItem?.includes(query_text)) {
       return true;
@@ -238,7 +237,7 @@ const brandManagement = () => {
       <div className="dashboard-wrapper">
         <Container fluid>
           <Row>
-            <div className="table-card">
+            <div className="table-brandd">
               <div className="table-data-search">
                 <div className="total-record">
                   <h5 className="mb-0">
@@ -253,7 +252,7 @@ const brandManagement = () => {
                         type="search"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Search by Brand name"
+                        placeholder="Search by Brand Name"
                         aria-label="Search"
                       />
                       <span>
@@ -262,7 +261,7 @@ const brandManagement = () => {
                     </form>
                   </div>
 
-                  <div className="card-filters">
+                  <div className="brandd-filters">
                     <Link
                       to="/add-brand-management"
                       className="btn btn-primary blue-btn d-flex gap-1 align-items-center"
@@ -274,19 +273,14 @@ const brandManagement = () => {
                     </Link>
                   </div>
 
-                  <div className="card-filters">
-                    <div className="card-filters">
+                  <div className="brandd-filters">
+                    <div className="brandd-filters">
                       <CSVLink
                         data={csvData}
                         headers={[
                           {
                             key: "brand_name",
                             label: "Brand Name",
-                          },
-
-                          {
-                            key: "createdAt",
-                            label: "Added Date",
                           },
                         ]}
                         filename={`brandsList.csv`}
