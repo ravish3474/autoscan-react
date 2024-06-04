@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import Eligibleapplication from "../Dashboard/Eligibleapplications";
-import Pendingapplication from "../Dashboard/Pendingapplication";
-import Vacancytable from "../Dashboard/Vacancytable";
+
 import { useEffect, useState } from "react";
 import {
   FetchDashboardData,
@@ -28,11 +26,6 @@ const Card = ({ imageSrc, title, value, units, link }) => (
           </div>
         </div>
         <h2 className="tab-title">{title}</h2>
-        {/*<div className="valueCounter d-flex align-items-center">
-            <div className="candidate-value">
-              <span>{units}</span>
-            </div>
-          </div>*/}
       </div>
     </Link>
   </div>

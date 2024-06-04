@@ -173,9 +173,9 @@ select {
 input[type="file"] {
     position: absolute;
     bottom: 8px;
-    left: 130px;
+    left: 115px;
     font-size: 14px;
-    width: 75px;
+    width: 100px;
 }
 
 #SuccesfullPostAdd img {

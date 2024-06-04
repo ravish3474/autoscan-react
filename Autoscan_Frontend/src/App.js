@@ -34,7 +34,12 @@ function App() {
         <Route path="/profile" component={Profile} />
       </Switch>
       <Footer />
-      {showUserModal && <LoginModal onClose={() => setShowUserModal(false)} />}
+      {showUserModal && (
+        <LoginModal
+          pathRoute={"/profile"}
+          onClose={() => setShowUserModal(false)}
+        />
+      )}
       {showDealerModal && (
         <DealerLoginModal onClose={() => setShowDealerModal(false)} />
       )}

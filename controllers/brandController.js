@@ -55,7 +55,7 @@ const getBrandById = async (req, res) => {
   try {
     let brandData = formatToJSON(
       await Brand.findOne({
-        where: { id: req.params?.id, is_deleted: 0 },
+        where: { id: req.params?.brandId, is_deleted: 0 },
       })
     );
     return res.status(200).json({
@@ -137,7 +137,7 @@ const createNewBrand = async (req, res) => {
     if (req.files && req.files?.length > 0) {
       req.files?.forEach((item) => {
         if (item && item !== undefined) {
-          console.log(item);
+          // console.log(item);
           if (process.env.MEDIA_LOCATION_S3 === "true") {
             if (item.location) {
               userObj[item.fieldname] = item.key;
@@ -179,7 +179,25 @@ const updateBrandById = async (req, res) => {
 
     brandObj["brand_name"] = brand_name;
     brandObj["status"] = status;
-
+    if (req.files && req.files?.length > 0) {
+      req.files?.forEach((item) => {
+        if (item && item !== undefined) {
+          // console.log(item);
+          if (process.env.MEDIA_LOCATION_S3 === "true") {
+            if (item.location) {
+              brandObj[item.fieldname] = item.key;
+            }
+          } else {
+            if (item.path) {
+              brandObj[item.fieldname] = item.path;
+            }
+          }
+        } else if (req.body.image === "null") {
+          //incase user wants to remove its image
+          brandObj[item.fieldname] = "";
+        }
+      });
+    }
     let updatedBrand = await Brand.update(
       {
         ...brandObj,
@@ -193,13 +211,13 @@ const updateBrandById = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      msg: "brand updated successfully",
+      msg: "Brand updated successfully",
     });
   } catch (error) {
-    console.log("Error (while updating brand):::", error);
+    console.log("Error (while updating Brand):::", error);
     return res.status(404).json({
       success: false,
-      msg: "Unable to update user",
+      msg: "Unable to update Brand",
     });
   }
 };

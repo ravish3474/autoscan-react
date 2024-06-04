@@ -1,9 +1,22 @@
 // components/modals/DealerLoginModal.js
 import React from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import dealerLoginImage from '../../images/main/user-login.png';
 
 function DealerLoginModal({ onClose }) {
+    // onclick Send OTP
+    const [showOTPSection, setShowOTPSection] = useState(false);
+    const [showSendOTPButton, setShowSendOTPButton] = useState(true);
+    const [showFormGroup, setShowFormGroup] = useState(true);
+
+    const handleSendOTP = () => {
+        setShowOTPSection(true);
+        setShowSendOTPButton(false);
+        setShowFormGroup(false);
+    };
+    const handleVerifyOTP = () => {
+    };
+    // onclick Send OTP
     const modalRef = useRef();
 
     const closeModal = (e) => {
@@ -11,6 +24,8 @@ function DealerLoginModal({ onClose }) {
             onClose();
         }
     };
+
+
 
     return (
         <div className="defaultModal" id="dealerLoginModal" ref={modalRef} onClick={closeModal}>
@@ -24,24 +39,33 @@ function DealerLoginModal({ onClose }) {
                         <h5 class="modal-title">LOGIN USING AUTOSCAN <br /> CREDENCIALS</h5>
                         <p class="s-para">for Better Experience, Order tracking & Regular updates</p>
                         <form id="DealerLoginForm">
-                            <div class="form__group field">
-                                <input type="text" class="form__field" placeholder="dealerMobNumber" name="dealerMobNumber" id="dealerMobNumber" required />
-                                <label for="dealerMobNumber" class="form__label">Enter mobile number</label>
-                                <p id="validationMessage" class="s-para validationMessage"></p>
-                            </div>
-                            <div class="form-footer">
-                                <button type="button" id="submitButton" class="button">
-                                    Send OTP
-                                </button>
-                                <p class="s-para">By continuing I agree with the <a href="#" class="theme">Privacy Policy</a>,
-                                    <a href="#" class="theme">Terms & Conditions</a>
+                            {showFormGroup && (
+                                <div className="form__group field">
+                                    <input type="text" className="form__field" placeholder="dealerMobNumber" name="dealerMobNumber" id="dealerMobNumber" required />
+                                    <label htmlFor="dealerMobNumber" className="form__label">Enter mobile number</label>
+                                    <p id="validationMessage" className="s-para validationMessage"></p>
+                                </div>
+                            )}
+                            <div className="form-footer">
+                                {showSendOTPButton && (
+                                    <button type="button" id="submitButton" className="button" onClick={handleSendOTP}>
+                                        Send OTP
+                                    </button>
+                                )}
+                                <p className="s-para">
+                                    By continuing I agree with the <a href="#" className="theme">Privacy Policy</a>,{' '}
+                                    <a href="#" className="theme">Terms & Conditions</a>
                                 </p>
 
-                                <div class="send-otp-section" >
-
-                                    <input type="text" id="otpInput" placeholder="Enter OTP" />
-                                    <button type="button" id="verifyOtpButton" class="border-none">Verify OTP</button>
-                                </div>
+                                {/* Conditionally render the OTP section based on state */}
+                                {showOTPSection && (
+                                    <div className="send-otp-section">
+                                        <input type="text" id="otpInput" placeholder="Enter OTP" />
+                                        <button type="button" id="verifyOtpButton" className="border-none" onClick={handleVerifyOTP}>
+                                            Verify OTP
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </form>
                     </div>

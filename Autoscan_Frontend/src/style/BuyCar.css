@@ -75,6 +75,9 @@
     padding: 2px;
     border-radius: 5px;
     margin: 0 0 30px;
+    height: 90vh;
+    overflow-x: scroll;
+    scrollbar-width: none;
 }
 
 .usedCarMainContainer .sidebar input[type="search"] {
@@ -95,6 +98,10 @@
 .usedCarMainContainer .sidebar .priceBar {
     border-bottom: 1px solid #E1E1E1;
     padding-bottom: 25px;
+    position: sticky;
+    top: -3px;
+    background: #FFF;
+    z-index: 1;
 }
 
 .usedCarMainContainer .sidebar button[type="submit"] {
@@ -441,9 +448,28 @@ input[type="radio"]+span {
         padding: 10px 5px;
     }
 
+    .singleCarItems {
+        padding: 0;
+    }
 
     .usedCarMainContainer .RightSide .filterItems {
         gap: 0;
+    }
+
+    .usedCarMainContainer .RightSide .filterItems a {
+        padding: 0 !important;
+    }
+
+    .usedCarMainContainer .RightSide .ribbon-2 {
+        font-size: 10px;
+    }
+
+    .usedCarMainContainer .RightSide .ribbon-2 b {
+        padding: 0px 2px;
+    }
+
+    .usedCarMainContainer .default-cars-advertise .card-content {
+        padding: 25px 10px;
     }
 }
 

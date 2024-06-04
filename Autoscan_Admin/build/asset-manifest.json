@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/admin/static/css/main.c89a5a53.css",
-    "main.js": "/admin/static/js/main.23ddcd2d.js",
+    "main.js": "/admin/static/js/main.45e24aab.js",
     "static/css/462.4a036714.chunk.css": "/admin/static/css/462.4a036714.chunk.css",
     "static/js/462.219a3cdf.chunk.js": "/admin/static/js/462.219a3cdf.chunk.js",
     "static/css/543.12381750.chunk.css": "/admin/static/css/543.12381750.chunk.css",
@@ -47,11 +47,9 @@
     "static/media/forgot-password.webp": "/admin/static/media/forgot-password.d950e24516e4709b63e3.webp",
     "static/media/fa-regular-400.woff2": "/admin/static/media/fa-regular-400.c52405129ae48097815d.woff2",
     "static/media/settings-icon.svg": "/admin/static/media/settings-icon.3f9f0e1612bbfa7c6db52cd09dcf6670.svg",
-    "static/media/print.svg": "/admin/static/media/print.2421d9ff387a9e32d425baad54e9d72a.svg",
     "static/media/edit.svg": "/admin/static/media/edit.15b320cd26a8be05028cffcd1dccad23.svg",
     "static/media/feedback.svg": "/admin/static/media/feedback.d9eb61b6cea1bbae940ef82c4931942d.svg",
     "static/media/lead-management.svg": "/admin/static/media/lead-management.60f8c2a808ec0b3b12089c2039e31c2a.svg",
-    "static/media/calender-card.svg": "/admin/static/media/calender-card.8ba3e9e447046fdb838bf27ff8bc3f9a.svg",
     "static/media/bell.svg": "/admin/static/media/bell.42533eb849d28e93d538fdfb09b9752f.svg",
     "static/media/delete-icon.svg": "/admin/static/media/delete-icon.640e1a9069c79af7826445c17bfd01f0.svg",
     "static/media/total-app-ico.svg": "/admin/static/media/total-app-ico.81caf0f221e3a0146bd132dda932abfb.svg",
@@ -61,16 +59,12 @@
     "static/media/download-icon.svg": "/admin/static/media/download-icon.0c11e26c2136b6b1f9cfb1ade8fb250f.svg",
     "static/media/alert.svg": "/admin/static/media/alert.c0032d1b4ffa5c2944d7f08ac883c378.svg",
     "static/media/dashboards.svg": "/admin/static/media/dashboards.64d9ab26c76458af30ed1a531caab2c9.svg",
-    "static/media/eye.svg": "/admin/static/media/eye.4f84d694483cc35d7dad0936fd61eef6.svg",
     "static/media/eyes.svg": "/admin/static/media/eyes.e1837403a4e7097bd005e4c4d34cfc26.svg",
     "static/media/cross.svg": "/admin/static/media/cross.ef0aecdb2d84100ae649.svg",
     "static/media/search-icon.svg": "/admin/static/media/search-icon.0102bad4d0b8921cadd072d85a23ce6c.svg",
-    "static/media/plus-create-job.svg": "/admin/static/media/plus-create-job.c015993196597872da0066b7fa3fc338.svg",
-    "static/media/location-card.svg": "/admin/static/media/location-card.9ba13ffe9a781540791ec9e2e58cbb8a.svg",
     "static/media/calender.svg": "/admin/static/media/calender.e6b906da271ca66df549f8d4adf57315.svg",
     "static/media/contatact-mana.svg": "/admin/static/media/contatact-mana.dcb3496cd8f343f6b95a16dfc603aa5c.svg",
     "index.html": "/admin/index.html",
-    "static/media/green-circle.svg": "/admin/static/media/green-circle.d74a2770ddcb1df545bf2176c3cd1619.svg",
     "static/media/arrow-1.svg": "/admin/static/media/arrow-1.1cfab1da506d829e817766013aca7c13.svg",
     "static/media/breadcums.svg": "/admin/static/media/breadcums.c27ffd7cc648830ec7c0ba499b41c1e1.svg",
     "static/media/close-bradcums.svg": "/admin/static/media/close-bradcums.6945e15c3a5e2d73299f143b7c40d2e4.svg",
@@ -80,7 +74,7 @@
     "static/media/plus-icon.svg": "/admin/static/media/plus-icon.4e79feb4f885f0d69484573f716ad22d.svg",
     "static/media/down-chevron.svg": "/admin/static/media/down-chevron.c4d53b1cf4d5f0e9b4c859c8aa19eac6.svg",
     "main.c89a5a53.css.map": "/admin/static/css/main.c89a5a53.css.map",
-    "main.23ddcd2d.js.map": "/admin/static/js/main.23ddcd2d.js.map",
+    "main.45e24aab.js.map": "/admin/static/js/main.45e24aab.js.map",
     "462.4a036714.chunk.css.map": "/admin/static/css/462.4a036714.chunk.css.map",
     "462.219a3cdf.chunk.js.map": "/admin/static/js/462.219a3cdf.chunk.js.map",
     "543.12381750.chunk.css.map": "/admin/static/css/543.12381750.chunk.css.map",
@@ -90,6 +84,6 @@
   },
   "entrypoints": [
     "static/css/main.c89a5a53.css",
-    "static/js/main.23ddcd2d.js"
+    "static/js/main.45e24aab.js"
   ]
 }

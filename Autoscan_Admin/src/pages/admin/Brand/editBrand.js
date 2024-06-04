@@ -7,7 +7,7 @@ import ButtonLoader from "../../../component/Common/ButtonLoader";
 import { Link, useHistory, useParams } from "react-router-dom";
 import left_chevron from "../../../assets/images-new/left-chevron.svg";
 import { toast } from "react-toastify";
-const EditBrand = props => {
+const EditBrand = (props) => {
   const history = useHistory();
   let { brandId } = useParams();
   const [errors, setErrors] = useState({});
@@ -20,16 +20,16 @@ const EditBrand = props => {
     status: "",
   });
 
-  const handleInput = event => {
+  const handleInput = (event) => {
     const { name, value } = event.target;
 
-    setStatePayload(prevState => ({
+    setStatePayload((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleImageFileChange = e => {
+  const handleImageFileChange = (e) => {
     console.log("image:", e);
     setImageFile(e.target.files[0]);
   };
@@ -37,15 +37,14 @@ const EditBrand = props => {
   const fetchBrandDetails = () => {
     // console.log('user',userId);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/brand/fetch-Brand/${brandId}`)
-      .then(response => {
+      .get(`${process.env.REACT_APP_API_URL}/brand/fetch-brandbyid/${brandId}`)
+      .then((response) => {
         const { success, brand } = response.data;
         if (success) {
           setStatePayload(brand);
-
         }
       })
-      .catch(err => console.log("Error:::", err));
+      .catch((err) => console.log("Error:::", err));
   };
 
   useEffect(() => {
@@ -54,30 +53,28 @@ const EditBrand = props => {
     return () => {};
   }, []);
 
-
-  const editNewBrand = payload => {
+  const editNewBrand = (payload) => {
     console.log("payload");
     console.log(payload);
     axios
-    .patch(
-      `${process.env.REACT_APP_API_URL}/brand/update-brand/${brandId}`,
-      payload,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-      .then(res => {
+      .patch(
+        `${process.env.REACT_APP_API_URL}/brand/update-brand/${brandId}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
         setIsLoading(false);
         console.log(res);
-       
-          toast.success(res.data?.msg || "Brand Editd successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
 
-          history.push("/brand-management");
-        
+        toast.success(res.data?.msg || "Brand Editd successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
+        history.push("/brand-management");
       })
       .catch(function (error) {
         toast.error(
@@ -90,28 +87,26 @@ const EditBrand = props => {
       });
   };
 
-  const handleSubmit = event => {
-  
+  const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
     setIsLoading(true);
     let errorObj = {};
 
     // Catching and setting errors;
-    let { brand_name,status } = statePayload;
-  
+    let { brand_name, status } = statePayload;
 
     if (!brand_name) {
       errorObj["brand_name"] = "Please choose a valid brand_name!";
     }
-    
+
     if (!status) {
       errorObj["status"] = "Please choose a valid status!";
     }
 
     // Setting the error object if any errors are present;
     if (Object.keys(errorObj)?.length > 0) {
-      setErrors(prevState => ({
+      setErrors((prevState) => ({
         ...prevState,
         ...errorObj,
       }));
@@ -184,33 +179,35 @@ const EditBrand = props => {
                   </Form.Group>
                 </Col>
                 <Col xl={4} lg={4} md={6}>
-                <Form.Group className="mb-3 ">
-              <Form.Label className="float-label">Brand Image.*</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                id="image"
-                name="files"
-                accept=".jpeg, .png, .jpg, .gif"
-                errorMessage="The file is required."
-                onChange={handleImageFileChange}
-              />
-              {errors?.files && (
-                <small className="text-danger"> {errors?.files} </small>
-              )}
-            </Form.Group>
-           
-            {statePayload.files && (
-              <>
-                <div>
-                  <img
-                    src={statePayload.files}
-                    alt="Selected Image"
-                    style={{ maxWidth: "20%" }}
-                  />
-                </div>
-              </>
-            )}
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Brand Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="files"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={handleImageFileChange}
+                    />
+                    {errors?.files && (
+                      <small className="text-danger"> {errors?.files} </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.files && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.files}
+                          alt="Selected Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
@@ -222,19 +219,14 @@ const EditBrand = props => {
                       name="status"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                       onChange={handleInput}
+                      onChange={handleInput}
                     >
                       <option selected disabled>
                         Select Status
                       </option>
-                     
-                            <option value="1">
-                              Active
-                            </option>
-                            <option value="0">
-                              Deactive
-                            </option>
-                        
+
+                      <option value="1">Active</option>
+                      <option value="0">Deactive</option>
                     </select>
                     {errors?.status && (
                       <small className="text-danger"> {errors?.status} </small>
@@ -258,7 +250,7 @@ const EditBrand = props => {
                   title="Cancel"
                   variant="secondary"
                   type="submit"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     window.location.href = "/brand-management";
                   }}

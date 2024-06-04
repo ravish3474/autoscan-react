@@ -3,13 +3,13 @@ const mysql = require("mysql2/promise");
 
 const sequelize = new Sequelize({
   dialect: "mysql",
-  host: "autoscan.chwweuwm8gml.ap-south-1.rds.amazonaws.com",
-  // host: "localhost",
+  // host: "autoscan.chwweuwm8gml.ap-south-1.rds.amazonaws.com",
+  host: "localhost",
   port: "3306",
-  username: "autoscan",
-  password: "usedcarsautoscan",
-  // username: "root",
-  // password: "",
+  // username: "autoscan",
+  // password: "usedcarsautoscan",
+  username: "root",
+  password: "",
   database: "autoscan",
   logging: false,
 });

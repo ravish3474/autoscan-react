@@ -13,11 +13,12 @@ import location from "../images/vector/Location.png";
 import carDetails from "../images/vector/Car.png";
 
 import carImages from "../images/vector/Picture.png";
+import LoginModal from "../components/modals/LoginModal";
 function Inspection() {
   // MultiStep start here
 
   const [activeStep, setActiveStep] = useState(1);
-
+  const [showUserModal, setShowUserModal] = useState(false);
   const handleNext = () => {
     setActiveStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure activeStep does not exceed the total number of steps
   };
@@ -186,9 +187,29 @@ function Inspection() {
         }
       )
       .then((res) => {
-        console.log(res);
-
         toast.success("Inspection Created successfully");
+        setStatePayload({
+          model_id: "",
+          brand_id: "",
+          varient_id: "",
+          kms_driven: "",
+          ownership: "",
+          manufacturing_year: "",
+          registration_year: "",
+          registration_state: "",
+          car_location: "",
+          registration_number: "",
+          insurance_validity: "",
+          ex_showroom: "",
+          price: "",
+          car_description: "",
+          inspection_address: "",
+          inspection_area: "",
+          inspection_landmark: "",
+          inspection_date: "",
+          inspection_time: "",
+          whatsapp_update: "",
+        });
       })
       .catch(function (error) {
         toast.error(
@@ -220,8 +241,11 @@ function Inspection() {
     payload.append("inspection_date", statePayload?.inspection_date);
     payload.append("inspection_time", statePayload?.inspection_time);
     payload.append("whatsapp_update", statePayload?.whatsapp_update);
-
-    createInspection(payload);
+    if (localStorage.getItem("authUser")) {
+      createInspection(payload);
+    } else {
+      setShowUserModal(true);
+    }
   };
   return (
     <div>
@@ -1024,6 +1048,15 @@ function Inspection() {
                         </div>
                       </div>
                     </form>
+                  </div>
+                  <div>
+                    {" "}
+                    {showUserModal && (
+                      <LoginModal
+                        pathRoute={"/inspection-car"}
+                        onClose={() => setShowUserModal(false)}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
