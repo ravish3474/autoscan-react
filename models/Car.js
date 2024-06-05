@@ -9,98 +9,96 @@ const Car = sequelize.define(
       allowNull: false,
     },
     model_id: {
-        type: DataTypes.INTEGER(10),
-        allowNull: false,
+      type: DataTypes.INTEGER(10),
+      allowNull: false,
     },
     varient_id: {
-        type: DataTypes.INTEGER(10),
-        allowNull: false,
+      type: DataTypes.INTEGER(10),
+      allowNull: false,
+    },
+    pincode: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
     },
     car_description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     manufacturing_year: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     kms_driven: {
-        type: DataTypes.INTEGER(10),
-        allowNull: false,
+      type: DataTypes.INTEGER(10),
+      allowNull: false,
     },
     ownership: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     registration_state: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     registration_year: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     registration_number: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     car_location: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     ex_showroom: {
-        type: DataTypes.INTEGER(10),
-        allowNull: false,
+      type: DataTypes.INTEGER(10),
+      allowNull: false,
     },
     price: {
-        type: DataTypes.INTEGER(10),
-        allowNull: false,
+      type: DataTypes.INTEGER(10),
+      allowNull: false,
     },
     insurance_validity: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
-    front_view:
-    {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null, 
+    front_view: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
-    front_right:
-    {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null, 
+    front_right: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
-    left_view:
-    {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null, 
+    left_view: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
-    rear_view:
-    {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null, 
+    rear_view: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
-    odometer:
-    {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null, 
+    odometer: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
-    chessis:
-    {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null, 
+    chessis: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-      comment:"0=available,1=coming soon"
+      comment: "0=available,1=coming soon",
     },
     is_deleted: {
       type: DataTypes.INTEGER,
@@ -110,7 +108,7 @@ const Car = sequelize.define(
   },
   {
     timestamps: true,
-    tableName: "car", 
+    tableName: "car",
   }
 );
 

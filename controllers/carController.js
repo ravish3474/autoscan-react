@@ -207,6 +207,7 @@ const createCar = async (req, res) => {
       model_id,
       brand_id,
       varient_id,
+      pincode,
       kms_driven,
       ownership,
       manufacturing_year,
@@ -225,6 +226,7 @@ const createCar = async (req, res) => {
     carObj["model_id"] = model_id;
     carObj["brand_id"] = brand_id;
     carObj["varient_id"] = varient_id;
+    carObj["pincode"] = pincode;
     carObj["kms_driven"] = kms_driven;
     carObj["ownership"] = ownership;
     carObj["manufacturing_year"] = manufacturing_year;
@@ -277,8 +279,61 @@ const createCar = async (req, res) => {
 const updateCar = async (req, res) => {
   try {
     let { id } = req.params;
+    let {
+      model_id,
+      brand_id,
+      varient_id,
+      pincode,
+      kms_driven,
+      ownership,
+      manufacturing_year,
+      registration_year,
+      registration_state,
+      car_location,
+      registration_number,
+      insurance_validity,
+      ex_showroom,
+      price,
+      car_description,
+      status,
+    } = req.body;
+
     let carObj = {};
-    let { car_name, status } = req.body;
+    carObj["model_id"] = model_id;
+    carObj["brand_id"] = brand_id;
+    carObj["varient_id"] = varient_id;
+    carObj["pincode"] = pincode;
+    carObj["kms_driven"] = kms_driven;
+    carObj["ownership"] = ownership;
+    carObj["manufacturing_year"] = manufacturing_year;
+    carObj["registration_year"] = registration_year;
+    carObj["registration_state"] = registration_state;
+    carObj["car_location"] = car_location;
+    carObj["registration_number"] = registration_number;
+    carObj["insurance_validity"] = insurance_validity;
+    carObj["ex_showroom"] = ex_showroom;
+    carObj["price"] = price;
+    carObj["car_description"] = car_description;
+    carObj["status"] = status;
+    if (req.files && req.files?.length > 0) {
+      req.files?.forEach((item) => {
+        if (item && item !== undefined) {
+          console.log(item);
+          if (process.env.MEDIA_LOCATION_S3 === "true") {
+            if (item.location) {
+              carObj[item.fieldname] = item.key;
+            }
+          } else {
+            if (item.path) {
+              carObj[item.fieldname] = item.path;
+            }
+          }
+        } else if (req.body.image === "null") {
+          //incase user wants to remove its image
+          carObj[item.fieldname] = "";
+        }
+      });
+    }
 
     carObj["car_name"] = car_name;
     carObj["status"] = status;

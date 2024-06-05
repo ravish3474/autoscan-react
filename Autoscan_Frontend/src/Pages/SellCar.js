@@ -36,6 +36,7 @@ function SellCar() {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
+  const [city, setCity] = useState([]);
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
   const [leftView, setLeftView] = useState([]);
@@ -46,6 +47,7 @@ function SellCar() {
     model_id: "",
     brand_id: "",
     varient_id: "",
+    pincode: "",
     kms_driven: "",
     ownership: "",
     manufacturing_year: "",
@@ -77,7 +79,7 @@ function SellCar() {
     axios
       .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
       .then((response) => {
-        const { success} = response.data;
+        const { success } = response.data;
         if (success) {
           const { allBrands } = response.data;
           let data = allBrands?.map((item) => ({
@@ -191,6 +193,7 @@ function SellCar() {
     payload.append("model_id", statePayload?.model_id);
     payload.append("brand_id", statePayload?.brand_id);
     payload.append("varient_id", statePayload?.varient_id);
+    payload.append("pincode", statePayload?.pincode);
     payload.append("kms_driven", statePayload?.kms_driven);
     payload.append("ownership", statePayload?.ownership);
     payload.append("manufacturing_year", statePayload?.manufacturing_year);
@@ -225,8 +228,32 @@ function SellCar() {
 
     createNewCar(payload);
   };
+  const handleCitySelection = (current_location) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      current_location: current_location,
+    }));
+  };
+  const fetchCityData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/city/fetch-city`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allcities } = response.data;
+          let data = allcities?.map((item) => ({
+            id: item?.id,
+            label: item?.city,
+            value: item?.city,
+          }));
+          setCity(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
   useEffect(() => {
     fetchBrandData();
+    fetchCityData();
     return () => {};
   }, []);
   return (
@@ -291,48 +318,53 @@ function SellCar() {
                       <div className="grid">
                         <div className="form__group field">
                           <select
-                            className="form__field"
-                            name="name"
-                            id="SelCity"
+                            type="select"
+                            name="current_location"
+                            id="current_location"
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
+                            onChange={(e) =>
+                              handleCitySelection(e.target?.value)
+                            }
                             required
                           >
-                            <option
-                              value=""
-                              disabled
-                              selected
-                              className="form__label"
-                            >
+                            <option selected disabled>
                               Select City
                             </option>
-                            <option value="dehradun">Dehradun</option>
-                            <option value="Dehradun2">Dehradun2</option>
-                            <option value="Dehradun3">Dehradun3</option>
+                            {city &&
+                              city.map((el) => {
+                                return (
+                                  <option key={el?.value} value={el?.value}>
+                                    {el?.label}
+                                  </option>
+                                );
+                              })}
                           </select>
-                          <label for="name" className="form__label">
+                          <label
+                            htmlFor="current_location"
+                            className="form__label"
+                          >
                             Select City
                           </label>
                         </div>
-                        <div className="form__group field  pincode">
-                          <select
+                        <div className="form__group field">
+                          <input
                             className="form__field"
-                            name="name"
-                            id="SelPincode"
-                            required
-                          >
-                            <option
-                              value=""
-                              disabled
-                              selected
-                              className="form__label"
-                            >
-                              Select Pincode
-                            </option>
-                            <option value="248001">248001</option>
-                            <option value="248001">248001</option>
-                            <option value="248001">248001</option>
-                          </select>
-                          <label for="name" className="form__label">
-                            Select Pincode
+                            type="text"
+                            placeholder="Pincode"
+                            name="pincode"
+                            id="pincode"
+                            value={statePayload.pincode}
+                            onChange={handleInput}
+                          />
+                          {errors.pincode && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors.pincode}{" "}
+                            </small>
+                          )}
+                          <label for="pincode" className="form__label">
+                            Pincode
                           </label>
                         </div>
                       </div>
