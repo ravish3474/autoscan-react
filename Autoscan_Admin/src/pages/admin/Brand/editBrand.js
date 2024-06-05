@@ -34,7 +34,7 @@ const EditBrand = (props) => {
     setImageFile(e.target.files[0]);
   };
 
-  const fetchBrandDetails = () => {
+  const fetchBrandDetails = (brandId) => {
     // console.log('user',userId);
     axios
       .get(`${process.env.REACT_APP_API_URL}/brand/fetch-brandbyid/${brandId}`)
@@ -48,7 +48,7 @@ const EditBrand = (props) => {
   };
 
   useEffect(() => {
-    fetchBrandDetails();
+    fetchBrandDetails(brandId);
 
     return () => {};
   }, []);

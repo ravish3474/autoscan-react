@@ -36,12 +36,15 @@ function Inspection() {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
+  const [city, setCity] = useState([]);
   const [inspectionDates, setInspectionDates] = useState([]);
   const [statePayload, setStatePayload] = useState({
     model_id: "",
     brand_id: "",
     varient_id: "",
     kms_driven: "",
+    current_location: "",
+    pincode: "",
     ownership: "",
     manufacturing_year: "",
     registration_year: "",
@@ -153,8 +156,34 @@ function Inspection() {
       varient_id: varientId,
     }));
   };
+
+  const handleCitySelection = (current_location) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      current_location: current_location,
+    }));
+  };
+  const fetchCityData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/city/fetch-city`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allcities } = response.data;
+          let data = allcities?.map((item) => ({
+            id: item?.id,
+            label: item?.city,
+            value: item?.city,
+          }));
+          setCity(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
+
   useEffect(() => {
     fetchBrandData();
+    fetchCityData();
     const today = new Date();
     const fiveDaysFromNow = new Date();
     fiveDaysFromNow.setDate(today.getDate());
@@ -188,28 +217,6 @@ function Inspection() {
       )
       .then((res) => {
         toast.success("Inspection Created successfully");
-        setStatePayload({
-          model_id: "",
-          brand_id: "",
-          varient_id: "",
-          kms_driven: "",
-          ownership: "",
-          manufacturing_year: "",
-          registration_year: "",
-          registration_state: "",
-          car_location: "",
-          registration_number: "",
-          insurance_validity: "",
-          ex_showroom: "",
-          price: "",
-          car_description: "",
-          inspection_address: "",
-          inspection_area: "",
-          inspection_landmark: "",
-          inspection_date: "",
-          inspection_time: "",
-          whatsapp_update: "",
-        });
       })
       .catch(function (error) {
         toast.error(
@@ -224,6 +231,8 @@ function Inspection() {
     payload.append("model_id", statePayload?.model_id);
     payload.append("brand_id", statePayload?.brand_id);
     payload.append("varient_id", statePayload?.varient_id);
+    payload.append("current_location", statePayload?.current_location);
+    payload.append("pincode", statePayload?.pincode);
     payload.append("kms_driven", statePayload?.kms_driven);
     payload.append("ownership", statePayload?.ownership);
     payload.append("manufacturing_year", statePayload?.manufacturing_year);
@@ -306,48 +315,53 @@ function Inspection() {
                       <div className="grid">
                         <div className="form__group field">
                           <select
-                            className="form__field"
-                            name="name"
-                            id="SelCity"
+                            type="select"
+                            name="current_location"
+                            id="current_location"
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
+                            onChange={(e) =>
+                              handleCitySelection(e.target?.value)
+                            }
                             required
                           >
-                            <option
-                              value=""
-                              disabled
-                              selected
-                              className="form__label"
-                            >
+                            <option selected disabled>
                               Select City
                             </option>
-                            <option value="dehradun">Dehradun</option>
-                            <option value="Dehradun2">Dehradun2</option>
-                            <option value="Dehradun3">Dehradun3</option>
+                            {city &&
+                              city.map((el) => {
+                                return (
+                                  <option key={el?.value} value={el?.value}>
+                                    {el?.label}
+                                  </option>
+                                );
+                              })}
                           </select>
-                          <label htmlFor="name" className="form__label">
+                          <label
+                            htmlFor="current_location"
+                            className="form__label"
+                          >
                             Select City
                           </label>
                         </div>
-                        <div className="form__group field  pincode">
-                          <select
+                        <div className="form__group field">
+                          <input
                             className="form__field"
-                            name="name"
-                            id="SelPincode"
-                            required
-                          >
-                            <option
-                              value=""
-                              disabled
-                              selected
-                              className="form__label"
-                            >
-                              Select Pincode
-                            </option>
-                            <option value="248001">248001</option>
-                            <option value="248001">248001</option>
-                            <option value="248001">248001</option>
-                          </select>
-                          <label htmlFor="name" className="form__label">
-                            Select Pincode
+                            type="text"
+                            placeholder="Pincode"
+                            name="pincode"
+                            id="pincode"
+                            value={statePayload.pincode}
+                            onChange={handleInput}
+                          />
+                          {errors.pincode && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors.pincode}{" "}
+                            </small>
+                          )}
+                          <label for="pincode" className="form__label">
+                            Pincode
                           </label>
                         </div>
                       </div>
@@ -426,13 +440,14 @@ function Inspection() {
                               })}
                           </select>
                           <label for="BrandName" className="form__label">
-                            Select Model
+                            Select Brand
                           </label>
                         </div>
                         <div className="form__group field">
                           <select
                             type="select"
                             name="model_id"
+                            id="model_id"
                             className="col-md-6 mb-1 form-control form-select"
                             style={{ width: "100%" }}
                             onChange={(e) =>
@@ -458,7 +473,7 @@ function Inspection() {
                               {errors?.model_id}{" "}
                             </small>
                           )}
-                          <label for="BrandName" className="form__label">
+                          <label for="model_id" className="form__label">
                             Select Model
                           </label>
                         </div>
@@ -466,6 +481,7 @@ function Inspection() {
                           <select
                             type="select"
                             name="varient_id"
+                            id="varient_id"
                             className="col-md-6 mb-1 form-control form-select"
                             style={{ width: "100%" }}
                             onChange={(e) =>
@@ -491,7 +507,7 @@ function Inspection() {
                               {errors?.varient_id}{" "}
                             </small>
                           )}
-                          <label for="BrandName" className="form__label">
+                          <label for="varient_id" className="form__label">
                             Select Varient
                           </label>
                         </div>
@@ -860,7 +876,7 @@ function Inspection() {
                                   placeholder="Enter Area/Locality"
                                   name="inspection_area"
                                   id="inspection_area"
-                                  value={statePayload.inspection_address}
+                                  value={statePayload.inspection_area}
                                   onChange={handleInput}
                                 />
                                 <label
@@ -879,7 +895,7 @@ function Inspection() {
                                   placeholder="Landmark"
                                   name="inspection_landmark"
                                   id="inspection_landmark"
-                                  value={statePayload.inspection_address}
+                                  value={statePayload.inspection_landmark}
                                   onChange={handleInput}
                                 />
                                 <label
@@ -910,7 +926,7 @@ function Inspection() {
                               name="inspection_date"
                               id="inspection_date"
                               value={statePayload.inspection_date}
-                              onChange={handleInputDate}
+                              onChange={handleInput}
                             />
                           </div>
                           <div className="form__group field defaultradio grid grid4  relative">
@@ -923,6 +939,7 @@ function Inspection() {
                                   value={moment(date, "MMMM D, YYYY").format(
                                     "YYYY-MM-DD"
                                   )}
+                                  onChange={handleInput}
                                 />
                                 <label
                                   className="btn btn-default"

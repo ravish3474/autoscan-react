@@ -203,6 +203,8 @@ const createInspection = async (req, res) => {
       model_id,
       brand_id,
       varient_id,
+      current_location,
+      pincode,
       kms_driven,
       ownership,
       manufacturing_year,
@@ -227,6 +229,8 @@ const createInspection = async (req, res) => {
     inspectionObj["model_id"] = model_id;
     inspectionObj["brand_id"] = brand_id;
     inspectionObj["varient_id"] = varient_id;
+    inspectionObj["current_location"] = current_location;
+    inspectionObj["pincode"] = pincode;
     inspectionObj["kms_driven"] = kms_driven;
     inspectionObj["ownership"] = ownership;
     inspectionObj["manufacturing_year"] = manufacturing_year;
@@ -270,6 +274,8 @@ const updateInspection = async (req, res) => {
       model_id,
       brand_id,
       varient_id,
+      current_location,
+      pincode,
       kms_driven,
       ownership,
       manufacturing_year,
@@ -294,6 +300,8 @@ const updateInspection = async (req, res) => {
     inspectionObj["model_id"] = model_id;
     inspectionObj["brand_id"] = brand_id;
     inspectionObj["varient_id"] = varient_id;
+    inspectionObj["current_location"] = current_location;
+    inspectionObj["pincode"] = pincode;
     inspectionObj["kms_driven"] = kms_driven;
     inspectionObj["ownership"] = ownership;
     inspectionObj["manufacturing_year"] = manufacturing_year;

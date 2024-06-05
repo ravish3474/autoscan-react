@@ -16,6 +16,14 @@ const Inspection = sequelize.define(
       type: DataTypes.INTEGER(10),
       allowNull: false,
     },
+    current_location: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    pincode: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
     car_description: {
       type: DataTypes.TEXT,
       allowNull: false,

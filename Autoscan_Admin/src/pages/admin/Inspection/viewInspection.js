@@ -84,6 +84,14 @@ export default function viewInspection() {
                     <td>{inspection?.varient?.varient_name}</td>
                   </tr>
                   <tr>
+                    <th>Current Location:</th>
+                    <td>{inspection?.current_location}</td>
+                  </tr>
+                  <tr>
+                    <th>Pincode:</th>
+                    <td>{inspection?.pincode}</td>
+                  </tr>
+                  <tr>
                     <th>Manufacturing Year:</th>
                     <td>{inspection?.manufacturing_year}</td>
                   </tr>

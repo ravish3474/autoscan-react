@@ -92,6 +92,8 @@ const inspectionManagement = () => {
     { dataField: "Brand.brand_name", text: "Brand Name" },
     { dataField: "model.model_name", text: "Model Name" },
     { dataField: "varient.varient_name", text: "Varient Name" },
+    { dataField: "current_location", text: "Current Location" },
+    { dataField: "pincode", text: "Pincode" },
     { dataField: "registration_state", text: "Registration State" },
     { dataField: "car_location", text: "Car location" },
     { dataField: "manufacturing_year", text: "Manufacturing Year" },

@@ -2,6 +2,7 @@ const { Car } = require("../models/Car");
 const { Brand } = require("../models/Brand");
 const { Model } = require("../models/Model");
 const { Varient } = require("../models/Varient");
+const { Cities } = require("../models/Cities");
 const { formatToJSON } = require("../helper/commonMethods");
 
 const getAllCars = async (req, res) => {
