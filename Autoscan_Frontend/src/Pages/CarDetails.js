@@ -191,9 +191,9 @@ function CarDetails() {
                     >
                       Make Offer
                     </button>
-                    <a href="" className="btn">
+                    {/* <a href="" className="btn">
                       Get Dealer Details
-                    </a>
+                    </a> */}
                   </div>
                   <div className="applyForLoanDiv">
                     <div>
