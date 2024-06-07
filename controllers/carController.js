@@ -35,7 +35,7 @@ const getAllCars = async (req, res) => {
         },
       ],
       where: {
-        is_deleted: 0,
+        status: 1,
       },
       order: [["id", "DESC"]],
     });

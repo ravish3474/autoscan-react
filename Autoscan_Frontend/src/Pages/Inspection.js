@@ -13,12 +13,11 @@ import location from "../images/vector/Location.png";
 import carDetails from "../images/vector/Car.png";
 
 import carImages from "../images/vector/Picture.png";
-import LoginModal from "../components/modals/LoginModal";
+
 function Inspection() {
   // MultiStep start here
 
   const [activeStep, setActiveStep] = useState(1);
-  const [showUserModal, setShowUserModal] = useState(false);
   const handleNext = () => {
     setActiveStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure activeStep does not exceed the total number of steps
   };
@@ -250,11 +249,8 @@ function Inspection() {
     payload.append("inspection_date", statePayload?.inspection_date);
     payload.append("inspection_time", statePayload?.inspection_time);
     payload.append("whatsapp_update", statePayload?.whatsapp_update);
-    if (localStorage.getItem("authUser")) {
-      createInspection(payload);
-    } else {
-      setShowUserModal(true);
-    }
+
+    createInspection(payload);
   };
   return (
     <div>
@@ -268,7 +264,7 @@ function Inspection() {
               <span>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
               </span>
-              <a href="inspection.php">Inspection</a>
+              <a href={"/inspection-car"}>Inspection</a>
             </div>
           </div>
         </div>
@@ -926,7 +922,7 @@ function Inspection() {
                               name="inspection_date"
                               id="inspection_date"
                               value={statePayload.inspection_date}
-                              onChange={handleInput}
+                              onChange={handleInputDate}
                             />
                           </div>
                           <div className="form__group field defaultradio grid grid4  relative">
@@ -1065,15 +1061,6 @@ function Inspection() {
                         </div>
                       </div>
                     </form>
-                  </div>
-                  <div>
-                    {" "}
-                    {showUserModal && (
-                      <LoginModal
-                        pathRoute={"/inspection-car"}
-                        onClose={() => setShowUserModal(false)}
-                      />
-                    )}
                   </div>
                 </div>
               </div>

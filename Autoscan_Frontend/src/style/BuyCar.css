@@ -33,6 +33,7 @@
 
 .usedCarMainContainer .RightSide .card-title {
     color: #000;
+    font-size: 16px;
 }
 
 .usedCarMainContainer .RightSide .sPara {
@@ -187,6 +188,8 @@ input[type="radio"]+span {
 
 .bodyType {
     position: relative;
+    height: 200px;
+    overflow-x: scroll;
 }
 
 .bodyType ul li {

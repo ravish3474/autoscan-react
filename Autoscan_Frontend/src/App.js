@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import DealerLoginModal from "./components/modals/DealerLoginModal"; // Import DealerLoginModal
-import ExploreCar from "./components/ExploreCar";
+import ExploreCar from "./Pages/ExploreCar";
 import SellCar from "./Pages/SellCar";
 import CarDetails from "./Pages/CarDetails";
 import CarValuation from "./Pages/CarValuation";
@@ -43,6 +43,7 @@ function App() {
       {showDealerModal && (
         <DealerLoginModal onClose={() => setShowDealerModal(false)} />
       )}
+     
     </Router>
   );
 }

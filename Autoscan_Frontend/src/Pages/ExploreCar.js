@@ -61,9 +61,15 @@ function ExploreCar() {
                   <div className=" bodyType">
                     <ul className="p-0 m-0">
                       {brands.map((brand) => (
-                        <li>
-                          <input type="checkbox" name="Hyundai" id="Hyundai" />
-                          <label for="Hyundai">{brand.brand_name}</label>
+                        <li key={brand.brand_id}>
+                          <input
+                            type="checkbox"
+                            name={brand.brand_name}
+                            id={brand.brand_name}
+                          />
+                          <label htmlFor={brand.brand_name}>
+                            {brand.brand_name}
+                          </label>
                         </li>
                       ))}
                     </ul>
@@ -152,12 +158,12 @@ function ExploreCar() {
                 <span>
                   <ion-icon name="chevron-forward-outline"></ion-icon>
                 </span>
-                <a href="buyCar.php">Used Car</a>
+                <a href={"/ExploreCar"}>Used Car</a>
               </div>
               <div className="EmptyBox ">
                 <div className="box"></div>
                 <div className="onclickFilterShow">
-                  <a href={""}>Search Manually</a>
+                  <span>Search Manually</span>
                 </div>
               </div>
             </div>
@@ -179,7 +185,8 @@ function ExploreCar() {
                         </figure>
                         <div className="card-content">
                           <h5 className="card-title">
-                            {car.Brand.brand_name} {car.model.model_name}
+                            {car.Brand ? car.Brand.brand_name : ""}{" "}
+                            {car.model ? car.model.model_name : ""}
                           </h5>
                           <p className="sPara">
                             <span className="carAverage">
@@ -187,7 +194,7 @@ function ExploreCar() {
                             </span>{" "}
                             |{" "}
                             <span className="carType">
-                              {car.varient.varient_name}
+                              {car.varient ? car.varient.varient_name : ""}
                             </span>
                             |<span className="carType2">Manual</span>
                           </p>

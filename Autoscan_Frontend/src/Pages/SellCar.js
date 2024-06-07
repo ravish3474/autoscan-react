@@ -14,6 +14,7 @@ import frontViewimg from "../images/cars/frontView.png";
 import FrontRightCorner from "../images/cars/FrontRightCorner.png";
 import LeftView from "../images/cars/LeftView.png";
 import Rearview from "../images/cars/Rearview.png";
+import LoginModal from "../components/modals/LoginModal";
 function SellCar() {
   // MultiStep start here
 
@@ -43,6 +44,7 @@ function SellCar() {
   const [rearView, setRearView] = useState([]);
   const [odometer, setOdometer] = useState([]);
   const [chessis, setChessis] = useState([]);
+  const [showUserModal, setShowUserModal] = useState(false);
   const [statePayload, setStatePayload] = useState({
     model_id: "",
     brand_id: "",
@@ -226,7 +228,11 @@ function SellCar() {
       payload.append("chessis", chessis);
     }
 
-    createNewCar(payload);
+    if (localStorage.getItem("authUser")) {
+      createNewCar(payload);
+    } else {
+      setShowUserModal(true);
+    }
   };
   const handleCitySelection = (current_location) => {
     setStatePayload((prevState) => ({
@@ -967,6 +973,15 @@ function SellCar() {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          {" "}
+          {showUserModal && (
+            <LoginModal
+              pathRoute={"/inspection-car"}
+              onClose={() => setShowUserModal(false)}
+            />
+          )}
         </div>
       </section>
     </div>

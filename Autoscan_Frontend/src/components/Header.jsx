@@ -25,6 +25,7 @@ function Header({ setShowUserModal, setShowDealerModal }) {
                                     <div className="dropdown">
                                         <button className='loginSubitems' onClick={() => setShowUserModal(true)}><ion-icon name="home-outline"></ion-icon> USER LOGIN</button>
                                         <button className='loginSubitems' onClick={() => setShowDealerModal(true)}><ion-icon name="person-add-outline"></ion-icon> Dealer LOGIN</button>
+        
                                     </div>
                                 </li>
                                 <Link to="/profile" target="_blank" class="btn"> TALK TO AN EXPERT  &nbsp; <ion-icon name="logo-whatsapp"></ion-icon></Link>

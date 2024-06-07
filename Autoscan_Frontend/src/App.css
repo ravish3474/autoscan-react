@@ -285,6 +285,12 @@
   border-radius: 2px;
 }
 
+#makeOfferModal .modal-header {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
 input#otpInput {
   padding: 10px;
 }
@@ -492,3 +498,4 @@ input#otpInput {
 .DropdownHeading {
   cursor: pointer;
 }
+

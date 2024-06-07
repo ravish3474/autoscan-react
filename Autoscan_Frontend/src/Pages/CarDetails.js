@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../style/ExploreCarDetails.css";
 import RecentSearch from "../components/RecentSearch";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SpecificationAccordion from "../components/SpecificationAccordian";
+import FaqAccordion from "../components/FaqAccordion.jsx";
+import MakeOffer from "../components/modals/MakeOffer";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -11,6 +14,11 @@ import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 function CarDetails() {
+  const [showMakeOffer, setShowOfferModal] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleText = () => {
+    setIsExpanded(!isExpanded);
+  };
   const [car, setCar] = useState({});
   let { carId } = useParams();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -41,14 +49,14 @@ function CarDetails() {
               <span>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
               </span>
-              <a href="buyCar.php" className="active">
+              <a href={"/ExploreCar"} className="active">
                 {" "}
                 Used Cars
               </a>
               <span>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
               </span>
-              <a href="sellCarDetails.php"> MG Aster Savvy</a>
+              <span>MG Aster Savvy</span>
             </div>
           </div>
         </div>
@@ -127,8 +135,10 @@ function CarDetails() {
                 <div>
                   {car && (
                     <h5 className="card-title">
-                      {car.manufacturing_year} {car.brand_id} {car.model_id}{" "}
-                      {car.varient_id}
+                      {car.manufacturing_year}{" "}
+                      {car.Brand ? car.Brand.brand_name : ""}{" "}
+                      {car.model ? car.model.model_name : ""}{" "}
+                      {car.varient ? car.varient.varient_name : ""}
                     </h5>
                   )}
                   <ul className="p-0">
@@ -148,15 +158,23 @@ function CarDetails() {
                   <div id="desc">
                     <div className="article">
                       <p className="s-para">{car.car_description}</p>
-                      <p className="moretext s-para">
+                      <p
+                        className="moretext s-para"
+                        style={{ display: isExpanded ? "block" : "none" }}
+                      >
                         Brisket ball tip cow sirloin. Chuck porchetta kielbasa
                         pork chop doner sirloin, bacon beef brisket ball tip
                         short ribs.
                       </p>
                     </div>
-                    <a className="moreless-button" href="#">
+                    <div>
+                      <span className="moreless-button" onClick={toggleText}>
+                        {isExpanded ? "Read less" : "Read more"}
+                      </span>
+                    </div>
+                    {/* <a className="moreless-button" href="#">
                       Read more
-                    </a>
+                    </a> */}
                   </div>
                   <p className="priceFrom">
                     <span>₹{car.ex_showroom}</span> - <span>₹{car.price}</span>
@@ -167,14 +185,12 @@ function CarDetails() {
                     Wohoo!! Congratulations <b>30%</b> OFF
                   </div>
                   <div className="grid">
-                    <a
-                      href=""
-                      data-bs-toggle="modal"
-                      data-bs-target="#makeOfferModal"
-                      class="MakeOfferModal"
+                    <button
+                      onClick={() => setShowOfferModal(true)}
+                      class="MakeOfferModal bg-none border-none"
                     >
                       Make Offer
-                    </a>
+                    </button>
                     <a href="" className="btn">
                       Get Dealer Details
                     </a>
@@ -208,6 +224,12 @@ function CarDetails() {
             </div>
           </div>
         </div>
+        {showMakeOffer && (
+          <MakeOffer
+            onClose={() => setShowOfferModal(false)}
+            price={car.price}
+          />
+        )}
       </section>
       <section className="DetailTable">
         <div className="container">
@@ -231,14 +253,14 @@ function CarDetails() {
                         <strong>Brand Name</strong>
                         <br />
                         <span style={{ fontSize: "smaller" }}>
-                          {car.brand_id}
+                          {car.Brand ? car.Brand.brand_name : ""}{" "}
                         </span>
                       </td>
                       <td>
                         <strong>Model</strong>
                         <br />
                         <span style={{ fontSize: "smaller" }}>
-                          {car.model_id}
+                          {car.model ? car.model.model_name : ""}{" "}
                         </span>
                       </td>
                     </tr>
@@ -270,7 +292,7 @@ function CarDetails() {
                         <strong>Varient</strong>
                         <br />
                         <span style={{ fontSize: "smaller" }}>
-                          {car.varient_id}
+                          {car.varient ? car.varient.varient_name : ""}
                         </span>
                       </td>
                       <td>
@@ -291,7 +313,7 @@ function CarDetails() {
           </div>
         </div>
       </section>
-      <section className="specificationDiv">
+      {/* <section className="specificationDiv">
         <div className="container">
           <div className="row">
             <div className="col-md-8">
@@ -299,62 +321,47 @@ function CarDetails() {
                 <h2 className="l-title">Specifications</h2>
                 <div className="accordion">
                   <div className="heading">Engine and Transmission</div>
-                  <div className="contents">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </div>
+                  <div className="contents">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
 
                   <div className="heading">Dimensions & Weight</div>
-                  <div className="contents">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </div>
+                  <div className="contents">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
 
                   <div className="heading">Capacity</div>
-                  <div className="contents">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </div>
-                  <div className="heading">
-                    Suspensions, Brakes, Steering & Tyres
-                  </div>
-                  <div className="contents">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </div>
+                  <div className="contents">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                  <div className="heading">Suspensions, Brakes, Steering & Tyres</div>
+                  <div className="contents">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                 </div>
               </div>
               <div className="CertificateReports">
                 <div className="card border-none bg-none">
-                  <h4 className="card-title">Certification Report</h4>
+                  <h4 className="card-title">
+                    Certification Report
+                  </h4>
                   <p>
-                    This car has been thoroughly inspected on 167 points and
-                    certified for quality. Just 5% of cars get Autoscan
-                    Certified.
+                    This car has been thoroughly inspected on 167 points and certified for quality. Just
+                    5%
+                    of cars get Autoscan Certified.
                   </p>
-                  <a
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#ReportDoneBYAutoScan"
-                  >
-                    VIEW REPORT &nbsp;
-                    <ion-icon name="arrow-forward-outline"></ion-icon>
-                  </a>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#ReportDoneBYAutoScan">VIEW REPORT
+                    &nbsp;
+                    <ion-icon name="arrow-forward-outline"></ion-icon></a>
                   <p className="card-text badge">
-                    <img src="images/vector/certificate-icon.png" alt="" />{" "}
-                    WARRENTY ELIGIBLE
+                    <img src="images/vector/certificate-icon.png" alt="" /> WARRENTY ELIGIBLE
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+
+      <SpecificationAccordion />
       <RecentSearch />
+      <FaqAccordion />
     </div>
   );
 }
