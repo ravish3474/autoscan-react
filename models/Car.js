@@ -94,6 +94,16 @@ const Car = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    car_addedby_user_id: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    car_addedby_dealer_id: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,

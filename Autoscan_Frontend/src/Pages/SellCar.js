@@ -19,6 +19,11 @@ function SellCar() {
   // MultiStep start here
 
   const [activeStep, setActiveStep] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const updateLoginState = (state) => {
+    setIsLoggedIn(state);
+  };
 
   const handleNext = () => {
     setActiveStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure activeStep does not exceed the total number of steps
@@ -169,8 +174,6 @@ function SellCar() {
   };
 
   const createNewCar = (payload) => {
-    console.log("payload");
-    console.log(payload);
     axios
       .post(`${process.env.REACT_APP_API_URL}/car/create-car`, payload, {
         headers: {
@@ -229,6 +232,8 @@ function SellCar() {
     }
 
     if (localStorage.getItem("authUser")) {
+      let user_id = localStorage.getItem("user_id");
+      payload.append("car_addedby_user_id", user_id);
       createNewCar(payload);
     } else {
       setShowUserModal(true);
@@ -980,6 +985,7 @@ function SellCar() {
             <LoginModal
               pathRoute={"/inspection-car"}
               onClose={() => setShowUserModal(false)}
+              onLogin={() => updateLoginState(true)}
             />
           )}
         </div>

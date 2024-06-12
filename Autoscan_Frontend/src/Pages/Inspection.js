@@ -249,6 +249,9 @@ function Inspection() {
     payload.append("inspection_date", statePayload?.inspection_date);
     payload.append("inspection_time", statePayload?.inspection_time);
     payload.append("whatsapp_update", statePayload?.whatsapp_update);
+    payload.append("user_fullname", statePayload?.user_fullname);
+    payload.append("email", statePayload?.email);
+    payload.append("phone", statePayload?.phone);
 
     createInspection(payload);
   };
@@ -841,6 +844,63 @@ function Inspection() {
                           </div>
                         </div>
                         <div className="relative">
+                          <div className="formHead">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <h6 className="formInputTitle">User Details</h6>
+                          </div>
+
+                          <div className="form__group field">
+                            <input
+                              type="input"
+                              className="form__field"
+                              placeholder="Name"
+                              name="user_fullname"
+                              id="user_fullname"
+                              value={statePayload.user_fullname}
+                              onChange={handleInput}
+                            />
+                            <label
+                              htmlFor="user_fullname"
+                              className="form__label"
+                            >
+                              User Name
+                            </label>
+                          </div>
+                          <div className="grid gridInner">
+                            <div className="form__group field ">
+                              <div>
+                                <input
+                                  type="input"
+                                  className="form__field"
+                                  placeholder="email"
+                                  name="email"
+                                  id="email"
+                                  value={statePayload.email}
+                                  onChange={handleInput}
+                                />
+                                <label htmlFor="email" className="form__label">
+                                  User Email
+                                </label>
+                              </div>
+                            </div>
+                            <div className="form__group field  ">
+                              <div>
+                                <input
+                                  type="input"
+                                  className="form__field"
+                                  placeholder="User Phone No"
+                                  name="phone"
+                                  id="phone"
+                                  value={statePayload.phone}
+                                  onChange={handleInput}
+                                />
+                                <label htmlFor="phone" className="form__label">
+                                  User Phone No
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <br />
                           <div className="formHead">
                             <ion-icon name="location-outline"></ion-icon>
                             <h6 className="formInputTitle">Select Address</h6>

@@ -48,7 +48,7 @@ const getAllInspections = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-const getAlInspectionPagination = async (req, res) => {
+const getAllInspectionPagination = async (req, res) => {
   Inspection.belongsTo(Brand, {
     foreignKey: "brand_id",
   });
@@ -223,6 +223,9 @@ const createInspection = async (req, res) => {
       inspection_date,
       inspection_time,
       whatsapp_update,
+      user_fullname,
+      email,
+      phone,
     } = req.body;
 
     let inspectionObj = {};
@@ -248,6 +251,9 @@ const createInspection = async (req, res) => {
     inspectionObj["inspection_date"] = inspection_date;
     inspectionObj["inspection_time"] = inspection_time;
     inspectionObj["whatsapp_update"] = whatsapp_update;
+    inspectionObj["user_fullname"] = user_fullname;
+    inspectionObj["email"] = email;
+    inspectionObj["phone"] = phone;
     inspectionObj["status"] = status;
     let newInspection = await Inspection.create({
       ...inspectionObj,
@@ -294,6 +300,9 @@ const updateInspection = async (req, res) => {
       inspection_date,
       inspection_time,
       whatsapp_update,
+      user_fullname,
+      email,
+      phone,
     } = req.body;
 
     let inspectionObj = {};
@@ -319,6 +328,9 @@ const updateInspection = async (req, res) => {
     inspectionObj["inspection_date"] = inspection_date;
     inspectionObj["inspection_time"] = inspection_time;
     inspectionObj["whatsapp_update"] = whatsapp_update;
+    inspectionObj["user_fullname"] = user_fullname;
+    inspectionObj["email"] = email;
+    inspectionObj["phone"] = phone;
     inspectionObj["status"] = status;
 
     let updatedInspection = await Inspection.update(
@@ -404,7 +416,7 @@ const deleteInspectionById = async (req, res) => {
 };
 
 module.exports = {
-  getAlInspectionPagination,
+  getAllInspectionPagination,
   getAllInspections,
   togglestatus,
   createInspection,

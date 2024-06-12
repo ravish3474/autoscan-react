@@ -100,7 +100,12 @@ class Sidebar extends Component {
                     <span>Car Management</span>
                   </Link>
                 </li>
-
+                <li className="mm-active">
+                  <Link to="/bidding-management">
+                    <img src={leadManagement} alt="" />
+                    <span>Bidding Management</span>
+                  </Link>
+                </li>
                 <li className="mm-active">
                   <Link to="/inspection-management">
                     <img src={leadManagement} alt="" />

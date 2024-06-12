@@ -11,7 +11,7 @@ if (process.env.MEDIA_LOCATION_S3 === "true") {
   fileUpload = require("../middlewares/fileUpload");
 }
 
-router.get("/list", inspectionController.getAlInspectionPagination);
+router.get("/list", inspectionController.getAllInspectionPagination);
 router.get("/Inspection-list", inspectionController.getAllInspections);
 router.get("/fetch-Inspection", inspectionController.fetchInspection);
 router.get(

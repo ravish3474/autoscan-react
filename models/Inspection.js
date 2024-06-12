@@ -94,6 +94,20 @@ const Inspection = sequelize.define(
       defaultValue: 0,
       comment: "0=No,1=Yes",
     },
+    user_fullname: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    phone: {
+      type: DataTypes.INTEGER(30),
+      allowNull: true,
+      defaultValue: null,
+    },
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,

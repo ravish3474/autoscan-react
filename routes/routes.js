@@ -11,6 +11,7 @@ const VarientRoutes = require("./varientRoutes.js");
 const CarRoutes = require("./carRoutes.js");
 const InspectionRoutes = require("./inspectionRoutes.js");
 const CityRoutes = require("./cityRoutes.js");
+const MakeOfferRoutes = require("./makeofferRoutes.js");
 // customer routes
 const AuthCustomerRoutes = require("./frontend/authRoutes.js");
 
@@ -24,7 +25,7 @@ router.use("/varient", VarientRoutes);
 router.use("/car", CarRoutes);
 router.use("/inspection", InspectionRoutes);
 router.use("/city", CityRoutes);
-
+router.use("/offer", MakeOfferRoutes);
 //customer routes
 router.use("/customer", AuthCustomerRoutes);
 

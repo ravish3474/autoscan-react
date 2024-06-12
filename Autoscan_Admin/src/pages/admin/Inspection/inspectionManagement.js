@@ -98,6 +98,9 @@ const inspectionManagement = () => {
     { dataField: "car_location", text: "Car location" },
     { dataField: "manufacturing_year", text: "Manufacturing Year" },
     { dataField: "ex_showroom", text: "Ex Showroom Price" },
+    { dataField: "user_fullname", text: "User Name" },
+    { dataField: "email", text: "User Email" },
+    { dataField: "phone", text: "User Phone No" },
     {
       dataField: "updatedAt",
       text: "Date",
@@ -305,6 +308,18 @@ const inspectionManagement = () => {
                           {
                             key: "ex_showroom",
                             label: "Ex Showroom Price",
+                          },
+                          {
+                            key: "user_fullname",
+                            label: "User Name",
+                          },
+                          {
+                            key: "email",
+                            label: "User Email",
+                          },
+                          {
+                            key: "phone",
+                            label: "User Phone No",
                           },
                         ]}
                         filename={`inspectionsList.csv`}

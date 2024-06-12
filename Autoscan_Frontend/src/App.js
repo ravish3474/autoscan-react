@@ -16,12 +16,18 @@ import LoginModal from "./components/modals/LoginModal";
 function App() {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showDealerModal, setShowDealerModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const updateLoginState = (state) => {
+    setIsLoggedIn(state);
+  };
 
   return (
     <Router>
       <Header
         setShowUserModal={setShowUserModal}
         setShowDealerModal={setShowDealerModal}
+        updateLoginState={updateLoginState}
       />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -38,12 +44,15 @@ function App() {
         <LoginModal
           pathRoute={"/profile"}
           onClose={() => setShowUserModal(false)}
+          onLogin={() => updateLoginState(true)}
         />
       )}
       {showDealerModal && (
-        <DealerLoginModal onClose={() => setShowDealerModal(false)} />
+        <DealerLoginModal
+          onClose={() => setShowDealerModal(false)}
+          onLogin={() => updateLoginState(true)}
+        />
       )}
-     
     </Router>
   );
 }

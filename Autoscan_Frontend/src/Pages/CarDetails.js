@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SpecificationAccordion from "../components/SpecificationAccordian";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import MakeOffer from "../components/modals/MakeOffer";
+import LoginModal from "../components/modals/LoginModal";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -15,7 +16,13 @@ import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 function CarDetails() {
   const [showMakeOffer, setShowOfferModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const updateLoginState = (state) => {
+    setIsLoggedIn(state);
+  };
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
@@ -185,15 +192,21 @@ function CarDetails() {
                     Wohoo!! Congratulations <b>30%</b> OFF
                   </div>
                   <div className="grid">
-                    <button
-                      onClick={() => setShowOfferModal(true)}
-                      class="MakeOfferModal bg-none border-none"
-                    >
-                      Make Offer
-                    </button>
-                    {/* <a href="" className="btn">
-                      Get Dealer Details
-                    </a> */}
+                    {localStorage.getItem("authUser") ? (
+                      <button
+                        onClick={() => setShowOfferModal(true)}
+                        class="MakeOfferModal bg-none border-none"
+                      >
+                        Make Offer
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setShowUserModal(true)}
+                        class="MakeOfferModal bg-none border-none"
+                      >
+                        Make Offer
+                      </button>
+                    )}
                   </div>
                   <div className="applyForLoanDiv">
                     <div>
@@ -224,12 +237,25 @@ function CarDetails() {
             </div>
           </div>
         </div>
+
         {showMakeOffer && (
           <MakeOffer
             onClose={() => setShowOfferModal(false)}
             price={car.price}
+            car_id={car.id}
+            car_addedby_user_id={car.car_addedby_user_id}
+            car_addedby_dealer_id={car.car_addedby_dealer_id}
           />
         )}
+        <div>
+          {showUserModal && (
+            <LoginModal
+              pathRoute={`/car-details/${carId}`}
+              onClose={() => setShowUserModal(false)}
+              onLogin={() => updateLoginState(true)}
+            />
+          )}
+        </div>
       </section>
       <section className="DetailTable">
         <div className="container">

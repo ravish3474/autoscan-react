@@ -45,6 +45,12 @@ import AddInspectionManagement from "../pages/admin/Inspection/createInspection"
 import EditInspectionManagement from "../pages/admin/Inspection/editInspection";
 import ViewInspectionManagement from "../pages/admin/Inspection/viewInspection";
 
+/**-ibidding-management */
+import BiddingManagement from "../pages/admin/Bidding/biddingManagement";
+import AddBiddingManagement from "../pages/admin/Bidding/createBidding";
+import EditBiddingManagement from "../pages/admin/Bidding/editBidding";
+import ViewBiddingManagement from "../pages/admin/Bidding/viewBidding";
+
 const authProtectedRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="dashboard" /> },
   { path: "/dashboard", component: RecruitmentDashboard },
@@ -91,6 +97,17 @@ const authProtectedRoutes = [
   {
     path: "/view-inspection/:inspectionId",
     component: ViewInspectionManagement,
+  },
+  /**-bidding-management**/
+  { path: "/bidding-management", component: BiddingManagement },
+  {
+    path: "/edit-bidding-management/:biddingId",
+    component: EditBiddingManagement,
+  },
+  { path: "/add-bidding-management", component: AddBiddingManagement },
+  {
+    path: "/view-bidding/:biddingId",
+    component: ViewBiddingManagement,
   },
 ];
 

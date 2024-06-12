@@ -219,6 +219,7 @@ const createCar = async (req, res) => {
       ex_showroom,
       price,
       car_description,
+      car_addedby_user_id,
       status,
     } = req.body;
 
@@ -238,6 +239,7 @@ const createCar = async (req, res) => {
     carObj["ex_showroom"] = ex_showroom;
     carObj["price"] = price;
     carObj["car_description"] = car_description;
+    carObj["car_addedby_user_id"] = car_addedby_user_id;
     carObj["status"] = status;
     if (req.files && req.files?.length > 0) {
       req.files?.forEach((item) => {
