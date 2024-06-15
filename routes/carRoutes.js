@@ -12,7 +12,7 @@ if (process.env.MEDIA_LOCATION_S3 === "true") {
 }
 
 router.get("/list", carController.getAllCarPagination);
-router.get("/Car-list", carController.getAllCars);
+router.get("/car-list", carController.getAllCars);
 router.get("/fetch-Car", carController.fetchCar);
 router.get("/fetch-activeCar", carController.fetchactiveCar);
 router.get("/fetch-Car/:id", carController.getCarById);

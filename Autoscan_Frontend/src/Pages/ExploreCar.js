@@ -2,22 +2,43 @@ import React, { useEffect, useState } from "react";
 import "../style/BuyCar.css";
 import { Link } from "react-router-dom";
 import "../js/main.js";
-
+import axios from "axios";
 function ExploreCar() {
   const [cars, setCars] = useState([]);
   const [brands, setBrands] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/car/car-list`
-        );
-        const data = await response.json();
-        setCars(data.car);
-      } catch (error) {
-        console.error("Error fetching cars:", error);
+  const [filterData, setFilterData] = useState({});
+  const handleSelect = (e, name) => {
+    if (e.target.checked) {
+      setFilterData({
+        ...filterData,
+        [name]: [...(filterData[name] || []), e.target.value],
+      });
+    } else {
+      setFilterData({
+        ...filterData,
+        [name]: (filterData[name] || []).filter(
+          (value) => value !== e.target.value
+        ),
+      });
+    }
+  };
+  const handleFilterSubmit = async () => {
+    fetchData(filterData);
+    window.scrollTo({ top: 550, behavior: "smooth" });
+  };
+
+  const resetFilters = () => {
+    const emptyFilterData = {};
+    setFilterData(emptyFilterData);
+    fetchData(emptyFilterData);
+    Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach(
+      (checkbox) => {
+        checkbox.checked = false;
       }
-    };
+    );
+  };
+
+  useEffect(() => {
     const fetchBrandData = async () => {
       try {
         const response = await fetch(
@@ -31,9 +52,33 @@ function ExploreCar() {
     };
 
     fetchBrandData();
-    fetchData();
+    fetchData(filterData);
   }, []);
+  const fetchData = async (filterDataObj) => {
+    // let queryParams = new URLSearchParams(filterDataObj).toString();
+    // if (queryParams) {
+    //   queryParams = `&${queryParams.toString()}`;
+    // }
 
+    let queryParams = new URLSearchParams();
+    Object.keys(filterDataObj).forEach((key) => {
+      queryParams.append(key, filterDataObj[key].join(","));
+    });
+
+    if (queryParams) {
+      queryParams = `&${queryParams.toString()}`;
+    }
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/car/car-list?${queryParams}`
+      );
+      const { car } = response?.data;
+      // console.log(data.car);
+      setCars(car);
+    } catch (error) {
+      console.error("Error fetching cars:", error);
+    }
+  };
   return (
     <section className="usedCarMainContainer">
       <div className="container">
@@ -45,18 +90,23 @@ function ExploreCar() {
                   <h5 className="card-title">Price Range</h5>
                   <div className="price-range-slider">
                     <p className="range-value">
-                      <input type="text" id="amount" readOnly />
+                      <input
+                        type="text"
+                        name="price_range"
+                        id="amount"
+                        value=""
+                      />
                     </p>
                     <div id="slider-range" className="range-bar"></div>
                   </div>
                 </div>
                 <div className="filterSubCategory search-box d-paddinng">
                   <h5 className="card-title">Brand and Models</h5>
-                  <input
+                  {/* <input
                     className="search"
                     type="search"
                     placeholder="Search..."
-                  />
+                  /> */}
 
                   <div className=" bodyType">
                     <ul className="p-0 m-0">
@@ -66,6 +116,8 @@ function ExploreCar() {
                             type="checkbox"
                             name={brand.brand_name}
                             id={brand.brand_name}
+                            value={brand.id}
+                            onChange={(e) => handleSelect(e, "brand")}
                           />
                           <label htmlFor={brand.brand_name}>
                             {brand.brand_name}
@@ -144,6 +196,22 @@ function ExploreCar() {
                       <label for="MUV">MUV</label>
                     </li>
                   </ul>
+                </div>
+                <div className="d-flex justify-content-center gap-2 mt-3">
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={handleFilterSubmit}
+                  >
+                    Search
+                  </button>
+                  <button
+                    className="btn btn-secondary"
+                    type="button"
+                    onClick={resetFilters}
+                  >
+                    Reset
+                  </button>
                 </div>
               </form>
             </div>

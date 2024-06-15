@@ -4,8 +4,20 @@ const { Model } = require("../models/Model");
 const { Varient } = require("../models/Varient");
 const { Cities } = require("../models/Cities");
 const { formatToJSON } = require("../helper/commonMethods");
-
+const { Sequelize } = require("sequelize");
+const Op = Sequelize.Op;
 const getAllCars = async (req, res) => {
+  let { brand = "" } = req.query;
+  let where_query = {
+    status: 1,
+  };
+
+  if (brand) {
+    where_query.brand_id = {
+      [Op.in]: brand.split(","),
+    };
+  }
+
   Car.belongsTo(Brand, {
     foreignKey: "brand_id",
   });
@@ -15,6 +27,7 @@ const getAllCars = async (req, res) => {
   Car.belongsTo(Varient, {
     foreignKey: "varient_id",
   });
+
   try {
     let car = await Car.findAll({
       include: [
@@ -34,9 +47,7 @@ const getAllCars = async (req, res) => {
           attributes: ["varient_name"],
         },
       ],
-      where: {
-        status: 1,
-      },
+      where: where_query,
       order: [["id", "DESC"]],
     });
     return res.status(200).json({
