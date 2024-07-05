@@ -208,20 +208,14 @@ const createInspection = async (req, res) => {
       kms_driven,
       ownership,
       manufacturing_year,
-      registration_year,
-      registration_state,
       car_location,
       registration_number,
-      insurance_validity,
-      ex_showroom,
-      price,
       car_description,
       status,
       inspection_address,
       inspection_area,
       inspection_landmark,
       inspection_date,
-      inspection_time,
       whatsapp_update,
       user_fullname,
       email,
@@ -237,19 +231,13 @@ const createInspection = async (req, res) => {
     inspectionObj["kms_driven"] = kms_driven;
     inspectionObj["ownership"] = ownership;
     inspectionObj["manufacturing_year"] = manufacturing_year;
-    inspectionObj["registration_year"] = registration_year;
-    inspectionObj["registration_state"] = registration_state;
     inspectionObj["car_location"] = car_location;
     inspectionObj["registration_number"] = registration_number;
-    inspectionObj["insurance_validity"] = insurance_validity;
-    inspectionObj["ex_showroom"] = ex_showroom;
-    inspectionObj["price"] = price;
     inspectionObj["car_description"] = car_description;
     inspectionObj["inspection_address"] = inspection_address;
     inspectionObj["inspection_area"] = inspection_area;
     inspectionObj["inspection_landmark"] = inspection_landmark;
     inspectionObj["inspection_date"] = inspection_date;
-    inspectionObj["inspection_time"] = inspection_time;
     inspectionObj["whatsapp_update"] = whatsapp_update;
     inspectionObj["user_fullname"] = user_fullname;
     inspectionObj["email"] = email;
@@ -285,20 +273,15 @@ const updateInspection = async (req, res) => {
       kms_driven,
       ownership,
       manufacturing_year,
-      registration_year,
-      registration_state,
       car_location,
       registration_number,
       insurance_validity,
-      ex_showroom,
-      price,
       car_description,
       status,
       inspection_address,
       inspection_area,
       inspection_landmark,
       inspection_date,
-      inspection_time,
       whatsapp_update,
       user_fullname,
       email,
@@ -314,19 +297,13 @@ const updateInspection = async (req, res) => {
     inspectionObj["kms_driven"] = kms_driven;
     inspectionObj["ownership"] = ownership;
     inspectionObj["manufacturing_year"] = manufacturing_year;
-    inspectionObj["registration_year"] = registration_year;
-    inspectionObj["registration_state"] = registration_state;
     inspectionObj["car_location"] = car_location;
     inspectionObj["registration_number"] = registration_number;
-    inspectionObj["insurance_validity"] = insurance_validity;
-    inspectionObj["ex_showroom"] = ex_showroom;
-    inspectionObj["price"] = price;
     inspectionObj["car_description"] = car_description;
     inspectionObj["inspection_address"] = inspection_address;
     inspectionObj["inspection_area"] = inspection_area;
     inspectionObj["inspection_landmark"] = inspection_landmark;
     inspectionObj["inspection_date"] = inspection_date;
-    inspectionObj["inspection_time"] = inspection_time;
     inspectionObj["whatsapp_update"] = whatsapp_update;
     inspectionObj["user_fullname"] = user_fullname;
     inspectionObj["email"] = email;

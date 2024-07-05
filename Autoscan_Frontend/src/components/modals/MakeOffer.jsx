@@ -33,12 +33,11 @@ function MakeOffer({
       .then((res) => {
         console.log(res);
         toast.success("Bidding done successfully");
-        
       })
       .catch(function (error) {
         toast.error("Bidding failed");
       });
-      onClose();
+    onClose();
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -104,7 +103,7 @@ function MakeOffer({
                       value={price + increment}
                     />
                     <label class="btn btn-default" for="bid_price">
-                      {((price + increment) / 100000).toFixed(2)} lakhs
+                      {((price - increment) / 100000).toFixed(2)} lakhs
                     </label>
                   </div>
                 ))}

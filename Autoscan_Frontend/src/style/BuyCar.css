@@ -186,10 +186,27 @@ input[type="radio"]+span {
     padding-left: 7px;
 }
 
-.bodyType {
+.filterSubCategory .bodyType {
     position: relative;
     height: 200px;
-    overflow-x: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+}
+
+.bodyType::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+.bodyType::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+.bodyType::-webkit-scrollbar-thumb {
+    background-color: #F96402;
+    border: 2px solid #F96402;
 }
 
 .bodyType ul li {
@@ -296,8 +313,22 @@ input[type="radio"]+span {
     position: relative;
 }
 
+.usedCarMainContainer .btn {
+    border: none;
+    border-radius: 0;
+    padding: 5px 20px;
+}
 
+.usedCarMainContainer .btn-primary {
+    background: #FB6A0A;
+}
 
+.usedCarMainContainer .btn-secondary {
+    border: 2px solid #FB6A0A;
+    background: #eee;
+    color: #FB6A0A;
+    font-weight: 600;
+}
 
 .card-content {
     position: relative;

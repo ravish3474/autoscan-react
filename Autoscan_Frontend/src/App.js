@@ -12,6 +12,9 @@ import Inspection from "./Pages/Inspection";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import LoginModal from "./components/modals/LoginModal";
+import CalculateFinalValue from "./Pages/CalculateFinalValue";
+import RequestCallBack from "./components/RequestCallBack";
+import ThankYou from "./components/ThankYou";
 
 function App() {
   const [showUserModal, setShowUserModal] = useState(false);
@@ -38,6 +41,9 @@ function App() {
         <Route path="/car-valuation" component={CarValuation} />
         <Route path="/listedCardDetails" component={ListedCarsDetails} />
         <Route path="/profile" component={Profile} />
+        <Route path="/finalValue" component={CalculateFinalValue} />
+        <Route path="/RequestCallBack" component={RequestCallBack} />
+        <Route path="/ThankYou" component={ThankYou} />
       </Switch>
       <Footer />
       {showUserModal && (

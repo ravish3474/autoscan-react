@@ -94,10 +94,8 @@ const inspectionManagement = () => {
     { dataField: "varient.varient_name", text: "Varient Name" },
     { dataField: "current_location", text: "Current Location" },
     { dataField: "pincode", text: "Pincode" },
-    { dataField: "registration_state", text: "Registration State" },
     { dataField: "car_location", text: "Car location" },
     { dataField: "manufacturing_year", text: "Manufacturing Year" },
-    { dataField: "ex_showroom", text: "Ex Showroom Price" },
     { dataField: "user_fullname", text: "User Name" },
     { dataField: "email", text: "User Email" },
     { dataField: "phone", text: "User Phone No" },
@@ -294,20 +292,12 @@ const inspectionManagement = () => {
                             label: "Varient Name",
                           },
                           {
-                            key: "registration_state",
-                            label: "Registration State",
-                          },
-                          {
                             key: "car_location",
                             label: "Car location",
                           },
                           {
                             key: "manufacturing_year",
                             label: "Manufacturing Year",
-                          },
-                          {
-                            key: "ex_showroom",
-                            label: "Ex Showroom Price",
                           },
                           {
                             key: "user_fullname",

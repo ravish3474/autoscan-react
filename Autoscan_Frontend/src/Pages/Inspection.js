@@ -35,6 +35,7 @@ function Inspection() {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
+  const [pincodes, setPincodes] = useState([]);
   const [city, setCity] = useState([]);
   const [inspectionDates, setInspectionDates] = useState([]);
   const [statePayload, setStatePayload] = useState({
@@ -46,13 +47,8 @@ function Inspection() {
     pincode: "",
     ownership: "",
     manufacturing_year: "",
-    registration_year: "",
-    registration_state: "",
     car_location: "",
     registration_number: "",
-    insurance_validity: "",
-    ex_showroom: "",
-    price: "",
     car_description: "",
     inspection_address: "",
     inspection_area: "",
@@ -156,10 +152,83 @@ function Inspection() {
     }));
   };
 
-  const handleCitySelection = (current_location) => {
+  const createInspection = (payload) => {
+    console.log("payload");
+    console.log(payload);
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/inspection/create-Inspection`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Inspection Created successfully");
+      })
+      .catch(function (error) {
+        toast.error(
+          "Inspection already exists. Unable to create a new Inspection"
+        );
+      });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setErrors({});
+    let payload = new FormData();
+    payload.append("model_id", statePayload?.model_id);
+    payload.append("brand_id", statePayload?.brand_id);
+    payload.append("varient_id", statePayload?.varient_id);
+    payload.append("current_location", statePayload?.current_location);
+    payload.append("pincode", statePayload?.pincode);
+    payload.append("kms_driven", statePayload?.kms_driven);
+    payload.append("ownership", statePayload?.ownership);
+    payload.append("manufacturing_year", statePayload?.manufacturing_year);
+    payload.append("car_location", statePayload?.car_location);
+    payload.append("registration_number", statePayload?.registration_number);
+    payload.append("car_description", statePayload?.car_description);
+    payload.append("inspection_address", statePayload?.inspection_address);
+    payload.append("inspection_area", statePayload?.inspection_area);
+    payload.append("inspection_landmark", statePayload?.inspection_landmark);
+    payload.append("inspection_date", statePayload?.inspection_date);
+    payload.append("inspection_time", statePayload?.inspection_time);
+    payload.append("whatsapp_update", statePayload?.whatsapp_update);
+    payload.append("user_fullname", statePayload?.user_fullname);
+    payload.append("email", statePayload?.email);
+    payload.append("phone", statePayload?.phone);
+
+    createInspection(payload);
+  };
+
+  const handleCitySelection = async (current_location) => {
+    setPincodes();
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/city/fetch-pincode-by-city/${current_location}`
+      );
+      const { success, allpincodes } = response.data;
+      if (success) {
+        const pincodeOptions = allpincodes.map((item) => ({
+          id: item.pincode,
+          label: item.pincode,
+          value: item.pincode,
+        }));
+        setPincodes(pincodeOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setStatePayload((prevState) => ({
       ...prevState,
       current_location: current_location,
+    }));
+  };
+  const handlePincodeSelection = (pincode) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      pincode: pincode,
     }));
   };
   const fetchCityData = () => {
@@ -201,60 +270,6 @@ function Inspection() {
     setInspectionDates(formattedDates);
   }, []);
 
-  const createInspection = (payload) => {
-    console.log("payload");
-    console.log(payload);
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/inspection/create-Inspection`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Inspection Created successfully");
-      })
-      .catch(function (error) {
-        toast.error(
-          "Inspection already exists. Unable to create a new Inspection"
-        );
-      });
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setErrors({});
-    let payload = new FormData();
-    payload.append("model_id", statePayload?.model_id);
-    payload.append("brand_id", statePayload?.brand_id);
-    payload.append("varient_id", statePayload?.varient_id);
-    payload.append("current_location", statePayload?.current_location);
-    payload.append("pincode", statePayload?.pincode);
-    payload.append("kms_driven", statePayload?.kms_driven);
-    payload.append("ownership", statePayload?.ownership);
-    payload.append("manufacturing_year", statePayload?.manufacturing_year);
-    payload.append("registration_year", statePayload?.registration_year);
-    payload.append("registration_state", statePayload?.registration_state);
-    payload.append("car_location", statePayload?.car_location);
-    payload.append("registration_number", statePayload?.registration_number);
-    payload.append("insurance_validity", statePayload?.insurance_validity);
-    payload.append("ex_showroom", statePayload?.ex_showroom);
-    payload.append("price", statePayload?.price);
-    payload.append("car_description", statePayload?.car_description);
-    payload.append("inspection_address", statePayload?.inspection_address);
-    payload.append("inspection_area", statePayload?.inspection_area);
-    payload.append("inspection_landmark", statePayload?.inspection_landmark);
-    payload.append("inspection_date", statePayload?.inspection_date);
-    payload.append("inspection_time", statePayload?.inspection_time);
-    payload.append("whatsapp_update", statePayload?.whatsapp_update);
-    payload.append("user_fullname", statePayload?.user_fullname);
-    payload.append("email", statePayload?.email);
-    payload.append("phone", statePayload?.phone);
-
-    createInspection(payload);
-  };
   return (
     <div>
       <section className="ActivePageHeader">
@@ -344,23 +359,36 @@ function Inspection() {
                           </label>
                         </div>
                         <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Pincode"
+                          <select
+                            type="select"
                             name="pincode"
-                            id="pincode"
-                            value={statePayload.pincode}
-                            onChange={handleInput}
-                          />
-                          {errors.pincode && (
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
+                            onChange={(e) =>
+                              handlePincodeSelection(e.target?.value)
+                            }
+                            required
+                          >
+                            <option selected disabled>
+                              Select Pincode
+                            </option>
+                            {pincodes &&
+                              pincodes.map((el) => {
+                                return (
+                                  <option key={el?.value} value={el?.id}>
+                                    {el?.label}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                          {errors?.pincode && (
                             <small className="text-danger">
                               {" "}
-                              {errors.pincode}{" "}
+                              {errors?.pincode}{" "}
                             </small>
                           )}
                           <label for="pincode" className="form__label">
-                            Pincode
+                            Select Pincode
                           </label>
                         </div>
                       </div>
@@ -579,52 +607,6 @@ function Inspection() {
                           <input
                             className="form__field"
                             type="text"
-                            placeholder="Registration Year"
-                            name="registration_year"
-                            id="registration_year"
-                            value={statePayload.registration_year}
-                            onChange={handleInput}
-                          />
-                          {errors.registration_year && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.registration_year}{" "}
-                            </small>
-                          )}
-                          <label
-                            for="registration_year"
-                            className="form__label"
-                          >
-                            Registration Year
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Registration State"
-                            name="registration_state"
-                            id="registration_state"
-                            value={statePayload.registration_state}
-                            onChange={handleInput}
-                          />
-                          {errors.registration_state && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.registration_state}{" "}
-                            </small>
-                          )}
-                          <label
-                            for="registration_state"
-                            className="form__label"
-                          >
-                            Registration State
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
                             placeholder="Car Location"
                             name="car_location"
                             id="car_location"
@@ -662,69 +644,6 @@ function Inspection() {
                             className="form__label"
                           >
                             Registration Number
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Insurance Validity"
-                            name="insurance_validity"
-                            id="insurance_validity"
-                            value={statePayload.insurance_validity}
-                            onChange={handleInput}
-                          />
-                          {errors.insurance_validity && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.insurance_validity}{" "}
-                            </small>
-                          )}
-                          <label
-                            for="insurance_validity"
-                            className="form__label"
-                          >
-                            Insurance Validity
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder=" Ex Showroom Price"
-                            name="ex_showroom"
-                            id="ex_showroom"
-                            value={statePayload.ex_showroom}
-                            onChange={handleInput}
-                          />
-                          {errors.ex_showroom && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.ex_showroom}{" "}
-                            </small>
-                          )}
-                          <label for="ex_showroom" className="form__label">
-                            Ex Showroom Price
-                          </label>
-                        </div>
-                        <div className="form__group field ">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Selling Price"
-                            name="price"
-                            id="price"
-                            value={statePayload.price}
-                            onChange={handleInput}
-                          />
-                          {errors.price && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.price}{" "}
-                            </small>
-                          )}
-                          <label for="price" className="form__label">
-                            Selling Price
                           </label>
                         </div>
                         <div className="form__group field fullWidth">
@@ -888,7 +807,7 @@ function Inspection() {
                                 <input
                                   type="input"
                                   className="form__field"
-                                  placeholder="User Phone No"
+                                  placeholder="User Phone No*"
                                   name="phone"
                                   id="phone"
                                   value={statePayload.phone}
@@ -1010,90 +929,7 @@ function Inspection() {
                             ))}
                           </div>
                           <br />
-                          <div className="formHead">
-                            <ion-icon
-                              name="alarm-outline"
-                              className="TimeIcon"
-                            ></ion-icon>
-                            <h6 className="formInputTitle">Select Time</h6>
-                          </div>
-                          <div className="form__group field defaultradio grid grid4">
-                            <div className="checkboxbutton">
-                              <input
-                                type="radio"
-                                id="inspection_time1"
-                                name="inspection_time"
-                                value="8:00-10:00 AM"
-                                onChange={handleInput}
-                              />
-                              <label
-                                className="btn btn-default"
-                                htmlFor="inspection_time1"
-                              >
-                                8:00 - <br /> 10:00 AM
-                              </label>
-                            </div>
-                            <div className="checkboxbutton">
-                              <input
-                                type="radio"
-                                id="inspection_time2"
-                                name="inspection_time"
-                                value="10:00-12:00 PM"
-                                onChange={handleInput}
-                              />
-                              <label
-                                className="btn btn-default"
-                                htmlFor="inspection_time2"
-                              >
-                                10:00 - <br /> 12:00 PM
-                              </label>
-                            </div>
-                            <div className="checkboxbutton">
-                              <input
-                                type="radio"
-                                id="inspection_time3"
-                                name="inspection_time"
-                                value="12:00-02:00 PM"
-                                onChange={handleInput}
-                              />
-                              <label
-                                className="btn btn-default"
-                                for="inspection_time3"
-                              >
-                                12:00 - <br /> 02:00 PM
-                              </label>
-                            </div>
-                            <div className="checkboxbutton">
-                              <input
-                                type="radio"
-                                id="inspection_time4"
-                                name="inspection_time"
-                                value="02:00-04:00 PM"
-                                onChange={handleInput}
-                              />
-                              <label
-                                className="btn btn-default"
-                                htmlFor="inspection_time4"
-                              >
-                                2:00 - <br /> 04:00 PM
-                              </label>
-                            </div>
-                            <div className="checkboxbutton">
-                              <input
-                                type="radio"
-                                id="inspection_time5"
-                                name="inspection_time"
-                                value="04:00-06:00 PM"
-                                onChange={handleInput}
-                              />
-                              <label
-                                className="btn btn-default"
-                                htmlFor="inspection_time5"
-                              >
-                                4:00 - <br /> 06:00 PM
-                              </label>
-                            </div>
-                          </div>
+
                           <div className="formFooter">
                             <ul className="p-0 m-0">
                               <li>

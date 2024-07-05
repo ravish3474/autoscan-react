@@ -1,0 +1,34 @@
+.thank-you-page {
+  background-color: #f7f7f7;
+  padding: 40px 0;
+}
+
+.thank-you-content {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.thank-you-content .car-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.thank-you-content h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.thank-you-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.thank-you-content button {
+  margin-top: 20px;
+}

@@ -1,0 +1,72 @@
+.upperBanner {
+    background: url(../images/main/requestedCallBanner.png) !important;
+    background-size: cover !important;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+}
+
+.upperBanner::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: url('../images/main/inspectionbannerOverlay.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.DefaultTopBanner .card {
+    position: relative;
+    z-index: 1;
+    color: #FFF;
+    text-align: left;
+}
+
+.DefaultTopBanner .card-title {
+    line-height: 30px;
+    text-shadow: 0 0 2px #fff7f7;
+}
+
+.whyChooseUS .RequestCallDiv .card {
+    background: url(../images/main/Request_Call_bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.theme-btn {
+    background: #FF802B;
+    padding: 10px;
+    border-radius: 6px;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+    width: 50%;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+
+
+@media screen and (max-width:1200px) {
+    .DefaultTopBanner .card-title {
+        font-size: 20px;
+    }
+
+    .DefaultTopBanner::after {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .DefaultTopBanner {
+        padding: 20px;
+        height: 30vh;
+    }
+}

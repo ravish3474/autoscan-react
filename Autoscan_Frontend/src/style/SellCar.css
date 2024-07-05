@@ -24,11 +24,12 @@ button.btn:active {
     border: none;
 }
 
-button.btn.next-step {
+.btn.next-step {
     color: #FFF;
     display: block;
     background: #FF802B;
     border-radius: 0;
+    width: 100%;
 }
 
 .btn.prev-step.me-2 {

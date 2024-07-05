@@ -1,7 +1,7 @@
 // SellCar.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles
@@ -18,6 +18,7 @@ import LoginModal from "../components/modals/LoginModal";
 function SellCar() {
   // MultiStep start here
 
+  const history = useHistory();
   const [activeStep, setActiveStep] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -42,6 +43,7 @@ function SellCar() {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
+  const [pincodes, setPincodes] = useState([]);
   const [city, setCity] = useState([]);
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
@@ -150,6 +152,7 @@ function SellCar() {
       varient_id: varientId,
     }));
   };
+
   const handleImageFileChange = (e, fieldName) => {
     const files = e.target.files[0];
 
@@ -184,6 +187,7 @@ function SellCar() {
         console.log(res);
 
         toast.success("Car Created successfully");
+        history.push("/Thankyou");
       })
       .catch(function (error) {
         toast.error("Car already exists. Unable to create a new Car");
@@ -239,10 +243,34 @@ function SellCar() {
       setShowUserModal(true);
     }
   };
-  const handleCitySelection = (current_location) => {
+
+  const handleCitySelection = async (current_location) => {
+    setPincodes();
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/city/fetch-pincode-by-city/${current_location}`
+      );
+      const { success, allpincodes } = response.data;
+      if (success) {
+        const pincodeOptions = allpincodes.map((item) => ({
+          id: item.pincode,
+          label: item.pincode,
+          value: item.pincode,
+        }));
+        setPincodes(pincodeOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     setStatePayload((prevState) => ({
       ...prevState,
       current_location: current_location,
+    }));
+  };
+  const handlePincodeSelection = (pincode) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      pincode: pincode,
     }));
   };
   const fetchCityData = () => {
@@ -359,34 +387,47 @@ function SellCar() {
                           </label>
                         </div>
                         <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Pincode"
+                          <select
+                            type="select"
                             name="pincode"
-                            id="pincode"
-                            value={statePayload.pincode}
-                            onChange={handleInput}
-                          />
-                          {errors.pincode && (
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
+                            onChange={(e) =>
+                              handlePincodeSelection(e.target?.value)
+                            }
+                            required
+                          >
+                            <option selected disabled>
+                              Select Pincode
+                            </option>
+                            {pincodes &&
+                              pincodes.map((el) => {
+                                return (
+                                  <option key={el?.value} value={el?.id}>
+                                    {el?.label}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                          {errors?.pincode && (
                             <small className="text-danger">
                               {" "}
-                              {errors.pincode}{" "}
+                              {errors?.pincode}{" "}
                             </small>
                           )}
                           <label for="pincode" className="form__label">
-                            Pincode
+                            Select Pincode
                           </label>
                         </div>
-                      </div>
-                      <div className="formFooter">
-                        <button
-                          type="button"
-                          className="btn next-step"
-                          onClick={handleNext}
-                        >
-                          Next
-                        </button>
+                        <div className="formFooter">
+                          <button
+                            type="button"
+                            className="btn next-step"
+                            onClick={handleNext}
+                          >
+                            Next
+                          </button>
+                        </div>
                       </div>
                     </form>
                   </div>
@@ -454,7 +495,7 @@ function SellCar() {
                               })}
                           </select>
                           <label for="BrandName" className="form__label">
-                            Select Model
+                            Select Brand
                           </label>
                         </div>
                         <div className="form__group field">
@@ -638,26 +679,6 @@ function SellCar() {
                           <input
                             className="form__field"
                             type="text"
-                            placeholder="Car Location"
-                            name="car_location"
-                            id="car_location"
-                            value={statePayload.car_location}
-                            onChange={handleInput}
-                          />
-                          {errors.car_location && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.car_location}{" "}
-                            </small>
-                          )}
-                          <label for="car_location" className="form__label">
-                            Car Location
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
                             placeholder="Registration Number"
                             name="registration_number"
                             id="registration_number"
@@ -700,26 +721,6 @@ function SellCar() {
                             Insurance Validity
                           </label>
                         </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder=" Ex Showroom Price"
-                            name="ex_showroom"
-                            id="ex_showroom"
-                            value={statePayload.ex_showroom}
-                            onChange={handleInput}
-                          />
-                          {errors.ex_showroom && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.ex_showroom}{" "}
-                            </small>
-                          )}
-                          <label for="ex_showroom" className="form__label">
-                            Ex Showroom Price
-                          </label>
-                        </div>
                         <div className="form__group field ">
                           <input
                             className="form__field"
@@ -737,7 +738,7 @@ function SellCar() {
                             </small>
                           )}
                           <label for="price" className="form__label">
-                            Selling Price
+                            Expected Selling Price
                           </label>
                         </div>
                         <div className="form__group field fullWidth">

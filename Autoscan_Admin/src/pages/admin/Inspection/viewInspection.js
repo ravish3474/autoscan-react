@@ -104,32 +104,12 @@ export default function viewInspection() {
                     <td>{inspection?.ownership}</td>
                   </tr>
                   <tr>
-                    <th>Registration State:</th>
-                    <td>{inspection?.registration_state}</td>
-                  </tr>
-                  <tr>
-                    <th>Registration Year</th>
-                    <td>{inspection?.registration_year}</td>
-                  </tr>
-                  <tr>
                     <th>Registration Number</th>
                     <td>{inspection?.registration_number}</td>
                   </tr>
                   <tr>
                     <th>Car Location</th>
                     <td>{inspection?.car_location}</td>
-                  </tr>
-                  <tr>
-                    <th>EX Showroom Price:</th>
-                    <td>{inspection?.ex_showroom}</td>
-                  </tr>
-                  <tr>
-                    <th>Asking Price:</th>
-                    <td>{inspection?.price}</td>
-                  </tr>
-                  <tr>
-                    <th>Insurance Validity:</th>
-                    <td>{inspection?.insurance_validity}</td>
                   </tr>
                   <tr>
                     <th>Car Description:</th>
@@ -150,10 +130,6 @@ export default function viewInspection() {
                   <tr>
                     <th>Inspection Date:</th>
                     <td>{inspection?.inspection_date}</td>
-                  </tr>
-                  <tr>
-                    <th>Inspection Time:</th>
-                    <td>{inspection?.inspection_time}</td>
                   </tr>
                   <tr>
                     <th>Whatsapp Update:</th>

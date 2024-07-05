@@ -40,31 +40,11 @@ const Inspection = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    registration_state: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    registration_year: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
     registration_number: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
     car_location: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    ex_showroom: {
-      type: DataTypes.INTEGER(10),
-      allowNull: false,
-    },
-    price: {
-      type: DataTypes.INTEGER(10),
-      allowNull: false,
-    },
-    insurance_validity: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -81,10 +61,6 @@ const Inspection = sequelize.define(
       allowNull: true,
     },
     inspection_date: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    inspection_time: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },

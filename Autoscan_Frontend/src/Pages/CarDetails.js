@@ -184,7 +184,7 @@ function CarDetails() {
                     </a> */}
                   </div>
                   <p className="priceFrom">
-                    <span>₹{car.ex_showroom}</span> - <span>₹{car.price}</span>
+                    <span>₹{car.price}/-</span>
                   </p>
                 </div>
                 <div>
