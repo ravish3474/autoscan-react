@@ -32,7 +32,7 @@ const carManagement = () => {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetchCarsList(currentPage, sizePerPage);
-    document.title = "Autoscan - Car Management";
+    document.title = "Usedcarwale - Car Management";
   }, [currentPage]);
   const handleToggleStatus = async (carId) => {
     axios

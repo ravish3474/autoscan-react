@@ -1,7 +1,7 @@
 // SellCar.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -15,6 +15,8 @@ import carDetails from "../images/vector/Car.png";
 import carImages from "../images/vector/Picture.png";
 
 function Inspection() {
+
+  const history = useHistory();
   // MultiStep start here
 
   const [activeStep, setActiveStep] = useState(1);
@@ -165,8 +167,9 @@ function Inspection() {
           },
         }
       )
-      .then((res) => {
+      .then((res) => {        
         toast.success("Inspection Created successfully");
+        history.push("/InspectionThankYou");
       })
       .catch(function (error) {
         toast.error(
@@ -754,7 +757,7 @@ function Inspection() {
                           <div className="card border-none ScheduleInspectionCard">
                             <h6 className="card-title">
                               {" "}
-                              AUTO SCAN APPROX VALUE
+                              UsedCarwale APPROX VALUE
                             </h6>
                             <p className="approxValue">
                               <span className="valueFrom">14,55,556</span>-{" "}

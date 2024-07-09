@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 // Import menuDropdown
 import ProfileMenu from "../TopbarDropdown/ProfileMenu";
 
-import logo from "../../assets/images/logo/AutoScanLogo.png";
-import logoLightSvg from "../../assets/images/logo/AutoScanLogo.png";
+import logo from "../../assets/images/logo/usedcarwalelogo.png";
+import logoLightSvg from "../../assets/images/logo/usedcarwalelogo.png";
 import breadcums from "../../assets/images-new/breadcums.svg";
 import close_breadcums from "../../assets/images-new/close-bradcums.svg";
 import settings_icon from "../../assets/images-new/settings-icon.svg";

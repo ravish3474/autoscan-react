@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../images/logo/AutoScanLogo.png"; // Import logo
+import logo from "../images/logo/usedcarwalelogo.png"; // Import logo
 import "../App.css"; // Import App.css
 import { Link, useHistory } from "react-router-dom";
 

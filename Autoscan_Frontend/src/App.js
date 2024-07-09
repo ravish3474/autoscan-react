@@ -15,6 +15,9 @@ import LoginModal from "./components/modals/LoginModal";
 import CalculateFinalValue from "./Pages/CalculateFinalValue";
 import RequestCallBack from "./components/RequestCallBack";
 import ThankYou from "./components/ThankYou";
+import InspectionThankYou from "./components/InspectionThankYou";
+
+
 
 function App() {
   const [showUserModal, setShowUserModal] = useState(false);
@@ -44,6 +47,7 @@ function App() {
         <Route path="/finalValue" component={CalculateFinalValue} />
         <Route path="/RequestCallBack" component={RequestCallBack} />
         <Route path="/ThankYou" component={ThankYou} />
+        <Route path="/InspectionThankYou" component={InspectionThankYou} />
       </Switch>
       <Footer />
       {showUserModal && (

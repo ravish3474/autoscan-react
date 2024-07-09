@@ -26,7 +26,7 @@ const BrandManagement = () => {
       fetchbrandsData();
     }
 
-    document.title = "Autoscan - brand List";
+    document.title = "Usedcarwale - brand List";
   }, []);
 
   const fetchbrandsData = async () => {

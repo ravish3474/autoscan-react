@@ -32,7 +32,7 @@ const varientManagement = () => {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetchVarientsList(currentPage, sizePerPage);
-    document.title = "Autoscan - Varient Management";
+    document.title = "Usedcarwale - Varient Management";
   }, [currentPage]);
   const handleToggleStatus = async (varientId) => {
     axios

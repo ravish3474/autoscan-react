@@ -32,7 +32,7 @@ const inspectionManagement = () => {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetchInspectionsList(currentPage, sizePerPage);
-    document.title = "Autoscan - Inspection Management";
+    document.title = "Usedcarwale - Inspection Management";
   }, [currentPage]);
   const handleToggleStatus = async (inspectionId) => {
     axios
