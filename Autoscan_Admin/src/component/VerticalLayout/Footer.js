@@ -9,7 +9,7 @@ class Footer extends Component {
           <div className="container-fluid">
             <Row>
               <Col sm={12} className="text-center">
-                © {new Date().getFullYear()} Autoscan.
+                © {new Date().getFullYear()} Usedcarwale.
               </Col>
             </Row>
           </div>

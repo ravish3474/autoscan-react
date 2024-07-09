@@ -32,7 +32,7 @@ const brandManagement = () => {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetchBrandsList(currentPage, sizePerPage);
-    document.title = "Autoscan - Brand Management";
+    document.title = "Usedcarwale - Brand Management";
   }, [currentPage]);
   const handleToggleStatus = async (brandId) => {
     axios

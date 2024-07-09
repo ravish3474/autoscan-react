@@ -50,7 +50,7 @@ function CarValuation() {
 
   const fetchBrandData = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
+      .get(`${process.env.REACT_APP_API_URL}/brand/brand-list`)
       .then((response) => {
         const { success } = response.data;
         if (success) {
@@ -65,6 +65,7 @@ function CarValuation() {
       })
       .catch((err) => console.log("Error:::", err));
   };
+
   const handleBrandSelection = async (brandId) => {
     try {
       const response = await axios.get(
@@ -110,29 +111,50 @@ function CarValuation() {
       model_id: modelId,
     }));
   };
+
   const handleVarientSelection = (varientId) => {
     setStatePayload((prevState) => ({
       ...prevState,
       varient_id: varientId,
     }));
   };
+
   const handleCitySelection = (rto_city) => {
     setStatePayload((prevState) => ({
       ...prevState,
       rto_city: rto_city,
     }));
   };
+
   useEffect(() => {
     fetchBrandData();
     fetchCityData();
     return () => {};
   }, []);
 
+  const validateFields = () => {
+    const newErrors = {};
+    if (!statePayload.brand_id) newErrors.brand_id = "Brand is required";
+    if (!statePayload.model_id) newErrors.model_id = "Model is required";
+    if (!statePayload.varient_id) newErrors.varient_id = "Varient is required";
+    if (!statePayload.rto_city) newErrors.rto_city = "RTO city is required";
+    if (!statePayload.manufacturing_year)
+      newErrors.manufacturing_year = "Manufacturing year is required";
+    if (!statePayload.kms_driven)
+      newErrors.kms_driven = "Kilometers driven is required";
+    if (!statePayload.ownership)
+      newErrors.ownership = "Ownership history is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
 
-    // Create a payload object from statePayload
+    if (!validateFields()) return;
+
     const payload = {
       model_id: statePayload?.model_id,
       brand_id: statePayload?.brand_id,
@@ -143,10 +165,7 @@ function CarValuation() {
       manufacturing_year: statePayload?.manufacturing_year,
     };
 
-    // Store the payload object as a JSON string in localStorage
     localStorage.setItem("payload", JSON.stringify(payload));
-
-    // Redirect to the final value page
     history.push("/finalvalue");
   };
 
@@ -166,7 +185,7 @@ function CarValuation() {
             </div>
           </div>
         </div>
-      </section>{" "}
+      </section>
       <section className="DefaultTopBanner">
         <div className="container">
           <div className="row"></div>
@@ -202,11 +221,10 @@ function CarValuation() {
                       </select>
                       {errors?.brand_id && (
                         <small className="text-danger">
-                          {" "}
-                          {errors?.brand_id}{" "}
+                          {errors?.brand_id}
                         </small>
                       )}
-                      <label htmlFor="SelYear" class="form__label">
+                      <label htmlFor="SelYear" className="form__label">
                         Brand
                       </label>
                     </div>
@@ -233,11 +251,10 @@ function CarValuation() {
                       </select>
                       {errors?.model_id && (
                         <small className="text-danger">
-                          {" "}
-                          {errors?.model_id}{" "}
+                          {errors?.model_id}
                         </small>
                       )}
-                      <label for="BrandName" className="form__label">
+                      <label htmlFor="BrandName" className="form__label">
                         Select Model
                       </label>
                     </div>
@@ -266,11 +283,10 @@ function CarValuation() {
                       </select>
                       {errors?.varient_id && (
                         <small className="text-danger">
-                          {" "}
-                          {errors?.varient_id}{" "}
+                          {errors?.varient_id}
                         </small>
                       )}
-                      <label for="VarientName" className="form__label">
+                      <label htmlFor="VarientName" className="form__label">
                         Select Varient
                       </label>
                     </div>
@@ -296,6 +312,11 @@ function CarValuation() {
                             );
                           })}
                       </select>
+                      {errors?.rto_city && (
+                        <small className="text-danger">
+                          {errors?.rto_city}
+                        </small>
+                      )}
                       <label htmlFor="rto_city" className="form__label">
                         Select RTO City
                       </label>
@@ -303,7 +324,7 @@ function CarValuation() {
                     <div className="form__group field">
                       <input
                         type="input"
-                        class="form__field"
+                        className="form__field"
                         placeholder="Enter Manufacturing year"
                         name="manufacturing_year"
                         id="manufacturing_year"
@@ -311,14 +332,22 @@ function CarValuation() {
                         onChange={handleInput}
                         required
                       />
-                      <label htmlFor="manufacturing_year" class="form__label">
+                      {errors?.manufacturing_year && (
+                        <small className="text-danger">
+                          {errors?.manufacturing_year}
+                        </small>
+                      )}
+                      <label
+                        htmlFor="manufacturing_year"
+                        className="form__label"
+                      >
                         Manufacturing Year
                       </label>
                     </div>
                     <div className="form__group field">
                       <input
                         type="number"
-                        class="form__field"
+                        className="form__field"
                         placeholder="Enter total KMs in odometer"
                         name="kms_driven"
                         id="kms_driven"
@@ -326,12 +355,17 @@ function CarValuation() {
                         onChange={handleInput}
                         required
                       />
-                      <label htmlFor="kms_driven" class="form__label">
+                      {errors?.kms_driven && (
+                        <small className="text-danger">
+                          {errors?.kms_driven}
+                        </small>
+                      )}
+                      <label htmlFor="kms_driven" className="form__label">
                         Enter total KMs in odometer
                       </label>
                     </div>
                     <div className="form__group field ownership-Fields d-flex">
-                      <label htmlFor="ownership" class="form__label">
+                      <label htmlFor="ownership" className="form__label">
                         Ownership History
                       </label>
                       <div className="checkboxbutton">
@@ -387,7 +421,7 @@ function CarValuation() {
                         </label>
                       </div>
                     </div>
-                    <div className="form__group field ">
+                    <div className="form__group field">
                       <button
                         to="finalValue"
                         className="btn theme-btn next-step"

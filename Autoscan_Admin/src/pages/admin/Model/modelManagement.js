@@ -32,7 +32,7 @@ const modelManagement = () => {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetchModelsList(currentPage, sizePerPage);
-    document.title = "Autoscan - Model Management";
+    document.title = "Usedcarwale - Model Management";
   }, [currentPage]);
   const handleToggleStatus = async (modelId) => {
     axios

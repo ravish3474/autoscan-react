@@ -26,7 +26,7 @@ const RoleList = () => {
       fetchRolesData();
     }
 
-    document.title = "Autoscan - Role List";
+    document.title = "Usedcarwale - Role List";
   }, []);
 
   const fetchRolesData = async () => {

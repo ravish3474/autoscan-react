@@ -24,7 +24,7 @@ const biddingManagement = () => {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetchBiddingsList(currentPage, sizePerPage);
-    document.title = "Autoscan - Bidding Management";
+    document.title = "Usedcarwale - Bidding Management";
   }, [currentPage]);
   const handleToggleStatus = async (biddingId) => {
     axios

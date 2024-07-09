@@ -35,7 +35,7 @@ const userList = () => {
 
   useEffect(() => {
     fetchUsersList(currentPage, sizePerPage);
-    document.title = "Autoscan - User Management";
+    document.title = "Usedcarwale - User Management";
   }, [currentPage]);
 
   const handleUserDelete = (userId) => {

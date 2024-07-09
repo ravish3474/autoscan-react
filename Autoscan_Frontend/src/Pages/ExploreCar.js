@@ -249,7 +249,7 @@ function ExploreCar() {
                             alt=""
                             className="arrow-img W100"
                           />
-                          <p className="card-text badge">AUTOSCAN ASSURED </p>
+                          <p className="card-text badge">usedcarwale ASSURED </p>
                         </figure>
                         <div className="card-content">
                           <h5 className="card-title">
