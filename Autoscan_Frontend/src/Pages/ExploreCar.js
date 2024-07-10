@@ -6,14 +6,26 @@ import axios from "axios";
 function ExploreCar() {
   const [cars, setCars] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [filterData, setFilterData] = useState({});
+  const [noCarsFound, setNoCarsFound] = useState(false);
+  const [filterData, setFilterData] = useState({
+    min_price: "",
+    max_price: "",
+    kms_driven: "",
+  });
   const handleSelect = (e, name) => {
     if (e.target.checked) {
       setFilterData({
         ...filterData,
         [name]: [...(filterData[name] || []), e.target.value],
       });
-    } else {
+    }
+    else if (name === 'min_price' || name === 'max_price' || name === 'kms_driven') {
+      setFilterData({
+        ...filterData,
+        [name]: e.target.value
+      });
+    }
+    else {
       setFilterData({
         ...filterData,
         [name]: (filterData[name] || []).filter(
@@ -27,15 +39,38 @@ function ExploreCar() {
     window.scrollTo({ top: 550, behavior: "smooth" });
   };
 
+  // const resetFilters = () => {
+  //   const emptyFilterData = {};
+  //   setFilterData(emptyFilterData);
+  //   fetchData(emptyFilterData);
+  //   Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach(
+  //     (checkbox) => {
+  //       checkbox.checked = false;
+  //     }
+  //   );
+  // };
+
+
   const resetFilters = () => {
-    const emptyFilterData = {};
+    const emptyFilterData = {
+      min_price: "",
+      max_price: "",
+      kms_driven: "",
+    };
     setFilterData(emptyFilterData);
     fetchData(emptyFilterData);
-    Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach(
-      (checkbox) => {
-        checkbox.checked = false;
-      }
-    );
+
+    // Reset checkbox inputs
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+
+    // Reset input values for min_price, max_price, and kms_driven
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach((input) => {
+      input.value = "";
+    });
   };
 
   useEffect(() => {
@@ -61,13 +96,22 @@ function ExploreCar() {
     // }
 
     let queryParams = new URLSearchParams();
-    Object.keys(filterDataObj).forEach((key) => {
-      queryParams.append(key, filterDataObj[key].join(","));
-    });
+  
+  if (filterDataObj.min_price) {
+    queryParams.append('min_price', filterDataObj.min_price);
+  }
+  if (filterDataObj.max_price) {
+    queryParams.append('max_price', filterDataObj.max_price);
+  }
+  if (filterDataObj.kms_driven) {
+    queryParams.append('kms_driven', filterDataObj.kms_driven);
+  }
 
-    if (queryParams) {
-      queryParams = `&${queryParams.toString()}`;
+  Object.keys(filterDataObj).forEach((key) => {
+    if (key !== 'min_price' && key !== 'max_price' && key !== 'kms_driven') {
+      queryParams.append(key, filterDataObj[key].join(","));
     }
+  });
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/car/car-list?${queryParams}`
@@ -75,6 +119,12 @@ function ExploreCar() {
       const { car } = response?.data;
       // console.log(data.car);
       setCars(car);
+      setCars(car);
+      if (car.length === 0) {
+        setNoCarsFound(true);
+      } else {
+        setNoCarsFound(false);
+      }
     } catch (error) {
       console.error("Error fetching cars:", error);
     }
@@ -88,16 +138,26 @@ function ExploreCar() {
               <form className="FilterForm">
                 <div className="filterSubCategory priceBar">
                   <h5 className="card-title">Price Range</h5>
-                  <div className="price-range-slider">
-                    <p className="range-value">
+                  <div className="row pr-5">
+                    <div className="col-md-6 form-group">
                       <input
-                        type="text"
-                        name="price_range"
-                        id="amount"
-                        value=""
+                        type="number"
+                        name="min_price"
+                        className="form-control"
+                        placeholder="Min Price"
+                       
+                        onChange={(e) => handleSelect(e, "min_price")}
                       />
-                    </p>
-                    <div id="slider-range" className="range-bar"></div>
+                    </div>
+                    <div className="col-md-6 form-group">
+                      <input
+                        type="number"
+                        name="max_price"
+                        className="form-control"
+                        placeholder="Max Price"
+                        onChange={(e) => handleSelect(e, "max_price")}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="filterSubCategory search-box d-paddinng">
@@ -129,73 +189,16 @@ function ExploreCar() {
                 </div>
                 <div className="filterSubCategory KMsDriven">
                   <h5 className="card-title">KMs Driven</h5>
-                  <ul className="p-0 m-0">
-                    <li>
-                      <label for="radio-1">
-                        <input
-                          type="radio"
-                          name="radios"
-                          id="radio-1"
-                          checked
-                        />
-                        <span>Maruti Suzuku</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label for="radio-2">
-                        <input
-                          type="radio"
-                          name="radios"
-                          id="radio-2"
-                          checked
-                        />
-                        <span>Hyundai</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label for="radio-3">
-                        <input
-                          type="radio"
-                          name="radios"
-                          id="radio-3"
-                          checked
-                        />
-                        <span>Mahindra</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label for="radio-4">
-                        <input
-                          type="radio"
-                          name="radios"
-                          id="radio-4"
-                          checked
-                        />
-                        <span>Nissan </span>
-                      </label>
-                    </li>
-                  </ul>
-                </div>
-                <div className="filterSubCategory bodyType">
-                  <h5 className="card-title">Body Type</h5>
-                  <ul className="p-0 m-0">
-                    <li>
-                      <input type="checkbox" name="Hatchback" id="Hatchback" />
-                      <label for="Hatchback">Hatchback</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" name="Sedan" id="Sedan" />
-                      <label for="Sedan">Sedanr</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" name="SUV" id="SUV" />
-                      <label for="SUV">SUV</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" name="MUV" id="MUV" />
-                      <label for="MUV">MUV</label>
-                    </li>
-                  </ul>
+                  <div className="form-group">
+                    <input
+                   type="number"
+                      name="kms_driven"
+                      className="form-control"
+                      placeholder="KM Driven"
+                      
+                      onChange={(e) => handleSelect(e, "kms_driven")}
+                    />
+                  </div>
                 </div>
                 <div className="d-flex justify-content-center gap-2 mt-3">
                   <button
@@ -236,51 +239,57 @@ function ExploreCar() {
               </div>
             </div>
             <div className="row filterItems">
-              {cars.map((car) => (
-                <Link to={`/car-details/${car.id}`} key={car.id}>
-                  {" "}
-                  {/* Update anchor tag to Link */}
-                  <div className="singleCarItems">
-                    <div className="card">
-                      <div className="card-body p-0">
-                        <figure className="m-0">
-                          <img
-                            src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`}
-                            alt=""
-                            className="arrow-img W100"
-                          />
-                          <p className="card-text badge">usedcarwale ASSURED </p>
-                        </figure>
-                        <div className="card-content">
-                          <h5 className="card-title">
-                            {car.Brand ? car.Brand.brand_name : ""}{" "}
-                            {car.model ? car.model.model_name : ""}
-                          </h5>
-                          <p className="sPara">
-                            <span className="carAverage">
-                              {car.kms_driven} Kms
-                            </span>{" "}
-                            |{" "}
-                            <span className="carType">
-                              {car.varient ? car.varient.varient_name : ""}
-                            </span>
-                            |<span className="carType2">Manual</span>
-                          </p>
-                          <h6 className="btn p-0 carPrice">₹{car.price}</h6>
-                          <hr />
-                          <p className="pre desc">
-                            Get it financed at 40,000 per month
-                          </p>
+              {noCarsFound ? (
+                <div className="col-12 text-center">
+                  <h3>No cars found matching the filters.</h3>
+                </div>
+              ) : (
+                cars.map((car) => (
+                  <Link to={`/car-details/${car.id}`} key={car.id}>
+                    <div className="singleCarItems">
+                      <div className="card">
+                        <div className="card-body p-0">
+                          <figure className="m-0">
+                            <img
+                              src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`}
+                              alt=""
+                              className="arrow-img W100"
+                            />
+                            <p className="card-text badge">
+                              usedcarwale ASSURED{" "}
+                            </p>
+                          </figure>
+                          <div className="card-content">
+                            <h5 className="card-title">
+                              {car.Brand ? car.Brand.brand_name : ""}{" "}
+                              {car.model ? car.model.model_name : ""}
+                            </h5>
+                            <p className="sPara">
+                              <span className="carAverage">
+                                {car.kms_driven} Kms
+                              </span>{" "}
+                              |{" "}
+                              <span className="carType">
+                                {car.varient ? car.varient.varient_name : ""}
+                              </span>
+                              |<span className="carType2">Manual</span>
+                            </p>
+                            <h6 className="btn p-0 carPrice">₹{car.price}</h6>
+                            <hr />
+                            <p className="pre desc">
+                              Get it financed at 40,000 per month
+                            </p>
 
-                          <div className="ribbon-2">
-                            GET UP TO <b>30%</b> OFF
+                            <div className="ribbon-2">
+                              GET UP TO <b>30%</b> OFF
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))
+              )}
             </div>
           </div>
         </div>

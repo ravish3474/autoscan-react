@@ -7,7 +7,7 @@ const { formatToJSON } = require("../helper/commonMethods");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const getAllCars = async (req, res) => {
-  let { brand = "" } = req.query;
+  let { brand = "", kms_driven, min_price, max_price } = req.query;
   let where_query = {
     status: 1,
   };
@@ -15,6 +15,26 @@ const getAllCars = async (req, res) => {
   if (brand) {
     where_query.brand_id = {
       [Op.in]: brand.split(","),
+    };
+  }
+
+  if (kms_driven) {
+    where_query.kms_driven = {
+      [Op.gte]: parseInt(kms_driven), // Greater than or equal to kms_driven
+    };
+  }
+
+  if (min_price && max_price) {
+    where_query.price = {
+      [Op.between]: [parseInt(min_price), parseInt(max_price)], // Price between min_price and max_price
+    };
+  } else if (min_price) {
+    where_query.price = {
+      [Op.gte]: parseInt(min_price), // Price greater than or equal to min_price
+    };
+  } else if (max_price) {
+    where_query.price = {
+      [Op.lte]: parseInt(max_price), // Price less than or equal to max_price
     };
   }
 
