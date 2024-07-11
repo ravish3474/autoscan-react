@@ -40,10 +40,6 @@ const Car = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    registration_year: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
     registration_number: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -58,10 +54,6 @@ const Car = sequelize.define(
     },
     price: {
       type: DataTypes.INTEGER(10),
-      allowNull: false,
-    },
-    insurance_validity: {
-      type: DataTypes.STRING(255),
       allowNull: false,
     },
     front_view: {

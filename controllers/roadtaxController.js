@@ -5,10 +5,10 @@ const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 
 const fetchroadtax = async (req, res) => {
-  const { brand_id, varient_id, model_id, city, manufacturing_year } = req.body;
+  const { brand_id, varient_id, model_id, city, manufacturing_year,kms_driven } = req.body;
 
   try {
-    if (!brand_id || !varient_id || !model_id || !city || !manufacturing_year) {
+    if (!brand_id || !varient_id || !model_id || !city || !manufacturing_year || !kms_driven) {
       return res.status(400).json({ error: 'Missing required parameters' });
     }
 
@@ -76,7 +76,7 @@ const fetchroadtax = async (req, res) => {
     const currentYear = new Date().getFullYear();
     const yearsDifference = currentYear - manufacturing_year;
     let adjustedPrice = exShowroomPrice + roadTaxAmount;
-
+    console.log("roadtax",adjustedPrice);
     if (yearsDifference > 0 && yearsDifference <= 10) {
         // Apply depreciation based on yearsDifference
         switch (true) {
@@ -117,7 +117,19 @@ const fetchroadtax = async (req, res) => {
             break;
         }
       }
-
+      console.log("deperciation year",adjustedPrice);
+      if (kms_driven < 50000) {
+        adjustedPrice = adjustedPrice;
+      } else if (kms_driven >= 50000 && kms_driven < 100000) {
+        adjustedPrice *= 0.97; // 3% deduction
+      } else if (kms_driven >= 100000 && kms_driven < 150000) {
+        adjustedPrice *= 0.95; // 5% deduction
+      } else if (kms_driven >= 150000 && kms_driven < 200000) {
+        adjustedPrice *= 0.90; // 10% deduction
+      } else if (kms_driven >= 200000) {
+        adjustedPrice *= 0.75; // 25% deduction
+      }
+      console.log("deperciation kms",adjustedPrice);
     // Prepare response
     res.json({
       success: true,

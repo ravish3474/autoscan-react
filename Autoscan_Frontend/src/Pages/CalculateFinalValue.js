@@ -12,6 +12,7 @@ function CalculateFinalValue() {
   const [selectedCategory, setSelectedCategory] = useState("Good");
   const [payload, setPayload] = useState(null);
   const [price, setPrice] = useState(0); // Initialize price with 0
+
   const fetchRoadTax = async () => {
     try {
       const storedPayload = localStorage.getItem("payload");
@@ -21,7 +22,7 @@ function CalculateFinalValue() {
       }
       
       const parsedPayload = JSON.parse(storedPayload);
-      const { brand_id, varient_id, model_id,manufacturing_year } = parsedPayload;
+      const { brand_id, varient_id, model_id, manufacturing_year, kms_driven } = parsedPayload;
 
       const response = await fetch(`${process.env.REACT_APP_API_URL}/calculate/fetch-roadtax`, {
         method: 'POST',
@@ -33,6 +34,7 @@ function CalculateFinalValue() {
           varient_id,
           model_id,
           manufacturing_year,
+          kms_driven,
           city: parsedPayload.rto_city // Assuming state is also stored in payload
         }),
       });
@@ -48,20 +50,34 @@ function CalculateFinalValue() {
       console.error("Error fetching road tax:", error);
     }
   };
+
   useEffect(() => {
     const storedPayload = localStorage.getItem("payload");
     if (storedPayload) {
       setPayload(JSON.parse(storedPayload));
     }
   
-
     fetchRoadTax();
-    
-  
-  }, []); // Trigger useEffect whenever payload changes
+  }, []); // Trigger useEffect on component mount
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+
+    // Adjust price based on category selection
+    switch (category) {
+      case "Excellent":
+        setPrice(prevPrice => prevPrice * 1.04); // Increase price by 4%
+        break;
+      case "Fair":
+      case "Average":
+        setPrice(prevPrice => prevPrice * 0.96); // Decrease price by 4%
+        break;
+      case "Bad":
+        alert("Aaah! Usedcarwale does not evalue bad condition vehicles.");
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -139,7 +155,7 @@ function CalculateFinalValue() {
                         <span className="d-inline-flex align-items-center">
                           <ion-icon name="remove-outline"></ion-icon>
                         </span> */}
-                        <p className="price-to m-2">₹{price}</p>
+                        <p className="price-to m-2">₹{price.toFixed(2)}</p>
                       </div>
                       <div className="booking-category mt-2">
                         {["Bad", "Fair", "Good", "Very Good", "Excellent"].map(

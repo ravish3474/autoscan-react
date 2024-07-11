@@ -60,11 +60,9 @@ function SellCar() {
     kms_driven: "",
     ownership: "",
     manufacturing_year: "",
-    registration_year: "",
     registration_state: "",
     car_location: "",
     registration_number: "",
-    insurance_validity: "",
     ex_showroom: "",
     price: "",
     car_description: "",
@@ -206,11 +204,9 @@ function SellCar() {
     payload.append("kms_driven", statePayload?.kms_driven);
     payload.append("ownership", statePayload?.ownership);
     payload.append("manufacturing_year", statePayload?.manufacturing_year);
-    payload.append("registration_year", statePayload?.registration_year);
     payload.append("registration_state", statePayload?.registration_state);
     payload.append("car_location", statePayload?.car_location);
     payload.append("registration_number", statePayload?.registration_number);
-    payload.append("insurance_validity", statePayload?.insurance_validity);
     payload.append("ex_showroom", statePayload?.ex_showroom);
     payload.append("price", statePayload?.price);
     payload.append("car_description", statePayload?.car_description);
@@ -633,29 +629,6 @@ function SellCar() {
                           <input
                             className="form__field"
                             type="text"
-                            placeholder="Registration Year"
-                            name="registration_year"
-                            id="registration_year"
-                            value={statePayload.registration_year}
-                            onChange={handleInput}
-                          />
-                          {errors.registration_year && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.registration_year}{" "}
-                            </small>
-                          )}
-                          <label
-                            for="registration_year"
-                            className="form__label"
-                          >
-                            Registration Year
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
                             placeholder="Registration State"
                             name="registration_state"
                             id="registration_state"
@@ -696,29 +669,6 @@ function SellCar() {
                             className="form__label"
                           >
                             Registration Number
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Insurance Validity"
-                            name="insurance_validity"
-                            id="insurance_validity"
-                            value={statePayload.insurance_validity}
-                            onChange={handleInput}
-                          />
-                          {errors.insurance_validity && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.insurance_validity}{" "}
-                            </small>
-                          )}
-                          <label
-                            for="insurance_validity"
-                            className="form__label"
-                          >
-                            Insurance Validity
                           </label>
                         </div>
                         <div className="form__group field ">

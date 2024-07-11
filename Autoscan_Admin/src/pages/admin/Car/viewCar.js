@@ -98,10 +98,6 @@ export default function viewCar() {
                     <td>{car?.registration_state}</td>
                   </tr>
                   <tr>
-                    <th>Registration Year</th>
-                    <td>{car?.registration_year}</td>
-                  </tr>
-                  <tr>
                     <th>Registration Number</th>
                     <td>{car?.registration_number}</td>
                   </tr>
@@ -116,10 +112,6 @@ export default function viewCar() {
                   <tr>
                     <th>Asking Price:</th>
                     <td>{car?.price}</td>
-                  </tr>
-                  <tr>
-                    <th>Insurance Validity:</th>
-                    <td>{car?.insurance_validity}</td>
                   </tr>
                   <tr>
                     <th>Car Description:</th>

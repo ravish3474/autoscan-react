@@ -242,11 +242,9 @@ const createCar = async (req, res) => {
       kms_driven,
       ownership,
       manufacturing_year,
-      registration_year,
       registration_state,
       car_location,
       registration_number,
-      insurance_validity,
       ex_showroom,
       price,
       car_description,
@@ -262,11 +260,9 @@ const createCar = async (req, res) => {
     carObj["kms_driven"] = kms_driven;
     carObj["ownership"] = ownership;
     carObj["manufacturing_year"] = manufacturing_year;
-    carObj["registration_year"] = registration_year;
     carObj["registration_state"] = registration_state;
     carObj["car_location"] = car_location;
     carObj["registration_number"] = registration_number;
-    carObj["insurance_validity"] = insurance_validity;
     carObj["ex_showroom"] = ex_showroom;
     carObj["price"] = price;
     carObj["car_description"] = car_description;
@@ -320,11 +316,9 @@ const updateCar = async (req, res) => {
       kms_driven,
       ownership,
       manufacturing_year,
-      registration_year,
       registration_state,
       car_location,
       registration_number,
-      insurance_validity,
       ex_showroom,
       price,
       car_description,
@@ -339,11 +333,9 @@ const updateCar = async (req, res) => {
     carObj["kms_driven"] = kms_driven;
     carObj["ownership"] = ownership;
     carObj["manufacturing_year"] = manufacturing_year;
-    carObj["registration_year"] = registration_year;
     carObj["registration_state"] = registration_state;
     carObj["car_location"] = car_location;
     carObj["registration_number"] = registration_number;
-    carObj["insurance_validity"] = insurance_validity;
     carObj["ex_showroom"] = ex_showroom;
     carObj["price"] = price;
     carObj["car_description"] = car_description;

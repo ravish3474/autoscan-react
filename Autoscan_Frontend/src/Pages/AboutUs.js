@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import "../style/AboutUs.css"; // Import your CSS file for styling
+import React from "react";
 
 const AboutUs = () => {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleAccordion = () => {
-    setExpanded(!expanded);
-  };
-
   return (
     <div className="container mt-5">
-      <div className="row">
+          <div className="row"><h1>About Us</h1></div>
+      <div className="row mt-3">
         <div className="col-md-6">
           <section className="section">
             <div className="section-content">
