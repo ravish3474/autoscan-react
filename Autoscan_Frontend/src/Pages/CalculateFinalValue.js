@@ -12,7 +12,7 @@ function CalculateFinalValue() {
   const [selectedCategory, setSelectedCategory] = useState("Good");
   const [payload, setPayload] = useState(null);
   const [price, setPrice] = useState(0); // Initialize price with 0
-
+  const [originalPrice, setOriginalPrice] = useState(0);
   const fetchRoadTax = async () => {
     try {
       const storedPayload = localStorage.getItem("payload");
@@ -42,9 +42,10 @@ function CalculateFinalValue() {
       if (!response.ok) {
         throw new Error('Failed to fetch road tax');
       }
-
       const data = await response.json();
-      setPrice(data.final_price); // Update price state with final_price from API response
+      const fetchedPrice = data.final_price;
+      setOriginalPrice(fetchedPrice); // Set original fetched price
+      setPrice(fetchedPrice); // Initialize price state with final_price from API response
 
     } catch (error) {
       console.error("Error fetching road tax:", error);
@@ -66,20 +67,22 @@ function CalculateFinalValue() {
     // Adjust price based on category selection
     switch (category) {
       case "Excellent":
-        setPrice(prevPrice => prevPrice * 1.04); // Increase price by 4%
+        setPrice(originalPrice * 1.04); // Increase price by 4%
+        break;
+      case "Good":
+        setPrice(originalPrice); // Set price back to original fetched price
         break;
       case "Fair":
-      case "Average":
-        setPrice(prevPrice => prevPrice * 0.96); // Decrease price by 4%
+        setPrice(originalPrice * 0.96); // Decrease price by 4%
         break;
       case "Bad":
-        alert("Aaah! Usedcarwale does not evalue bad condition vehicles.");
+        alert("Aaah! Usedcarwale does not evaluate bad condition vehicles.");
         break;
       default:
         break;
     }
   };
-
+  
   return (
     <>
       <div className="container-fluid ActivePageHeader">
@@ -158,7 +161,7 @@ function CalculateFinalValue() {
                         <p className="price-to m-2">₹{price.toFixed(2)}</p>
                       </div>
                       <div className="booking-category mt-2">
-                        {["Bad", "Fair", "Good", "Very Good", "Excellent"].map(
+                        {["Bad", "Fair", "Good", "Excellent"].map(
                           (category, index) => (
                             <span
                               key={index}
