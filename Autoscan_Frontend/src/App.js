@@ -16,7 +16,7 @@ import CalculateFinalValue from "./Pages/CalculateFinalValue";
 import RequestCallBack from "./components/RequestCallBack";
 import ThankYou from "./components/ThankYou";
 import InspectionThankYou from "./components/InspectionThankYou";
-
+import AboutUs from "./Pages/AboutUs"
 
 
 function App() {
@@ -46,6 +46,7 @@ function App() {
         <Route path="/profile" component={Profile} />
         <Route path="/finalValue" component={CalculateFinalValue} />
         <Route path="/RequestCallBack" component={RequestCallBack} />
+        <Route path="/AboutUs" component={AboutUs} />
         <Route path="/ThankYou" component={ThankYou} />
         <Route path="/InspectionThankYou" component={InspectionThankYou} />
       </Switch>

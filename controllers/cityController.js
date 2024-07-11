@@ -1,4 +1,4 @@
-const { CityPincode } = require("../models/CityPincode");
+const CityPincode = require('../models/CityPincode');
 const { Sequelize } = require("sequelize"); // Import Sequelize to use its functions
 const sequelize = require("../config/connection"); // Adjust the path as needed
 

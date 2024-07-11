@@ -7,7 +7,7 @@ import mail from "../images/vector/mail.png"; // Import image for left side
 import submitMail from "../images/vector/submitMail.png"; // Import image for left side
 import Frame from "../images/vector/Frame.png"; // Import image for left side
 import logo from "../images/logo/usedcarwalelogo.png"; // Import logo
-
+import { Link } from "react-router-dom"; // Import Link from React Router
 function Footer() {
   return (
     <section className="footer" id="footer">
@@ -69,7 +69,7 @@ function Footer() {
               <div className="quickLinks">
                 <ul className="p-0">
                   <li>
-                    <a href="#">About Us</a>
+                  <Link to="/AboutUs">About Us</Link>
                   </li>
                   <li>
                     <a href="#">Register as a dealer</a>

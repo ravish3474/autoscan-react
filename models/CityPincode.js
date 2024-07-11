@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/connection");
 
 const CityPincode = sequelize.define(
-  "city_pincode",
+  "CityPincode",
   {
     state: {
       type: DataTypes.STRING(255),
@@ -36,7 +36,8 @@ const CityPincode = sequelize.define(
 );
 
 CityPincode.sync({ alter: true }).then(() => {
-  console.log("CityPincode Model synced");
+  console.log("CityPincode model synced");
 });
 
-module.exports.CityPincode = CityPincode;
+module.exports = CityPincode;
+

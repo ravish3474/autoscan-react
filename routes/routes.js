@@ -12,6 +12,7 @@ const CarRoutes = require("./carRoutes.js");
 const InspectionRoutes = require("./inspectionRoutes.js");
 const CityRoutes = require("./cityRoutes.js");
 const MakeOfferRoutes = require("./makeofferRoutes.js");
+const RoadTaxRoutes = require("./RoadTaxRoutes.js");
 // customer routes
 const AuthCustomerRoutes = require("./frontend/authRoutes.js");
 
@@ -26,6 +27,7 @@ router.use("/car", CarRoutes);
 router.use("/inspection", InspectionRoutes);
 router.use("/city", CityRoutes);
 router.use("/offer", MakeOfferRoutes);
+router.use("/calculate", RoadTaxRoutes);
 //customer routes
 router.use("/customer", AuthCustomerRoutes);
 

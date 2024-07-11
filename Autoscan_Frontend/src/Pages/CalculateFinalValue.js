@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../style/FinalCarValusation.css";
+import "../style/FinalCarValuation.css";
 import MainCarValuation from "../images/cars/carValuation.png";
 import carValuationRight from "../images/cars/carValuationRight.png";
 import Vector1 from "../images/vector/Vector6.svg";
@@ -11,13 +11,54 @@ import { Link } from "react-router-dom";
 function CalculateFinalValue() {
   const [selectedCategory, setSelectedCategory] = useState("Good");
   const [payload, setPayload] = useState(null);
+  const [price, setPrice] = useState(0); // Initialize price with 0
+  const fetchRoadTax = async () => {
+    try {
+      const storedPayload = localStorage.getItem("payload");
+      if (!storedPayload) {
+        console.error("Payload not found in localStorage");
+        return;
+      }
+      
+      const parsedPayload = JSON.parse(storedPayload);
+      const { brand_id, varient_id, model_id,manufacturing_year } = parsedPayload;
 
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/calculate/fetch-roadtax`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          brand_id,
+          varient_id,
+          model_id,
+          manufacturing_year,
+          city: parsedPayload.rto_city // Assuming state is also stored in payload
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch road tax');
+      }
+
+      const data = await response.json();
+      setPrice(data.final_price); // Update price state with final_price from API response
+
+    } catch (error) {
+      console.error("Error fetching road tax:", error);
+    }
+  };
   useEffect(() => {
     const storedPayload = localStorage.getItem("payload");
     if (storedPayload) {
       setPayload(JSON.parse(storedPayload));
     }
-  }, []);
+  
+
+    fetchRoadTax();
+    
+  
+  }, []); // Trigger useEffect whenever payload changes
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -88,15 +129,17 @@ function CalculateFinalValue() {
                 <div className="row details">
                   <div className="left-side">
                     <div className="box">
-                      <h6 className="car-type-name">
-                        Bentley Continental GT Convertible
-                      </h6>
+                      {payload && (
+                        <h6 className="car-type-name">
+                          {payload.brand} {payload.model} {payload.variant}
+                        </h6>
+                      )}
                       <div className="price-vary-from d-inline-flex align-items-center">
-                        <p className="price-from m-2">₹1,37,40,307</p>
+                        {/* <p className="price-from m-2">₹1,37,40,307</p>
                         <span className="d-inline-flex align-items-center">
                           <ion-icon name="remove-outline"></ion-icon>
-                        </span>
-                        <p className="price-to m-2">₹1,45,90,223</p>
+                        </span> */}
+                        <p className="price-to m-2">₹{price}</p>
                       </div>
                       <div className="booking-category mt-2">
                         {["Bad", "Fair", "Good", "Very Good", "Excellent"].map(
