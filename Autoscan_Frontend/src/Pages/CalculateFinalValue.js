@@ -7,6 +7,23 @@ import Vector2 from "../images/vector/Vector5.svg";
 import Vector3 from "../images/vector/Vector4.svg";
 import Vector4 from "../images/vector/Vector7.svg";
 import { Link } from "react-router-dom";
+function formatPriceWithCommas(price) {
+  // Round off the price to an integer
+  const roundedPrice = Math.round(price);
+
+  // Convert to string
+  const priceString = roundedPrice.toString();
+
+  // Check if the price is greater than 999 (to determine if comma is needed)
+  if (roundedPrice > 999) {
+    // Format with comma for thousands and lakhs
+    return `${priceString.slice(0, -5)},${priceString.slice(-5, -3)},${priceString.slice(-3)}`;
+  } else {
+    // No comma needed for numbers less than 1000
+    return `${priceString}`;
+  }
+}
+
 
 function CalculateFinalValue() {
   const [selectedCategory, setSelectedCategory] = useState("Good");
@@ -158,7 +175,7 @@ function CalculateFinalValue() {
                         <span className="d-inline-flex align-items-center">
                           <ion-icon name="remove-outline"></ion-icon>
                         </span> */}
-                        <p className="price-to m-2">₹{price.toFixed(2)}</p>
+                        <p className="price-to m-2">₹{formatPriceWithCommas(price)}</p>
                       </div>
                       <div className="booking-category mt-2">
                         {["Bad", "Fair", "Good", "Excellent"].map(
