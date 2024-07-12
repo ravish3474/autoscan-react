@@ -74,60 +74,56 @@ const fetchroadtax = async (req, res) => {
     const roadTaxAmount = (road_tax / 100) * exShowroomPrice;
 
     const currentYear = new Date().getFullYear();
-    const yearsDifference = currentYear - manufacturing_year;
+    let yearsDifference = currentYear - manufacturing_year;
     let adjustedPrice = exShowroomPrice + roadTaxAmount;
     console.log("roadtax",adjustedPrice);
+
     if (yearsDifference > 0 && yearsDifference <= 10) {
-        // Apply depreciation based on yearsDifference
-        switch (true) {
-          case (yearsDifference <= 0.5):
-            adjustedPrice *= 0.95; // 5% depreciation
-            break;
-          case (yearsDifference <= 1):
-            adjustedPrice *= 0.85; // 15% depreciation
-            break;
-          case (yearsDifference <= 2):
-            adjustedPrice *= 0.7695; // 23.05% depreciation
-            break;
-          case (yearsDifference <= 3):
-            adjustedPrice *= 0.69255; // 30.745% depreciation
-            break;
-          case (yearsDifference <= 4):
-            adjustedPrice *= 0.623295; // 37.6705% depreciation
-            break;
-          case (yearsDifference <= 5):
-            adjustedPrice *= 0.5609655; // 43.90345% depreciation
-            break;
-          case (yearsDifference <= 6):
-            adjustedPrice *= 0.50486895; // 49.513105% depreciation
-            break;
-          case (yearsDifference <= 7):
-            adjustedPrice *= 0.454382055; // 54.561795% depreciation
-            break;
-          case (yearsDifference <= 8):
-            adjustedPrice *= 0.4089438495; // 59.1651655% depreciation
-            break;
-          case (yearsDifference <= 9):
-            adjustedPrice *= 0.3680494646; // 63.3565359% depreciation
-            break;
-          case (yearsDifference <= 10):
-            adjustedPrice *= 0.3312445181; // 67.23051619% depreciation
-            break;
-          default:
-            break;
-        }
+    let caldepreciation;
+      // Calculate depreciation based on yearsDifference
+      console.log("yearsDifference",yearsDifference);
+    
+      if (yearsDifference <= 0.5) {
+          adjustedPrice *= 0.95; // 5% depreciation for the first 0.5 years
+          caldepreciation=adjustedPrice*0.05;
+          adjustedPrice=adjustedPrice-caldepreciation;
+          yearsDifference -= 0.5;
+          console.log("5%",adjustedPrice);
       }
+let count=0;
+      for (let i = 1; i <= Math.floor(yearsDifference); i++) {
+         
+          if (count<1) {
+              caldepreciation=adjustedPrice*0.05;
+              adjustedPrice=adjustedPrice-caldepreciation;
+              console.log("first 5%",adjustedPrice);
+          }
+          caldepreciation=adjustedPrice*0.10;
+          adjustedPrice=adjustedPrice-caldepreciation;
+          console.log("first 10%",adjustedPrice);
+         count++;
+      }
+  }
       console.log("deperciation year",adjustedPrice);
+      let kmdeprecation;
       if (kms_driven < 50000) {
         adjustedPrice = adjustedPrice;
       } else if (kms_driven >= 50000 && kms_driven < 100000) {
-        adjustedPrice *= 0.97; // 3% deduction
+        kmdeprecation=adjustedPrice*0.03;
+        adjustedPrice=adjustedPrice-kmdeprecation;
+        console.log("50000<100000");
       } else if (kms_driven >= 100000 && kms_driven < 150000) {
-        adjustedPrice *= 0.95; // 5% deduction
+        kmdeprecation=adjustedPrice*0.05;
+        adjustedPrice=adjustedPrice-kmdeprecation;
+        console.log("100000<150000");
       } else if (kms_driven >= 150000 && kms_driven < 200000) {
-        adjustedPrice *= 0.90; // 10% deduction
+        kmdeprecation=adjustedPrice*0.10;
+        adjustedPrice=adjustedPrice-kmdeprecation;
+        console.log("150000<200000");
       } else if (kms_driven >= 200000) {
-        adjustedPrice *= 0.75; // 25% deduction
+        kmdeprecation=adjustedPrice*0.25;
+        adjustedPrice=adjustedPrice-kmdeprecation;
+        console.log("200000<500000");
       }
       console.log("deperciation kms",adjustedPrice);
     // Prepare response
