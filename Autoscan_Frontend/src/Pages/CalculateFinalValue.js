@@ -167,7 +167,7 @@ function CalculateFinalValue() {
                     <div className="box">
                       {payload && (
                         <h6 className="car-type-name">
-                          {payload.brand} {payload.model} {payload.variant}
+                          {payload.brand_name} {payload.model_name} {payload.variant}
                         </h6>
                       )}
                       <div className="price-vary-from d-inline-flex align-items-center">

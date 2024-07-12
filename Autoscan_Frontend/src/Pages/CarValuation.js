@@ -66,7 +66,7 @@ function CarValuation() {
       .catch((err) => console.log("Error:::", err));
   };
 
-  const handleBrandSelection = async (brandId) => {
+  const handleBrandSelection = async (brandId, brandName) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/model/fetch-model-by-brand/${brandId}`
@@ -79,17 +79,24 @@ function CarValuation() {
           value: item.id,
         }));
         setModels(modelOptions);
+      } else {
+        // Handle error case if needed
+        console.error("Failed to fetch models:", response.data.error);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching models:", error);
+      // Handle error case if needed
     }
+  
     setStatePayload((prevState) => ({
       ...prevState,
       brand_id: brandId,
+      brand_name: brandName,
     }));
   };
+  
 
-  const handleModelSelection = async (modelId) => {
+  const handleModelSelection = async (modelId,modelName) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
@@ -109,13 +116,15 @@ function CarValuation() {
     setStatePayload((prevState) => ({
       ...prevState,
       model_id: modelId,
+      model_name: modelName,
     }));
   };
 
-  const handleVarientSelection = (varientId) => {
+  const handleVarientSelection = (varientId,varientName) => {
     setStatePayload((prevState) => ({
       ...prevState,
       varient_id: varientId,
+      varient_name: varientName,
     }));
   };
 
@@ -159,6 +168,9 @@ function CarValuation() {
       model_id: statePayload?.model_id,
       brand_id: statePayload?.brand_id,
       varient_id: statePayload?.varient_id,
+      brand_name: statePayload?.brand_name,
+      model_name: statePayload?.model_name,
+      varient_name: statePayload?.varient_name,
       rto_city: statePayload?.rto_city,
       kms_driven: statePayload?.kms_driven,
       ownership: statePayload?.ownership,
@@ -204,7 +216,7 @@ function CarValuation() {
                         name="brand_id"
                         className="col-md-6 mb-1 form-control form-select"
                         style={{ width: "100%" }}
-                        onChange={(e) => handleBrandSelection(e.target?.value)}
+                        onChange={(e) => handleBrandSelection(e.target?.value,e.target.selectedOptions[0].text)}
                         required
                       >
                         <option selected disabled>
@@ -234,7 +246,7 @@ function CarValuation() {
                         name="model_id"
                         className="col-md-6 mb-1 form-control form-select"
                         style={{ width: "100%" }}
-                        onChange={(e) => handleModelSelection(e.target?.value)}
+                        onChange={(e) => handleModelSelection(e.target?.value,e.target.selectedOptions[0].text)}
                         required
                       >
                         <option selected disabled>
@@ -265,7 +277,7 @@ function CarValuation() {
                         className="col-md-6 mb-1 form-control form-select"
                         style={{ width: "100%" }}
                         onChange={(e) =>
-                          handleVarientSelection(e.target?.value)
+                          handleVarientSelection(e.target?.value,e.target.selectedOptions[0].text)
                         }
                         required
                       >
