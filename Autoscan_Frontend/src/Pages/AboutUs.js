@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 
 const AboutUs = () => {
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []); 
   return (
     <div className="container mt-5">
           <div className="row"><h1>About Us</h1></div>
