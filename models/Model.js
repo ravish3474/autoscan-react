@@ -14,6 +14,12 @@ const Model = sequelize.define(
         allowNull: true,
         defaultValue: null, 
     },
+    car_img:
+    {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        defaultValue: null, 
+    },
     model_year:
     {
         type: DataTypes.STRING(255),

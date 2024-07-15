@@ -13,7 +13,7 @@ function LoginModal({ onClose, pathRoute }) {
   const [buttonLoading, setButtonLoading] = useState(false);
   const history = useHistory();
   const modalRef = useRef();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       onClose();
@@ -67,7 +67,7 @@ function LoginModal({ onClose, pathRoute }) {
         localStorage.setItem("user_info", JSON.stringify(res.data.customer));
         localStorage.setItem("user_id", res.data.customer.id);
         localStorage.setItem("logintime", new Date());
-
+        setIsLoggedIn(true);
         history.push(pathRoute);
         onClose();
       } else if (res.status === 200 && res.data.status === "fail") {

@@ -13,7 +13,7 @@ function FaqAccordion() {
                 <div className="row">
                     <div className="col-md-8">
                         <div className="card border-none">
-                            <h2 className="l-title">Faq's</h2>
+                            <h2 className="l-title">FAQ's</h2>
                             <div className="accordion">
                                 <div className="heading" onClick={() => toggleAccordion(0)}>
                                     What is Used car valuation?

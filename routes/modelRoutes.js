@@ -6,7 +6,7 @@ const upload = multer();
 
 let fileUpload;
 if (process.env.MEDIA_LOCATION_S3 === "true") {
-  fileUpload = require("../middlewares/fileUploadS3");
+  fileUpload = require("../middlewares/fileUploadsS3");
 } else {
   fileUpload = require("../middlewares/fileUpload");
 }

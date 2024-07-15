@@ -13,6 +13,7 @@ const CreateVarient = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
+
   const [statePayload, setStatePayload] = useState({
     brand_id: "",
     model_id: "",
@@ -28,6 +29,7 @@ const CreateVarient = (props) => {
       [name]: value,
     }));
   };
+
   const handleBrandSelection = async (brandId) => {
     try {
       const response = await axios.get(
@@ -142,6 +144,7 @@ const CreateVarient = (props) => {
       payload.append("model_id", statePayload?.model_id);
       payload.append("varient_name", statePayload?.varient_name);
       payload.append("status", statePayload?.status);
+    
       // Calling the api and saving data;
       createNewVarient(payload);
     }
@@ -332,7 +335,9 @@ const CreateVarient = (props) => {
                     )}
                   </Form.Group>
                 </Col>
+               
               </Row>
+
 
               <Form.Group className="cta text-center d-flex justify-content-center mt-4">
                 <ButtonLoader

@@ -44,10 +44,6 @@ const Inspection = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    car_location: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
     inspection_address: {
       type: DataTypes.STRING(255),
       allowNull: true,

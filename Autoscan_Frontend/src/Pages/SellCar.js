@@ -45,6 +45,7 @@ function SellCar() {
   const [varients, setVarients] = useState([]);
   const [pincodes, setPincodes] = useState([]);
   const [city, setCity] = useState([]);
+  const [state, setState] = useState([]);
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
   const [leftView, setLeftView] = useState([]);
@@ -182,8 +183,6 @@ function SellCar() {
         },
       })
       .then((res) => {
-        console.log(res);
-
         toast.success("Car Created successfully");
         history.push("/Thankyou");
       })
@@ -286,9 +285,27 @@ function SellCar() {
       })
       .catch((err) => console.log("Error:::", err));
   };
+  const fetchstateData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/city/fetch-state`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allstates } = response.data;
+          let data = allstates?.map((item) => ({
+            id: item?.id,
+            label: item?.state,
+            value: item?.state,
+          }));
+          setState(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
   useEffect(() => {
     fetchBrandData();
     fetchCityData();
+    fetchstateData();
     return () => {};
   }, []);
   return (
@@ -603,19 +620,29 @@ function SellCar() {
                           </label>
                         </div>
                         <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Manufacturing Year"
+                          <select
+                            type="select"
                             name="manufacturing_year"
                             id="manufacturing_year"
-                            value={statePayload.manufacturing_year}
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
                             onChange={handleInput}
-                          />
+                            required
+                          >
+                            <option selected disabled>
+                              Select Manufacturing Year
+                            </option>
+                            {Array.from(Array(15), (_, i) => i + 2010).map(
+                              (year) => (
+                                <option key={year} value={year}>
+                                  {year}
+                                </option>
+                              )
+                            )}
+                          </select>
                           {errors.manufacturing_year && (
                             <small className="text-danger">
-                              {" "}
-                              {errors.manufacturing_year}{" "}
+                              {errors.manufacturing_year}
                             </small>
                           )}
                           <label
@@ -626,23 +653,29 @@ function SellCar() {
                           </label>
                         </div>
                         <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Registration State"
+                          <select
+                            type="select"
                             name="registration_state"
                             id="registration_state"
-                            value={statePayload.registration_state}
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
                             onChange={handleInput}
-                          />
-                          {errors.registration_state && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.registration_state}{" "}
-                            </small>
-                          )}
+                            required
+                          >
+                            <option selected disabled>
+                              Select Registration State
+                            </option>
+                            {state &&
+                              state.map((el) => {
+                                return (
+                                  <option key={el?.value} value={el?.value}>
+                                    {el?.label}
+                                  </option>
+                                );
+                              })}
+                          </select>
                           <label
-                            for="registration_state"
+                            htmlFor="registration_state"
                             className="form__label"
                           >
                             Registration State
@@ -934,7 +967,7 @@ function SellCar() {
           {" "}
           {showUserModal && (
             <LoginModal
-              pathRoute={"/inspection-car"}
+              pathRoute={"/sell-car"}
               onClose={() => setShowUserModal(false)}
               onLogin={() => updateLoginState(true)}
             />

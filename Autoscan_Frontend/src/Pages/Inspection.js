@@ -49,14 +49,12 @@ function Inspection() {
     pincode: "",
     ownership: "",
     manufacturing_year: "",
-    car_location: "",
     registration_number: "",
     car_description: "",
     inspection_address: "",
     inspection_area: "",
     inspection_landmark: "",
     inspection_date: "",
-    inspection_time: "",
     whatsapp_update: "",
   });
   const handleInputDate = (event) => {
@@ -173,7 +171,7 @@ function Inspection() {
       })
       .catch(function (error) {
         toast.error(
-          "Inspection already exists. Unable to create a new Inspection"
+          "Unable to create Inspection"
         );
       });
   };
@@ -189,14 +187,12 @@ function Inspection() {
     payload.append("kms_driven", statePayload?.kms_driven);
     payload.append("ownership", statePayload?.ownership);
     payload.append("manufacturing_year", statePayload?.manufacturing_year);
-    payload.append("car_location", statePayload?.car_location);
     payload.append("registration_number", statePayload?.registration_number);
     payload.append("car_description", statePayload?.car_description);
     payload.append("inspection_address", statePayload?.inspection_address);
     payload.append("inspection_area", statePayload?.inspection_area);
     payload.append("inspection_landmark", statePayload?.inspection_landmark);
     payload.append("inspection_date", statePayload?.inspection_date);
-    payload.append("inspection_time", statePayload?.inspection_time);
     payload.append("whatsapp_update", statePayload?.whatsapp_update);
     payload.append("user_fullname", statePayload?.user_fullname);
     payload.append("email", statePayload?.email);
@@ -584,19 +580,29 @@ function Inspection() {
                           </label>
                         </div>
                         <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Manufacturing Year"
+                          <select
+                            type="select"
                             name="manufacturing_year"
                             id="manufacturing_year"
-                            value={statePayload.manufacturing_year}
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
                             onChange={handleInput}
-                          />
+                            required
+                          >
+                            <option selected disabled>
+                              Select Manufacturing Year
+                            </option>
+                            {Array.from(Array(15), (_, i) => i + 2010).map(
+                              (year) => (
+                                <option key={year} value={year}>
+                                  {year}
+                                </option>
+                              )
+                            )}
+                          </select>
                           {errors.manufacturing_year && (
                             <small className="text-danger">
-                              {" "}
-                              {errors.manufacturing_year}{" "}
+                              {errors.manufacturing_year}
                             </small>
                           )}
                           <label
@@ -604,26 +610,6 @@ function Inspection() {
                             className="form__label"
                           >
                             Manufacturing Year
-                          </label>
-                        </div>
-                        <div className="form__group field">
-                          <input
-                            className="form__field"
-                            type="text"
-                            placeholder="Car Location"
-                            name="car_location"
-                            id="car_location"
-                            value={statePayload.car_location}
-                            onChange={handleInput}
-                          />
-                          {errors.car_location && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors.car_location}{" "}
-                            </small>
-                          )}
-                          <label for="car_location" className="form__label">
-                            Car Location
                           </label>
                         </div>
                         <div className="form__group field">

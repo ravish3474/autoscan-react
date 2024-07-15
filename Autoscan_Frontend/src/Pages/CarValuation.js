@@ -334,28 +334,38 @@ function CarValuation() {
                       </label>
                     </div>
                     <div className="form__group field">
-                      <input
-                        type="input"
-                        className="form__field"
-                        placeholder="Enter Manufacturing year"
-                        name="manufacturing_year"
-                        id="manufacturing_year"
-                        value={statePayload.manufacturing_year}
-                        onChange={handleInput}
-                        required
-                      />
-                      {errors?.manufacturing_year && (
-                        <small className="text-danger">
-                          {errors?.manufacturing_year}
-                        </small>
-                      )}
-                      <label
-                        htmlFor="manufacturing_year"
-                        className="form__label"
-                      >
-                        Manufacturing Year
-                      </label>
-                    </div>
+                          <select
+                            type="select"
+                            name="manufacturing_year"
+                            id="manufacturing_year"
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
+                            onChange={handleInput}
+                            required
+                          >
+                            <option selected disabled>
+                              Select Manufacturing Year
+                            </option>
+                            {Array.from(Array(15), (_, i) => i + 2010).map(
+                              (year) => (
+                                <option key={year} value={year}>
+                                  {year}
+                                </option>
+                              )
+                            )}
+                          </select>
+                          {errors.manufacturing_year && (
+                            <small className="text-danger">
+                              {errors.manufacturing_year}
+                            </small>
+                          )}
+                          <label
+                            for="manufacturing_year"
+                            className="form__label"
+                          >
+                            Manufacturing Year
+                          </label>
+                        </div>
                     <div className="form__group field">
                       <input
                         type="number"

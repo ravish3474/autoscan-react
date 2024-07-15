@@ -8,4 +8,6 @@ router.get(
   cityController.getPincodeByCityId
 );
 
+router.get("/fetch-state", cityController.fetchState);
+
 module.exports = router;

@@ -180,7 +180,6 @@ const getCarById = async (req, res) => {
       msg: "Car fetched successfully",
     });
   } catch (error) {
-    console.log("Error (while fetching Car):::", error);
     return res.status(404).json({
       success: false,
       msg: "Unable to fetch Car",
@@ -203,7 +202,6 @@ const fetchCar = async (req, res) => {
       msg: "cars fetched successfully",
     });
   } catch (error) {
-    console.log("Error (while fetching cars):::", error);
     return res.status(404).json({
       success: false,
       msg: "Unable to fetch cars",
@@ -224,7 +222,6 @@ const fetchactiveCar = async (req, res) => {
       msg: "cars fetched successfully",
     });
   } catch (error) {
-    console.log("Error (while fetching cars):::", error);
     return res.status(404).json({
       success: false,
       msg: "Unable to fetch cars",
@@ -271,7 +268,6 @@ const createCar = async (req, res) => {
     if (req.files && req.files?.length > 0) {
       req.files?.forEach((item) => {
         if (item && item !== undefined) {
-          console.log(item);
           if (process.env.MEDIA_LOCATION_S3 === "true") {
             if (item.location) {
               carObj[item.fieldname] = item.key;
@@ -297,7 +293,6 @@ const createCar = async (req, res) => {
       msg: "Car created successfully",
     });
   } catch (error) {
-    console.log("Error (while creating car):", error);
     return res.status(500).json({
       success: false,
       msg: "Unable to create car",
@@ -343,7 +338,6 @@ const updateCar = async (req, res) => {
     if (req.files && req.files?.length > 0) {
       req.files?.forEach((item) => {
         if (item && item !== undefined) {
-          console.log(item);
           if (process.env.MEDIA_LOCATION_S3 === "true") {
             if (item.location) {
               carObj[item.fieldname] = item.key;
@@ -379,7 +373,6 @@ const updateCar = async (req, res) => {
       msg: "car updated successfully",
     });
   } catch (error) {
-    console.log("Error (while updating car):::", error);
     return res.status(404).json({
       success: false,
       msg: "Unable to update user",
@@ -437,7 +430,6 @@ const deleteCarById = async (req, res) => {
       msg: "car deleted successfully",
     });
   } catch (err) {
-    console.log("Error (while deleting user):::", err);
     return res.status(404)?.json({
       success: false,
       msg: "Unable to delete car. Some error occured!",

@@ -43,7 +43,30 @@ const fetchCity = async (req, res) => {
   }
 };
 
+const fetchState = async (req, res) => {
+  try {
+    let allstates = await CityPincode.findAll({
+      attributes: [[Sequelize.fn("DISTINCT", Sequelize.col("state")), "state"]],
+      where: { is_deleted: 0 },
+      order: [["state", "ASC"]],
+    });
+
+    return res.status(200).json({
+      success: true,
+      allstates,
+      msg: "State fetched successfully",
+    });
+  } catch (error) {
+    console.log("Error (while fetching State):::", error);
+    return res.status(404).json({
+      success: false,
+      msg: "Unable to fetch State",
+    });
+  }
+};
+
 module.exports = {
   getPincodeByCityId,
   fetchCity,
+  fetchState
 };

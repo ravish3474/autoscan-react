@@ -44,12 +44,9 @@ const s3Storage = multerS3({
   contentDisposition: "inline",
   contentType: multerS3.AUTO_CONTENT_TYPE,
   metadata: function (req, file, cb) {
-    //console.log('test',file);
-    //   console.log('aws bucket name',process.env.AWS_S3_BUCKET_NAME);
     cb(null, { fieldName: file.fieldname });
   },
   key: function (req, file, cb) {
-    //   console.log('filed');
     const ext = MIME_TYPE_MAP[file.mimetype];
     let fileName = `car_imgs/${uuidv4()}.${ext}`;
     if (req.user && req.user.id) {

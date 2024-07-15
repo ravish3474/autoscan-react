@@ -44,7 +44,6 @@ const getAllInspections = async (req, res) => {
       msg: "Inspection fetched successfully",
     });
   } catch (error) {
-    console.error("Error fetching Inspection:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -208,7 +207,6 @@ const createInspection = async (req, res) => {
       kms_driven,
       ownership,
       manufacturing_year,
-      car_location,
       registration_number,
       car_description,
       status,
@@ -231,7 +229,6 @@ const createInspection = async (req, res) => {
     inspectionObj["kms_driven"] = kms_driven;
     inspectionObj["ownership"] = ownership;
     inspectionObj["manufacturing_year"] = manufacturing_year;
-    inspectionObj["car_location"] = car_location;
     inspectionObj["registration_number"] = registration_number;
     inspectionObj["car_description"] = car_description;
     inspectionObj["inspection_address"] = inspection_address;
@@ -253,7 +250,6 @@ const createInspection = async (req, res) => {
       msg: "Inspection created successfully",
     });
   } catch (error) {
-    console.log("Error (while creating inspection):", error);
     return res.status(500).json({
       success: false,
       msg: "Unable to create inspection",
@@ -273,9 +269,7 @@ const updateInspection = async (req, res) => {
       kms_driven,
       ownership,
       manufacturing_year,
-      car_location,
       registration_number,
-      insurance_validity,
       car_description,
       status,
       inspection_address,
@@ -297,7 +291,6 @@ const updateInspection = async (req, res) => {
     inspectionObj["kms_driven"] = kms_driven;
     inspectionObj["ownership"] = ownership;
     inspectionObj["manufacturing_year"] = manufacturing_year;
-    inspectionObj["car_location"] = car_location;
     inspectionObj["registration_number"] = registration_number;
     inspectionObj["car_description"] = car_description;
     inspectionObj["inspection_address"] = inspection_address;
