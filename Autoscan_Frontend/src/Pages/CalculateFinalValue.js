@@ -515,7 +515,7 @@ function CalculateFinalValue() {
                         <span className="d-inline-flex align-items-center">
                           <ion-icon name="remove-outline"></ion-icon>
                         </span> */}
-                        <p className="price-to m-2">₹{formatPriceWithCommas(price?"":0)}</p>
+                        <p className="price-to m-2">₹{formatPriceWithCommas(price)}</p>
                       </div>
                       <div className="booking-category mt-2">
                         {["Bad", "Fair", "Good", "Excellent"].map(
