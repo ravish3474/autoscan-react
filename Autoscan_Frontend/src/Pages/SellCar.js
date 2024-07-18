@@ -53,6 +53,21 @@ function SellCar() {
   const [odometer, setOdometer] = useState([]);
   const [chessis, setChessis] = useState([]);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [formattedRegistrationNumber, setFormattedRegistrationNumber] = useState('');
+
+  const handleRegistrationNumberChange = (e) => {
+    const inputValue = e.target.value;
+    const formattedValue = inputValue.toUpperCase().replace(
+      /^([A-Z]{2})([0-9]{2})([A-Z]{2})([0-9]{4})$/,
+      "$1$2-$3-$4"
+    );
+    setFormattedRegistrationNumber(formattedValue);
+    const { name} = e.target;
+    setStatePayload((prevState) => ({
+      ...prevState,
+      [name]: formattedValue,
+    }));
+  };
   const [statePayload, setStatePayload] = useState({
     model_id: "",
     brand_id: "",
@@ -688,8 +703,8 @@ function SellCar() {
                             placeholder="Registration Number"
                             name="registration_number"
                             id="registration_number"
-                            value={statePayload.registration_number}
-                            onChange={handleInput}
+                            value={formattedRegistrationNumber}
+                            onChange={handleRegistrationNumberChange}
                           />
                           {errors.registration_number && (
                             <small className="text-danger">

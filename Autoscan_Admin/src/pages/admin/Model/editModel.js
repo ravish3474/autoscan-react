@@ -13,13 +13,18 @@ const EditModel = props => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [brands, setBrands] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
   const [statePayload, setStatePayload] = useState({
     brand: "",
     model_name: "",
+    car_img:"",
     model_year: "",
     status: "",
   });
-
+  const handleImageFileChange = (e) => {
+    console.log("image:", e);
+    setImageFile(e.target.files[0]);
+  };
 
   const handleInput = event => {
     const { name, value } = event.target;
@@ -129,7 +134,9 @@ const EditModel = props => {
     payload.append("model_name", statePayload?.model_name);
     payload.append("model_year", statePayload?.model_year);
     payload.append("status", statePayload?.status);
-
+    if (imageFile) {
+      payload.append("car_img", imageFile);
+    }
     // Calling the api and saving data;
     editNewModel(payload);
   };
@@ -264,7 +271,37 @@ const EditModel = props => {
                     )}
                   </Form.Group>
                 </Col>
-               
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Car Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="files"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={handleImageFileChange}
+                    />
+                    {errors?.files && (
+                      <small className="text-danger"> {errors?.files} </small>
+                    )}
+                  </Form.Group>
+
+                  {statePayload.files && (
+                    <>
+                      <div>
+                        <img
+                          src={statePayload.files}
+                          alt="Selected Image"
+                          style={{ maxWidth: "20%" }}
+                        />
+                      </div>
+                    </>
+                  )}
+                </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">

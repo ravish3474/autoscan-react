@@ -17,11 +17,38 @@ import carImages from "../images/vector/Picture.png";
 function Inspection() {
 
   const history = useHistory();
-  // MultiStep start here
-
   const [activeStep, setActiveStep] = useState(1);
-  const handleNext = () => {
-    setActiveStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure activeStep does not exceed the total number of steps
+  const [price, setPrice] = useState(0); // Initialize price with 0
+  const handleNext = async () => {
+    if (activeStep === 2) {
+      const apiUrl = `${process.env.REACT_APP_API_URL}/calculate/fetch-roadtax`;
+      const payload = {
+        brand_id: statePayload.brand_id,
+        varient_id: statePayload.varient_id,
+        model_id: statePayload.model_id,
+        manufacturing_year: statePayload.manufacturing_year,
+        kms_driven: statePayload.kms_driven,
+        city: statePayload.current_location, // Assuming current_location is the RTO city
+      };
+  
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+  
+        const data = await response.json();
+        const fetchedPrice = data.final_price;
+        setPrice(fetchedPrice);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    setActiveStep((prevStep) => Math.min(prevStep + 1, 3));
   };
 
   const handlePrev = () => {
@@ -31,7 +58,16 @@ function Inspection() {
   const handleHeaderClick = (step) => {
     setActiveStep(step); // Set activeStep directly when clicking on the accordion header
   };
-
+  function formatPriceWithCommas(price) {
+    const roundedPrice = Math.round(price);
+    const priceString = roundedPrice.toString();
+    if (roundedPrice > 999) {
+      return `${priceString.slice(0, -5)},${priceString.slice(-5, -3)},${priceString.slice(-3)}`;
+    } else {
+      return `${priceString}`;
+    }
+  }
+  
   // multiStep ends here
   const [errors, setErrors] = useState({});
   const [brands, setBrands] = useState([]);
@@ -746,8 +782,7 @@ function Inspection() {
                               UsedCarwale APPROX VALUE
                             </h6>
                             <p className="approxValue">
-                              <span className="valueFrom">14,55,556</span>-{" "}
-                              <span className="valueTo">15,89,400</span>
+                              <span className="valueFrom">₹{formatPriceWithCommas(price)}</span>
                             </p>
                           </div>
                         </div>

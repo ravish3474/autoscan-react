@@ -7,19 +7,13 @@ import Vector2 from "../images/vector/Vector5.svg";
 import Vector3 from "../images/vector/Vector4.svg";
 import Vector4 from "../images/vector/Vector7.svg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 function formatPriceWithCommas(price) {
-  // Round off the price to an integer
   const roundedPrice = Math.round(price);
-
-  // Convert to string
   const priceString = roundedPrice.toString();
-
-  // Check if the price is greater than 999 (to determine if comma is needed)
   if (roundedPrice > 999) {
-    // Format with comma for thousands and lakhs
     return `${priceString.slice(0, -5)},${priceString.slice(-5, -3)},${priceString.slice(-3)}`;
   } else {
-    // No comma needed for numbers less than 1000
     return `${priceString}`;
   }
 }
@@ -30,6 +24,30 @@ function CalculateFinalValue() {
   const [payload, setPayload] = useState(null);
   const [price, setPrice] = useState(0); // Initialize price with 0
   const [originalPrice, setOriginalPrice] = useState(0);
+  const [errors, setErrors] = useState({});
+  const [brands, setBrands] = useState([]);
+  const [models, setModels] = useState([]);
+  const [city, setCity] = useState([]);
+  const [varients, setVarients] = useState([]);
+  const [statePayload, setStatePayload] = useState({
+    model_id: "",
+    brand_id: "",
+    varient_id: "",
+    rto_city: "",
+    kms_driven: "",
+    ownership: "",
+    manufacturing_year: "",
+  });
+
+  const handleInput = (event) => {
+    const { name, value } = event.target;
+
+    setStatePayload((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const fetchRoadTax = async () => {
     try {
       const storedPayload = localStorage.getItem("payload");
@@ -69,14 +87,165 @@ function CalculateFinalValue() {
     }
   };
 
+  const fetchCityData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/city/fetch-city`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allcities } = response.data;
+          let data = allcities?.map((item) => ({
+            id: item?.id,
+            label: item?.city,
+            value: item?.city,
+          }));
+          setCity(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
+
+  const fetchBrandData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/brand/brand-list`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allBrands } = response.data;
+          let data = allBrands?.map((item) => ({
+            id: item?.id,
+            label: item?.brand_name,
+            value: item?.id,
+          }));
+          setBrands(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
+
+  const handleBrandSelection = async (brandId, brandName) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/model/fetch-model-by-brand/${brandId}`
+      );
+      const { success, allmodels } = response.data;
+      if (success) {
+        const modelOptions = allmodels.map((item) => ({
+          id: item.id,
+          label: item.model_name,
+          value: item.id,
+        }));
+        setModels(modelOptions);
+      } else {
+        // Handle error case if needed
+        console.error("Failed to fetch models:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching models:", error);
+      // Handle error case if needed
+    }
+  
+    setStatePayload((prevState) => ({
+      ...prevState,
+      brand_id: brandId,
+      brand_name: brandName,
+    }));
+  };
+  
+
+  const handleModelSelection = async (modelId,modelName) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
+      );
+      const { success, allVarients } = response.data;
+      if (success) {
+        const varientOptions = allVarients.map((item) => ({
+          id: item.id,
+          label: item.varient_name,
+          value: item.id,
+        }));
+        setVarients(varientOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setStatePayload((prevState) => ({
+      ...prevState,
+      model_id: modelId,
+      model_name: modelName,
+    }));
+  };
+
+  const handleVarientSelection = (varientId,varientName) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      varient_id: varientId,
+      varient_name: varientName,
+    }));
+  };
+
+  const handleCitySelection = (rto_city) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      rto_city: rto_city,
+    }));
+  };
+  const validateFields = () => {
+    const newErrors = {};
+    if (!statePayload.brand_id) newErrors.brand_id = "Brand is required";
+    if (!statePayload.model_id) newErrors.model_id = "Model is required";
+    if (!statePayload.varient_id) newErrors.varient_id = "Varient is required";
+    if (!statePayload.rto_city) newErrors.rto_city = "RTO city is required";
+    if (!statePayload.manufacturing_year)
+      newErrors.manufacturing_year = "Manufacturing year is required";
+    if (!statePayload.kms_driven)
+      newErrors.kms_driven = "Kilometers driven is required";
+    if (!statePayload.ownership)
+      newErrors.ownership = "Ownership history is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  
+
+  
   useEffect(() => {
+
     const storedPayload = localStorage.getItem("payload");
     if (storedPayload) {
       setPayload(JSON.parse(storedPayload));
     }
   
     fetchRoadTax();
-  }, []); // Trigger useEffect on component mount
+    fetchBrandData();
+    fetchCityData();
+  }, []); 
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setErrors({});
+    if (!validateFields()) {
+      console.log("Validation failed"); 
+      return;
+    }
+    const payload = {
+      model_id: statePayload?.model_id,
+      brand_id: statePayload?.brand_id,
+      varient_id: statePayload?.varient_id,
+      brand_name: statePayload?.brand_name,
+      model_name: statePayload?.model_name,
+      varient_name: statePayload?.varient_name,
+      rto_city: statePayload?.rto_city,
+      kms_driven: statePayload?.kms_driven,
+      ownership: statePayload?.ownership,
+      manufacturing_year: statePayload?.manufacturing_year,
+    };
+  
+    localStorage.setItem("payload", JSON.stringify(payload));
+    fetchRoadTax(); 
+  };
+
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -120,34 +289,205 @@ function CalculateFinalValue() {
               <div className="card border-none">
                 <h6>Evaluate Again</h6>
                 <div className="form-wrapper">
-                  {["Category", "Make", "Model", "Year"].map((label, index) => (
-                    <div className="form-sub-division" key={index}>
-                      <label>{`Select ${label}`}</label>
+                <form>
+                <div className="form-sub-division">
+                      <label>{`Select RTO City`}</label>
                       <select
+                        type="select"
+                        name="rto_city"
+                        id="rto_city"
                         className="form-select"
-                        aria-label="Default select example"
+                        style={{ width: "100%" }}
+                        onChange={(e) => handleCitySelection(e.target?.value)}
+                        required
                       >
-                        <option selected>
-                          {label === "Category" ? "Car" : "Select"}
+                        <option selected disabled defaultValue>
+                          Select RTO City
                         </option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        {city &&
+                          city.map((el) => {
+                            return (
+                              <option key={el?.value} value={el?.value}>
+                                {el?.label}
+                              </option>
+                            );
+                          })}
                       </select>
+                      {errors?.rto_city && (
+                        <small className="text-danger">
+                          {errors?.rto_city}
+                        </small>
+                      )}
                     </div>
-                  ))}
-                  <div className="form-sub-division">
-                    <label>Enter KMS Driven</label>
+                    <div className="form-sub-division">
+                      <label>{`Select Brand`}</label>
+                      <select
+                        type="select"
+                        name="brand_id"
+                         className="form-select"
+                        style={{ width: "100%" }}
+                        onChange={(e) => handleBrandSelection(e.target?.value,e.target.selectedOptions[0].text)}
+                        required
+                      >
+                        <option selected disabled defaultValue>
+                          Select Brand
+                        </option>
+                        {brands &&
+                          brands.map((el) => {
+                            return (
+                              <option key={el?.value} value={el?.id}>
+                                {el?.label}
+                              </option>
+                            );
+                          })}
+                      </select>
+                      {errors?.brand_id && (
+                        <small className="text-danger">
+                          {errors?.brand_id}
+                        </small>
+                      )}
+                    </div>
+                    <div className="form-sub-division">
+                      <label>{`Select Model`}</label>
+                      <select
+                        type="select"
+                        name="model_id"
+                        className="form-select"
+                        style={{ width: "100%" }}
+                        onChange={(e) => handleModelSelection(e.target?.value,e.target.selectedOptions[0].text)}
+                        required
+                      >
+                        <option selected disabled defaultValue>
+                          Select Model
+                        </option>
+                        {models &&
+                          models.map((el) => {
+                            return (
+                              <option key={el?.value} value={el?.id}>
+                                {el?.label}
+                              </option>
+                            );
+                          })}
+                      </select>
+                      {errors?.model_id && (
+                        <small className="text-danger">
+                          {errors?.model_id}
+                        </small>
+                      )}
+                    </div>
+                    <div className="form-sub-division">
+                      <label>{`Select Varient`}</label>
+                      <select
+                        type="select"
+                        name="varient_id"
+                        className="form-select"
+                        style={{ width: "100%" }}
+                        onChange={(e) =>
+                          handleVarientSelection(e.target?.value,e.target.selectedOptions[0].text)
+                        }
+                        required
+                      >
+                        <option selected disabled defaultValue>
+                          Select Varient
+                        </option>
+                        {varients &&
+                          varients.map((el) => {
+                            return (
+                              <option key={el?.value} value={el?.id}>
+                                {el?.label}
+                              </option>
+                            );
+                          })}
+                      </select>
+                      {errors?.varient_id && (
+                        <small className="text-danger">
+                          {errors?.varient_id}
+                        </small>
+                      )}
+                    </div> 
+                    <div className="form-sub-division">
+                      <label>{`Select Manufacturing Year`}</label>
+                      <select
+                            type="select"
+                            name="manufacturing_year"
+                            id="manufacturing_year"
+                            className="col-md-6 mb-1 form-control form-select"
+                            style={{ width: "100%" }}
+                            onChange={handleInput}
+                          >
+                            <option selected disabled defaultValue>
+                              Select Manufacturing Year
+                            </option>
+                            {Array.from(Array(15), (_, i) => i + 2010).map(
+                              (year) => (
+                                <option key={year} value={year}>
+                                  {year}
+                                </option>
+                              )
+                            )}
+                          </select>
+                          {errors.manufacturing_year && (
+                            <small className="text-danger">
+                              {errors.manufacturing_year}
+                            </small>
+                          )}
+                    </div> 
+
+                    <div className="form-sub-division">
+                    <label>{`Select Ownership`}</label>
+                      <input
+                        type="number"
+                        className="form-select"
+                        placeholder="Enter total KMs in odometer"
+                        name="kms_driven"
+                        id="kms_driven"
+                        value={statePayload.kms_driven}
+                        onChange={handleInput}
+                        required
+                      />
+                      {errors?.kms_driven && (
+                        <small className="text-danger">
+                          {errors?.kms_driven}
+                        </small>
+                      )}
+                    </div>
+                    
+                    <div className="form-sub-division">
+                    <label>{`Select Ownership`}</label>
                     <select
-                      className="form-select"
-                      aria-label="Default select example"
+                      type="select"
+                      name="ownership"
+                      className="col-md-6 mb-1 form-control form-select"
+                      style={{ width: "100%" }}
+                      onChange={handleInput}
                     >
-                      <option selected>8999</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <option selected disabled>
+                        Select Ownership
+                      </option>
+
+                      <option value="First Owner">First Owner</option>
+                      <option value="Second Owner">Second Owner</option>
+                      <option value="Third Owner">Third Owner</option>
+                      <option value="Fourth Owner">Fourth Owner</option>
+                      <option value="Unregistered">Unregistered</option>
                     </select>
-                  </div>
+                    {errors?.ownership && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.ownership}{" "}
+                      </small>
+                    )}
+                    </div>
+                    <div className="form-sub-division">
+                      <button
+                        to="finalValue"
+                        className="btn theme-btn next-step"
+                        onClick={handleSubmit}
+                      >
+                        CHECK PRICE
+                      </button>
+                    </div>
+                  </form>
                   <label htmlFor="site-search">Search a Car</label>
                   <input
                     type="search"
@@ -175,7 +515,7 @@ function CalculateFinalValue() {
                         <span className="d-inline-flex align-items-center">
                           <ion-icon name="remove-outline"></ion-icon>
                         </span> */}
-                        <p className="price-to m-2">₹{formatPriceWithCommas(price)}</p>
+                        <p className="price-to m-2">₹{formatPriceWithCommas(price?"":0)}</p>
                       </div>
                       <div className="booking-category mt-2">
                         {["Bad", "Fair", "Good", "Excellent"].map(

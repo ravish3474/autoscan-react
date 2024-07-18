@@ -89,7 +89,18 @@ const modelManagement = () => {
   const columns = [
     { dataField: "Brand.brand_name", text: "Brand Name" },
     { dataField: "model_name", text: "Model Name" },
-    { dataField: "model_year", text: "Model Year" },
+    {
+      dataField: "car_img",
+      text: "Car Image",
+      formatter: (cell, row) => {
+        return (
+          <img
+            src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${row.car_img}`}
+            alt={row.car_img}
+          />
+        );
+      },
+    },
     {
       dataField: "updatedAt",
       text: "Date",

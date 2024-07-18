@@ -17,6 +17,7 @@ const CreateModel = props => {
     brand: "",
     model_name: "",
     model_year: "",
+    car_img:"",
     status: "",
   });
   const handleImageFileChange = (e) => {
