@@ -231,6 +231,26 @@ const updateModel = async (req, res) => {
     let modelObj = {};
     let { brand_id, model_name, model_year, status } = req.body;
 
+    if (req.files && req.files?.length > 0) {
+      req.files?.forEach((item) => {
+        if (item && item !== undefined) {
+          // console.log(item);
+          if (process.env.MEDIA_LOCATION_S3 === "true") {
+            if (item.location) {
+              modelObj[item.fieldname] = item.key;
+            }
+          } else {
+            if (item.path) {
+              modelObj[item.fieldname] = item.path;
+            }
+          }
+        } else if (req.body.image === "null") {
+          //incase user wants to remove its image
+          modelObj[item.fieldname] = "";
+        }
+      });
+    }
+
     modelObj["brand_id"] = brand_id;
     modelObj["model_name"] = model_name;
     modelObj["model_year"] = model_year;
@@ -249,6 +269,7 @@ const updateModel = async (req, res) => {
 
     return res.status(200).json({
       success: true,
+      updatedModel,
       msg: "model updated successfully",
     });
   } catch (error) {

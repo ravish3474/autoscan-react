@@ -196,7 +196,7 @@ const EditModel = props => {
           <Col lg={12}>
             <div className="filter-card-form card-shadow contact-form mt-3">
               <Row>
-              <Col xl={4} lg={4} md={6}>
+                <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
                       Brand<sup>*</sup>
@@ -206,22 +206,26 @@ const EditModel = props => {
                       name="brand_id"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                      onChange={e => handleBrandSelection(e.target?.value)}
+                      onChange={(e) => handleBrandSelection(e.target?.value)}
                     >
                       <option selected disabled>
                         Select Brand
                       </option>
                       {brands &&
-                        brands.map(el => {
+                        brands.map((el) => {
                           return (
-                            <option key={el?.value} value={el?.id}>
+                            <option key={el?.value} value={el?.id}  selected={el?.id == statePayload?.brand_id}>
                               {el?.label}
                             </option>
                           );
                         })}
                     </select>
+
                     {errors?.brand_id && (
-                      <small className="text-danger"> {errors?.brand_id} </small>
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.brand_id}{" "}
+                      </small>
                     )}
                   </Form.Group>
                 </Col>
@@ -273,9 +277,7 @@ const EditModel = props => {
                 </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Car Image.*
-                    </Form.Label>
+                    <Form.Label className="float-label">Car Image.*</Form.Label>
                     <Form.Control
                       type="file"
                       className="form-control"
@@ -312,17 +314,13 @@ const EditModel = props => {
                       name="status"
                       className="col-md-6 mb-1 form-control form-select"
                       style={{ width: "100%" }}
-                       onChange={handleInput}
+                      onChange={handleInput}
                     >
                       <option selected disabled>
                         Select Status
                       </option>
-                        <option value="1">
-                          Active
-                        </option>
-                        <option value="0">
-                          Deactive
-                        </option>
+                      <option value="1" selected={"1"== statePayload?.status}>Active</option>
+                      <option value="0" selected={"0" == statePayload?.status}>Deactive</option>
                     </select>
                     {errors?.status && (
                       <small className="text-danger"> {errors?.status} </small>
@@ -330,7 +328,6 @@ const EditModel = props => {
                   </Form.Group>
                 </Col>
               </Row>
-
 
               <Form.Group className="cta text-center d-flex justify-content-center mt-4">
                 <ButtonLoader
@@ -347,7 +344,7 @@ const EditModel = props => {
                   title="Cancel"
                   variant="secondary"
                   type="submit"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     window.location.href = "/model-management";
                   }}

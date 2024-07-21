@@ -8,7 +8,6 @@ import {
 import { Form } from "reactstrap";
 import { Col, Container, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
-import FunnelChart from "./FunnelChart";
 import arrow from "../../../assets/images/icon/arrow.svg";
 import calender_icon from "../../../assets/images/icon/calender.svg";
 import DatePicker from "react-datepicker";
