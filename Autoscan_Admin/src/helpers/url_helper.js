@@ -194,6 +194,4 @@ export const UPDATE_SETTING_URL = "/api/admin/frontend-access/update";
 export const DELETE_SETTING_URL = "/api/admin/frontend-access/delete";
 
 export const DOWNLOAD_CSV = "/admin/candidate-details/downloadcsv";
-export const DASHBOARD_DATA = "/admin/common/getdashboarddata";
-export const AGENDA_DATA = "/admin/common/getagendadetails";
 // export const DOWNLOAD_DEPART_CSV = "/admin/department/downloadCsv";

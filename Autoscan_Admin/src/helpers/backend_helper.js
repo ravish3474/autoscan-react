@@ -2532,41 +2532,8 @@ export const downloadCSVReport = (payload) => {
 // };
 
 
-export const FetchDashboardData = (payload) => {
-  const token = authHeader();
 
-  let configHeaders = {};
 
-  if (token) {
-    configHeaders = {
-      headers: {
-        Authorization: token,
-      },
-    };
-  }
-
-  return get(`${url.DASHBOARD_DATA}` + payload, {
-    ...configHeaders,
-  });
-};
-
-export const getTodayAgendaDetails = () => {
-  const token = authHeader();
-
-  let configHeaders = {};
-
-  if (token) {
-    configHeaders = {
-      headers: {
-        Authorization: token,
-      },
-    };
-  }
-
-  return get(`${url.AGENDA_DATA}`, {
-    ...configHeaders,
-  });
-};
 
 export {
   getAssessmentReportAPI,

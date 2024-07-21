@@ -3,53 +3,53 @@ import { Redirect } from "react-router-dom";
 // User profile
 // import Home from "../pages/frontend/index";
 // Authentication related pages
-import Login from "../pages/admin/Authentication/Login";
-import Logout from "../pages/admin/Authentication/Logout";
-import ForgetPwd from "../pages/admin/Authentication/ForgetPassword";
-import AccessDenied from "../pages/admin/Authentication/AccessDenied";
-import ChangePassword from "../pages/admin/Authentication/ChangePassword";
-import ResetPassword from "../pages/admin/Authentication/ResetPassword";
+import Login from "../pages/Authentication/Login";
+import Logout from "../pages/Authentication/Logout";
+import ForgetPwd from "../pages/Authentication/ForgetPassword";
+import AccessDenied from "../pages/Authentication/AccessDenied";
+import ChangePassword from "../pages/Authentication/ChangePassword";
+import ResetPassword from "../pages/Authentication/ResetPassword";
 
 // Dashboard
-import RecruitmentDashboard from "../pages/admin/Dashboard/Dashboard";
-import CreateUser from "../pages/admin/Users/createUser";
-import EditUser from "../pages/admin/Users/editUser";
-import UserList from "../pages/admin/Users/userList";
-import RoleList from "../pages/admin/settings/role-management/roleList";
+import RecruitmentDashboard from "../pages/Dashboard/Dashboard";
+import CreateUser from "../pages/Users/createUser";
+import EditUser from "../pages/Users/editUser";
+import UserList from "../pages/Users/userList";
+import RoleList from "../pages/settings/role-management/roleList";
 /**-role-management */
-import RoleManagement from "../pages/admin/settings/role-management/RoleManagement";
-import AddRoleManagement from "../pages/admin/settings/role-management/AddRoleManagement";
-import EditRoleManagement from "../pages/admin/settings/role-management/EditRoleManagement";
+import RoleManagement from "../pages/settings/role-management/RoleManagement";
+import AddRoleManagement from "../pages/settings/role-management/AddRoleManagement";
+import EditRoleManagement from "../pages/settings/role-management/EditRoleManagement";
 // /**-manage-user */
 /**-brand-management */
-import BrandManagement from "../pages/admin/Brand/brandManagement";
-import AddBrandManagement from "../pages/admin/Brand/createBrand";
-import EditBrandManagement from "../pages/admin/Brand/editBrand";
+import BrandManagement from "../pages/Brand/brandManagement";
+import AddBrandManagement from "../pages/Brand/createBrand";
+import EditBrandManagement from "../pages/Brand/editBrand";
 /**-model-management */
-import ModelManagement from "../pages/admin/Model/modelManagement";
-import AddModelManagement from "../pages/admin/Model/createModel";
-import EditModelManagement from "../pages/admin/Model/editModel";
+import ModelManagement from "../pages/Model/modelManagement";
+import AddModelManagement from "../pages/Model/createModel";
+import EditModelManagement from "../pages/Model/editModel";
 /**-varient-management */
-import VarientManagement from "../pages/admin/Varient/varientManagement";
-import AddVarientManagement from "../pages/admin/Varient/createVarient";
-import EditVarientManagement from "../pages/admin/Varient/editVarient";
+import VarientManagement from "../pages/Varient/varientManagement";
+import AddVarientManagement from "../pages/Varient/createVarient";
+import EditVarientManagement from "../pages/Varient/editVarient";
 
 /**-car-management */
-import CarManagement from "../pages/admin/Car/carManagement";
-import AddCarManagement from "../pages/admin/Car/createCar";
-import EditCarManagement from "../pages/admin/Car/editCar";
-import ViewCarManagement from "../pages/admin/Car/viewCar";
+import CarManagement from "../pages/Car/carManagement";
+import AddCarManagement from "../pages/Car/createCar";
+import EditCarManagement from "../pages/Car/editCar";
+import ViewCarManagement from "../pages/Car/viewCar";
 /**-inspection-management */
-import InspectionManagement from "../pages/admin/Inspection/inspectionManagement";
-import AddInspectionManagement from "../pages/admin/Inspection/createInspection";
-import EditInspectionManagement from "../pages/admin/Inspection/editInspection";
-import ViewInspectionManagement from "../pages/admin/Inspection/viewInspection";
+import InspectionManagement from "../pages/Inspection/inspectionManagement";
+import AddInspectionManagement from "../pages/Inspection/createInspection";
+import EditInspectionManagement from "../pages/Inspection/editInspection";
+import ViewInspectionManagement from "../pages/Inspection/viewInspection";
 
 /**-ibidding-management */
-import BiddingManagement from "../pages/admin/Bidding/biddingManagement";
-import AddBiddingManagement from "../pages/admin/Bidding/createBidding";
-import EditBiddingManagement from "../pages/admin/Bidding/editBidding";
-import ViewBiddingManagement from "../pages/admin/Bidding/viewBidding";
+import BiddingManagement from "../pages/Bidding/biddingManagement";
+import AddBiddingManagement from "../pages/Bidding/createBidding";
+import EditBiddingManagement from "../pages/Bidding/editBidding";
+import ViewBiddingManagement from "../pages/Bidding/viewBidding";
 
 const authProtectedRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="dashboard" /> },
