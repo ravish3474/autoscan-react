@@ -14,7 +14,7 @@ export default function SettingManagement() {
             <div className="breadcums-list">
               <ul className="margin-remove m-0">
                 <li className="margin-remove padding-remove">
-                  <Link to="/role-list">Roles Management</Link>
+                  <Link to="/role-list">Roles Managements</Link>
                 </li>
              
                 <li className="margin-remove padding-remove">
