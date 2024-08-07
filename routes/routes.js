@@ -13,7 +13,7 @@ const InspectionRoutes = require("./inspectionRoutes.js");
 const CityRoutes = require("./cityRoutes.js");
 const MakeOfferRoutes = require("./makeofferRoutes.js");
 const RoadTaxRoutes = require("./RoadTaxRoutes.js");
-const DealerRoutes = require("./DealerRoutes.js");
+const DealerRoutes = require("./dealerRoutes.js");
 // customer routes
 const AuthCustomerRoutes = require("./frontend/authRoutes.js");
 
