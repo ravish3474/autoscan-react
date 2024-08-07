@@ -90,9 +90,8 @@ const carManagement = () => {
     { dataField: "varient.varient_name", text: "Varient Name" },
     { dataField: "registration_state", text: "Registration State" },
     { dataField: "pincode", text: "Pincode" },
-    { dataField: "car_location", text: "Car location" },
     { dataField: "manufacturing_year", text: "Manufacturing Year" },
-    { dataField: "ex_showroom", text: "Ex Showroom Price" },
+    { dataField: "price", text: "Selling Price" },
     {
       dataField: "updatedAt",
       text: "Date",

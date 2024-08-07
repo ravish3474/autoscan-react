@@ -865,7 +865,7 @@ span.calender-icon.form {
 }
 
 body[data-sidebar="dark"] .navbar-brand-box {
-  background: transparent;
+  background: #FFF !important;
 }
 
 #sidebar-menu::-webkit-scrollbar-track {

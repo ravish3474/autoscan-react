@@ -128,6 +128,12 @@ class Sidebar extends Component {
                     </li>
                   </ul>
                 </li>
+                <li className="mm-active">
+                  <Link to="/dealer-list">
+                  <img src={settings} alt="" />
+                    <span>Manage Dealer</span>
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

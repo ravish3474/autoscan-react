@@ -34,9 +34,7 @@ const EditCar = (props) => {
     ownership: "",
     manufacturing_year: "",
     registration_state: "",
-    car_location: "",
     registration_number: "",
-    ex_showroom: "",
     price: "",
     car_description: "",
     front_view: frontView || "",
@@ -250,9 +248,7 @@ const EditCar = (props) => {
     payload.append("ownership", statePayload?.ownership);
     payload.append("manufacturing_year", statePayload?.manufacturing_year);
     payload.append("registration_state", statePayload?.registration_state);
-    payload.append("car_location", statePayload?.car_location);
     payload.append("registration_number", statePayload?.registration_number);
-    payload.append("ex_showroom", statePayload?.ex_showroom);
     payload.append("price", statePayload?.price);
     payload.append("car_description", statePayload?.car_description);
     payload.append("status", statePayload?.status);
@@ -496,29 +492,7 @@ const EditCar = (props) => {
                     )}
                   </Form.Group>
                 </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label className="float-label">
-                      Car Location
-                      <sup>
-                        <sup>*</sup>
-                      </sup>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=" "
-                      name="car_location"
-                      value={statePayload.car_location}
-                      onChange={handleInput}
-                    />
-                    {errors.car_location && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors.car_location}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-                </Col>
+               
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -542,29 +516,7 @@ const EditCar = (props) => {
                     )}
                   </Form.Group>
                 </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label className="float-label">
-                      Ex Showroom Price
-                      <sup>
-                        <sup>*</sup>
-                      </sup>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=" "
-                      name="ex_showroom"
-                      value={statePayload.ex_showroom}
-                      onChange={handleInput}
-                    />
-                    {errors.ex_showroom && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors.ex_showroom}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-                </Col>
+              
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">

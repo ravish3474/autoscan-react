@@ -65,7 +65,7 @@ class Dashboard extends Component {
       ca_drop_count: 0,
       ca_signed_by_investor_pending_by_trustee: 0,
       ca_signed_by_all_process_completed: 0,
-      saas_name: "Mamypoko",
+      saas_name: "Usedcarwale",
       is_super_admin: JSON.parse(localStorage.getItem("authUser"))?.userInfo
         ?.is_super_admin,
       access: JSON.parse(localStorage.getItem("roleWiseAccess")),
@@ -134,10 +134,10 @@ class Dashboard extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Dashboard | Mamypoko - Admin</title>
+            <title>Dashboard | Usedcarwale - Admin</title>
           </MetaTags>
           <Container fluid>
-            <h3 className="mb-5">Welcome to Mamypoko Admin Panel !</h3>
+            <h3 className="mb-5">Welcome to Usedcarwale Admin Panel !</h3>
             {/* Render Breadcrumb */}
             {/* <Breadcrumbs
               title={this.props.t("Dashboards")}

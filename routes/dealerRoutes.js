@@ -1,0 +1,12 @@
+const dealerController = require("../controllers/dealerController");
+const express = require("express");
+const router = express.Router();
+const multer = require('multer');
+const upload = multer();
+router.post('/create-dealer',upload.none(),dealerController.createNewDealer);
+router.get("/list", dealerController.getAlDealerPagination);
+router.get('/fetch-dealer', dealerController.getAllDealers);
+router.get('/fetch-dealerbyid/:dealerId',dealerController.getDealerById);
+router.patch('/update-dealer/:dealerId',dealerController.updateDealerById);
+router.delete('/delete-dealer/:dealerId',dealerController.deleteDealerById);
+module.exports = router;

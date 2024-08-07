@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import defaultCarImage from "../images/cars/carValuation.png";
 function TrendingSearches() {
   const [cars, setCars] = useState([]);
   useEffect(() => {
@@ -37,7 +38,11 @@ function TrendingSearches() {
                   <div className="card-body p-0">
                     <figure className="m-0">
                       <img
-                        src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`}
+                         src={
+                          car.model.car_img
+                            ? `https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.model.car_img}`
+                            : defaultCarImage
+                        }
                         alt=""
                         className="arrow-img W100"
                       />

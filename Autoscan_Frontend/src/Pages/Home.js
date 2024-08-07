@@ -10,7 +10,6 @@ import TrendingSearches from "./TrendingSearches";
 import ExploreCar from "../Pages/ExploreCar"; // Import ExploreCar page
 import SellCar from "../Pages/SellCar"; // Import SellCar component
 import CarDetails from "../Pages/CarDetails"; // Import CarDetails component
-
 function Home() {
   return (
     <Router>

@@ -38,6 +38,7 @@ const getAllBrands = async (req, res) => {
   try {
     const brands = await Brand.findAll({
       where: { is_deleted: 0 },
+      order: [["brand_name", "ASC"]],
     });
     return res.status(200).json({
       success: true,

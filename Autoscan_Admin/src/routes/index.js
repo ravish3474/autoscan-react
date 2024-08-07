@@ -51,6 +51,12 @@ import AddBiddingManagement from "../pages/Bidding/createBidding";
 import EditBiddingManagement from "../pages/Bidding/editBidding";
 import ViewBiddingManagement from "../pages/Bidding/viewBidding";
 
+// Dealer-management
+import DealerList from "../pages/Dealers/dealerList";
+import CreateDealer from "../pages/Dealers/createDealer";
+import EditDealer from "../pages/Dealers/editDealer";
+
+
 const authProtectedRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="dashboard" /> },
   { path: "/dashboard", component: RecruitmentDashboard },
@@ -58,6 +64,13 @@ const authProtectedRoutes = [
   { path: "/create-user", component: CreateUser },
   { path: "/edit-user/:userId", component: EditUser },
   { path: "/user-list", component: UserList },
+
+
+  //dealer
+  { path: "/create-dealer", component: CreateDealer },
+  { path: "/edit-dealer/:dealerId", component: EditDealer },
+  { path: "/dealer-list", component: DealerList },
+
   { path: "/change-password", component: ChangePassword },
   { path: "/role-list", component: RoleList },
 

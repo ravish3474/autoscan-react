@@ -59,7 +59,7 @@ const getAllCars = async (req, res) => {
         {
           model: Model,
           key: "id",
-          attributes: ["model_name"],
+          attributes: ["model_name","car_img"],
         },
         {
           model: Varient,
@@ -240,15 +240,19 @@ const createCar = async (req, res) => {
       ownership,
       manufacturing_year,
       registration_state,
-      car_location,
       registration_number,
-      ex_showroom,
       price,
       car_description,
       car_addedby_user_id,
       status,
     } = req.body;
-
+    const existingCar = await Car.findOne({ registration_number });
+    if (existingCar) {
+      return res.status(400).json({
+        success: false,
+        msg: "Registration number already exists",
+      });
+    }
     let carObj = {};
     carObj["model_id"] = model_id;
     carObj["brand_id"] = brand_id;
@@ -258,9 +262,7 @@ const createCar = async (req, res) => {
     carObj["ownership"] = ownership;
     carObj["manufacturing_year"] = manufacturing_year;
     carObj["registration_state"] = registration_state;
-    carObj["car_location"] = car_location;
     carObj["registration_number"] = registration_number;
-    carObj["ex_showroom"] = ex_showroom;
     carObj["price"] = price;
     carObj["car_description"] = car_description;
     carObj["car_addedby_user_id"] = car_addedby_user_id;

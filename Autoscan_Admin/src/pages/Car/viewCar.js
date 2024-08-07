@@ -102,15 +102,7 @@ export default function viewCar() {
                     <td>{car?.registration_number}</td>
                   </tr>
                   <tr>
-                    <th>Car Location</th>
-                    <td>{car?.car_location}</td>
-                  </tr>
-                  <tr>
-                    <th>Ex Showroom Price:</th>
-                    <td>{car?.ex_showroom}</td>
-                  </tr>
-                  <tr>
-                    <th>Asking Price:</th>
+                    <th>Selling Price:</th>
                     <td>{car?.price}</td>
                   </tr>
                   <tr>

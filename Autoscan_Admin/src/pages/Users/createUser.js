@@ -158,12 +158,6 @@ const createUser = props => {
 
   /**multi-select**/
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const options = [
-    { value: "1", label: "Mamypoko" },
-    { value: "2", label: "Sofy" },
-    { value: "3", label: "Lifree" },
-    // Add more options as needed
-  ];
   const handleChange = selectedValues => {
     setSelectedOptions(selectedValues);
   };

@@ -27,37 +27,9 @@ const editUser = props => {
   const [imageFile, setImageFile] = useState(null);
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const options = [
-    { value: "1", label: "Mamypoko" },
-    { value: "2", label: "Sofy" },
-    { value: "3", label: "Lifree" },
-    // Add more options as needed
-  ];
   const handleChange = selectedValues => {
     setSelectedOptions(selectedValues);
   };
-  // const handleFileChange = (event) => {
-  //   const selectedFile = event.target.files[0];
-  //   if (selectedFile) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setImageUrl(reader.result);
-  //     };
-  //     reader.readAsDataURL(selectedFile);
-  //     setFile(selectedFile);
-
-  //   }
-  // };
-  // Function to handle image upload
-  // const handleImageUpload = () => {
-  //   // Here, you can implement your image upload logic
-  //   // For example, you can use FormData to send the file to your server
-  //   if (file) {
-  //     const formData = new FormData();
-  //     formData.append('image', file);
-  //     // Example: send formData to your server using fetch or axios
-  //   }
-  // };
 
   const handleImageFileChange = e => {
     console.log("image:", e);
