@@ -244,9 +244,19 @@ const createCar = async (req, res) => {
       price,
       car_description,
       car_addedby_user_id,
+      car_addedby_dealer_id,
       status,
+      engine_transmission,
+      dimension,
+      weight,
+      capacity,
+      suspensions,
+      breaks,
+      streering_tires
     } = req.body;
-    const existingCar = await Car.findOne({ registration_number });
+    const existingCar = await Car.findOne({  where: {
+      registration_number: registration_number,
+    }, });
     if (existingCar) {
       return res.status(400).json({
         success: false,
@@ -254,6 +264,30 @@ const createCar = async (req, res) => {
       });
     }
     let carObj = {};
+    if (engine_transmission) {
+      carObj["engine_transmission"] = engine_transmission;
+    }
+    if (dimension) {
+      carObj["dimension"] = dimension;
+    }
+    if (weight) {
+      carObj["weight"] = weight;
+    }
+    if (capacity) {
+      carObj["capacity"] = capacity;
+    }
+    if (suspensions) {
+      carObj["suspensions"] = suspensions;
+    }
+    if (breaks) {
+      carObj["breaks"] = breaks;
+    }
+    if (streering_tires) {
+      carObj["streering_tires"] = streering_tires;
+    }
+    if (car_addedby_dealer_id) {
+      carObj["car_addedby_dealer_id"] = car_addedby_dealer_id;
+    }
     carObj["model_id"] = model_id;
     carObj["brand_id"] = brand_id;
     carObj["varient_id"] = varient_id;
@@ -295,6 +329,7 @@ const createCar = async (req, res) => {
       msg: "Car created successfully",
     });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       success: false,
       msg: "Unable to create car",

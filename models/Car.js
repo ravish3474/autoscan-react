@@ -44,14 +44,6 @@ const Car = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    car_location: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    ex_showroom: {
-      type: DataTypes.INTEGER(10),
-      allowNull: false,
-    },
     price: {
       type: DataTypes.INTEGER(10),
       allowNull: false,
@@ -82,6 +74,41 @@ const Car = sequelize.define(
       defaultValue: null,
     },
     chessis: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    engine_transmission: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    dimension: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    weight: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    capacity: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    suspensions: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    breaks: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    streering_tires: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
