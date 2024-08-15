@@ -210,47 +210,97 @@ function SellCar() {
     event.preventDefault();
     setErrors({});
 
-    let payload = new FormData();
-    payload.append("model_id", statePayload?.model_id);
-    payload.append("brand_id", statePayload?.brand_id);
-    payload.append("varient_id", statePayload?.varient_id);
-    payload.append("pincode", statePayload?.pincode);
-    payload.append("kms_driven", statePayload?.kms_driven);
-    payload.append("ownership", statePayload?.ownership);
-    payload.append("manufacturing_year", statePayload?.manufacturing_year);
-    payload.append("registration_state", statePayload?.registration_state);
-    payload.append("car_location", statePayload?.car_location);
-    payload.append("registration_number", statePayload?.registration_number);
-    payload.append("ex_showroom", statePayload?.ex_showroom);
-    payload.append("price", statePayload?.price);
-    payload.append("car_description", statePayload?.car_description);
-    payload.append("status", statePayload?.status);
-
-    if (frontView) {
-      payload.append("front_view", frontView);
+    let errors = {};
+    if (!statePayload.pincode) {
+      errors.pincode = "Pincode is required";
     }
-    if (frontRight) {
-      payload.append("front_right", frontRight);
+    if (!statePayload.current_location) {
+      errors.current_location = "Current Location is required";
     }
-    if (leftView) {
-      payload.append("left_view", leftView);
-    }
-    if (rearView) {
-      payload.append("rear_view", rearView);
-    }
-    if (odometer) {
-      payload.append("odometer", odometer);
-    }
-    if (chessis) {
-      payload.append("chessis", chessis);
+    if (!statePayload.brand_id) {
+      errors.brand_id = "Brand is required";
     }
 
-    if (localStorage.getItem("authUser")) {
-      let user_id = localStorage.getItem("user_id");
-      payload.append("car_addedby_user_id", user_id);
-      createNewCar(payload);
-    } else {
-      setShowUserModal(true);
+    if (!statePayload.model_id) {
+      errors.model_id = "Model is required";
+    }
+
+    if (!statePayload.varient_id) {
+      errors.varient_id = "Varient is required";
+    }
+    if (!statePayload.kms_driven) {
+      errors.kms_driven = "Kms Driven is required";
+    }
+
+    if (!statePayload.ownership) {
+      errors.ownership = "Ownership is required";
+    }
+
+    if (!statePayload.manufacturing_year) {
+      errors.manufacturing_year = "Manufacturing Year is required";
+    }
+
+    if (!statePayload.registration_state) {
+      errors.registration_state = "Registration State is required";
+    }
+
+    if (!statePayload.car_location) {
+      errors.car_location = "Car Location is required";
+    }
+
+    if (!statePayload.registration_number) {
+      errors.registration_number = "Registration Number is required";
+    }
+
+    if (!statePayload.price) {
+      errors.price = "Price is required";
+    }
+
+
+    setErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      let payload = new FormData();
+      payload.append("model_id", statePayload?.model_id);
+      payload.append("brand_id", statePayload?.brand_id);
+      payload.append("varient_id", statePayload?.varient_id);
+      payload.append("pincode", statePayload?.pincode);
+      payload.append("kms_driven", statePayload?.kms_driven);
+      payload.append("ownership", statePayload?.ownership);
+      payload.append("manufacturing_year", statePayload?.manufacturing_year);
+      payload.append("registration_state", statePayload?.registration_state);
+      payload.append("car_location", statePayload?.car_location);
+      payload.append("registration_number", statePayload?.registration_number);
+      payload.append("ex_showroom", statePayload?.ex_showroom);
+      payload.append("price", statePayload?.price);
+      payload.append("car_description", statePayload?.car_description);
+      payload.append("status", statePayload?.status);
+
+      if (frontView) {
+        payload.append("front_view", frontView);
+      }
+      if (frontRight) {
+        payload.append("front_right", frontRight);
+      }
+      if (leftView) {
+        payload.append("left_view", leftView);
+      }
+      if (rearView) {
+        payload.append("rear_view", rearView);
+      }
+      if (odometer) {
+        payload.append("odometer", odometer);
+      }
+      if (chessis) {
+        payload.append("chessis", chessis);
+      }
+
+      if (localStorage.getItem("authUser")) {
+        let user_id = localStorage.getItem("user_id");
+        payload.append("car_addedby_user_id", user_id);
+        createNewCar(payload);
+      } else {
+        setShowUserModal(true);
+      }
     }
   };
 
@@ -407,6 +457,12 @@ function SellCar() {
                                 );
                               })}
                           </select>
+                          {errors?.current_location && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.current_location}{" "}
+                            </small>
+                          )}
                           <label
                             htmlFor="current_location"
                             className="form__label"
@@ -522,6 +578,12 @@ function SellCar() {
                                 );
                               })}
                           </select>
+                          {errors?.brand_id && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.brand_id}{" "}
+                            </small>
+                          )}
                           <label for="BrandName" className="form__label">
                             Select Brand
                           </label>
@@ -595,13 +657,20 @@ function SellCar() {
                         <div className="form__group field">
                           <input
                             className="form__field"
-                            type="text"
+                            type="number"
                             placeholder="Km Driven"
+                             min="0"
                             name="kms_driven"
                             id="kms_driven"
                             value={statePayload.kms_driven}
                             onChange={handleInput}
                           />
+                           {errors?.kms_driven && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.kms_driven}{" "}
+                            </small>
+                          )}
                           <label for="kms_driven" className="form__label">
                             Km Driven
                           </label>
@@ -689,6 +758,12 @@ function SellCar() {
                                 );
                               })}
                           </select>
+                          {errors?.registration_state && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.registration_state}{" "}
+                            </small>
+                          )}
                           <label
                             htmlFor="registration_state"
                             className="form__label"
@@ -722,7 +797,8 @@ function SellCar() {
                         <div className="form__group field ">
                           <input
                             className="form__field"
-                            type="text"
+                           type="number"
+                           min="10000"
                             placeholder="Selling Price"
                             name="price"
                             id="price"

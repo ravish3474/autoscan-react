@@ -77,6 +77,7 @@ function CarValuation() {
           id: item.id,
           label: item.model_name,
           value: item.id,
+          car_img:item.car_img
         }));
         setModels(modelOptions);
       } else {
@@ -96,7 +97,7 @@ function CarValuation() {
   };
   
 
-  const handleModelSelection = async (modelId,modelName) => {
+  const handleModelSelection = async (modelId,modelName,car_img) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
@@ -117,6 +118,7 @@ function CarValuation() {
       ...prevState,
       model_id: modelId,
       model_name: modelName,
+      car_img:car_img
     }));
   };
 
@@ -170,6 +172,7 @@ function CarValuation() {
       varient_id: statePayload?.varient_id,
       brand_name: statePayload?.brand_name,
       model_name: statePayload?.model_name,
+      car_img: statePayload?.car_img,
       varient_name: statePayload?.varient_name,
       rto_city: statePayload?.rto_city,
       kms_driven: statePayload?.kms_driven,
@@ -246,7 +249,13 @@ function CarValuation() {
                         name="model_id"
                         className="col-md-6 mb-1 form-control form-select"
                         style={{ width: "100%" }}
-                        onChange={(e) => handleModelSelection(e.target?.value,e.target.selectedOptions[0].text)}
+                        onChange={(e) => {
+                          const selectedOption = e.target.selectedOptions[0];
+                          const id = selectedOption.value;
+                          const label = selectedOption.text;
+                          const car_img = selectedOption.getAttribute('data-img');
+                          handleModelSelection(id, label, car_img);
+                        }}
                         required
                       >
                         <option selected disabled>
@@ -255,7 +264,7 @@ function CarValuation() {
                         {models &&
                           models.map((el) => {
                             return (
-                              <option key={el?.value} value={el?.id}>
+                              <option key={el?.value} value={el?.id}  data-img={el?.car_img}>
                                 {el?.label}
                               </option>
                             );

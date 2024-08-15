@@ -134,6 +134,7 @@ function CalculateFinalValue() {
           id: item.id,
           label: item.model_name,
           value: item.id,
+          car_img:item.car_img
         }));
         setModels(modelOptions);
       } else {
@@ -153,7 +154,7 @@ function CalculateFinalValue() {
   };
   
 
-  const handleModelSelection = async (modelId,modelName) => {
+  const handleModelSelection = async (modelId,modelName,car_img) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/varient/fetch-varient-by-model/${modelId}`
@@ -174,6 +175,7 @@ function CalculateFinalValue() {
       ...prevState,
       model_id: modelId,
       model_name: modelName,
+      car_img:car_img
     }));
   };
 
@@ -223,6 +225,7 @@ function CalculateFinalValue() {
   }, []); 
 
   const handleSubmit = (event) => {
+   
     event.preventDefault();
     setErrors({});
     if (!validateFields()) {
@@ -237,12 +240,17 @@ function CalculateFinalValue() {
       model_name: statePayload?.model_name,
       varient_name: statePayload?.varient_name,
       rto_city: statePayload?.rto_city,
+      car_img: statePayload?.car_img,
       kms_driven: statePayload?.kms_driven,
       ownership: statePayload?.ownership,
       manufacturing_year: statePayload?.manufacturing_year,
     };
   
     localStorage.setItem("payload", JSON.stringify(payload));
+    const storedPayload = localStorage.getItem("payload");
+    if (storedPayload) {
+      setPayload(JSON.parse(storedPayload));
+    }
     fetchRoadTax(); 
   };
 
@@ -289,8 +297,8 @@ function CalculateFinalValue() {
               <div className="card border-none">
                 <h6>Evaluate Again</h6>
                 <div className="form-wrapper">
-                <form>
-                <div className="form-sub-division">
+                  <form>
+                    <div className="form-sub-division">
                       <label>{`Select RTO City`}</label>
                       <select
                         type="select"
@@ -324,9 +332,14 @@ function CalculateFinalValue() {
                       <select
                         type="select"
                         name="brand_id"
-                         className="form-select"
+                        className="form-select"
                         style={{ width: "100%" }}
-                        onChange={(e) => handleBrandSelection(e.target?.value,e.target.selectedOptions[0].text)}
+                        onChange={(e) =>
+                          handleBrandSelection(
+                            e.target?.value,
+                            e.target.selectedOptions[0].text
+                          )
+                        }
                         required
                       >
                         <option selected disabled defaultValue>
@@ -354,7 +367,13 @@ function CalculateFinalValue() {
                         name="model_id"
                         className="form-select"
                         style={{ width: "100%" }}
-                        onChange={(e) => handleModelSelection(e.target?.value,e.target.selectedOptions[0].text)}
+                        onChange={(e) => {
+                          const selectedOption = e.target.selectedOptions[0];
+                          const id = selectedOption.value;
+                          const label = selectedOption.text;
+                          const car_img = selectedOption.getAttribute('data-img');
+                          handleModelSelection(id, label, car_img);
+                        }}
                         required
                       >
                         <option selected disabled defaultValue>
@@ -363,7 +382,7 @@ function CalculateFinalValue() {
                         {models &&
                           models.map((el) => {
                             return (
-                              <option key={el?.value} value={el?.id}>
+                              <option key={el?.value} value={el?.id}  data-img={el?.car_img}>
                                 {el?.label}
                               </option>
                             );
@@ -383,7 +402,10 @@ function CalculateFinalValue() {
                         className="form-select"
                         style={{ width: "100%" }}
                         onChange={(e) =>
-                          handleVarientSelection(e.target?.value,e.target.selectedOptions[0].text)
+                          handleVarientSelection(
+                            e.target?.value,
+                            e.target.selectedOptions[0].text
+                          )
                         }
                         required
                       >
@@ -404,37 +426,37 @@ function CalculateFinalValue() {
                           {errors?.varient_id}
                         </small>
                       )}
-                    </div> 
+                    </div>
                     <div className="form-sub-division">
                       <label>{`Select Manufacturing Year`}</label>
                       <select
-                            type="select"
-                            name="manufacturing_year"
-                            id="manufacturing_year"
-                            className="col-md-6 mb-1 form-control form-select"
-                            style={{ width: "100%" }}
-                            onChange={handleInput}
-                          >
-                            <option selected disabled defaultValue>
-                              Select Manufacturing Year
+                        type="select"
+                        name="manufacturing_year"
+                        id="manufacturing_year"
+                        className="col-md-6 mb-1 form-control form-select"
+                        style={{ width: "100%" }}
+                        onChange={handleInput}
+                      >
+                        <option selected disabled defaultValue>
+                          Select Manufacturing Year
+                        </option>
+                        {Array.from(Array(15), (_, i) => i + 2010).map(
+                          (year) => (
+                            <option key={year} value={year}>
+                              {year}
                             </option>
-                            {Array.from(Array(15), (_, i) => i + 2010).map(
-                              (year) => (
-                                <option key={year} value={year}>
-                                  {year}
-                                </option>
-                              )
-                            )}
-                          </select>
-                          {errors.manufacturing_year && (
-                            <small className="text-danger">
-                              {errors.manufacturing_year}
-                            </small>
-                          )}
-                    </div> 
+                          )
+                        )}
+                      </select>
+                      {errors.manufacturing_year && (
+                        <small className="text-danger">
+                          {errors.manufacturing_year}
+                        </small>
+                      )}
+                    </div>
 
                     <div className="form-sub-division">
-                    <label>{`Select Ownership`}</label>
+                      <label>{`Select Ownership`}</label>
                       <input
                         type="number"
                         className="form-select"
@@ -451,32 +473,32 @@ function CalculateFinalValue() {
                         </small>
                       )}
                     </div>
-                    
-                    <div className="form-sub-division">
-                    <label>{`Select Ownership`}</label>
-                    <select
-                      type="select"
-                      name="ownership"
-                      className="col-md-6 mb-1 form-control form-select"
-                      style={{ width: "100%" }}
-                      onChange={handleInput}
-                    >
-                      <option selected disabled>
-                        Select Ownership
-                      </option>
 
-                      <option value="First Owner">First Owner</option>
-                      <option value="Second Owner">Second Owner</option>
-                      <option value="Third Owner">Third Owner</option>
-                      <option value="Fourth Owner">Fourth Owner</option>
-                      <option value="Unregistered">Unregistered</option>
-                    </select>
-                    {errors?.ownership && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors?.ownership}{" "}
-                      </small>
-                    )}
+                    <div className="form-sub-division">
+                      <label>{`Select Ownership`}</label>
+                      <select
+                        type="select"
+                        name="ownership"
+                        className="col-md-6 mb-1 form-control form-select"
+                        style={{ width: "100%" }}
+                        onChange={handleInput}
+                      >
+                        <option selected disabled>
+                          Select Ownership
+                        </option>
+
+                        <option value="First Owner">First Owner</option>
+                        <option value="Second Owner">Second Owner</option>
+                        <option value="Third Owner">Third Owner</option>
+                        <option value="Fourth Owner">Fourth Owner</option>
+                        <option value="Unregistered">Unregistered</option>
+                      </select>
+                      {errors?.ownership && (
+                        <small className="text-danger">
+                          {" "}
+                          {errors?.ownership}{" "}
+                        </small>
+                      )}
                     </div>
                     <div className="form-sub-division">
                       <button
@@ -500,14 +522,22 @@ function CalculateFinalValue() {
             <div className="col-xl-6 col-md-5 booking-details-div">
               <div className="card main-card">
                 <figure className="text-center">
-                  <img src={MainCarValuation} alt="Main Car Valuation" />
+                  <img
+                    src={
+                      payload && payload.car_img
+                        ? `https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${payload.car_img}`
+                        : MainCarValuation
+                    }
+                    alt="Main Car Valuation"
+                  />
                 </figure>
                 <div className="row details">
                   <div className="left-side">
                     <div className="box">
                       {payload && (
                         <h6 className="car-type-name">
-                          {payload.brand_name} {payload.model_name} {payload.variant}
+                          {payload.brand_name} {payload.model_name}{" "}
+                          {payload.variant}
                         </h6>
                       )}
                       <div className="price-vary-from d-inline-flex align-items-center">
@@ -515,7 +545,9 @@ function CalculateFinalValue() {
                         <span className="d-inline-flex align-items-center">
                           <ion-icon name="remove-outline"></ion-icon>
                         </span> */}
-                        <p className="price-to m-2">₹{formatPriceWithCommas(price)}</p>
+                        <p className="price-to m-2">
+                          ₹{formatPriceWithCommas(price)}
+                        </p>
                       </div>
                       <div className="booking-category mt-2">
                         {["Bad", "Fair", "Good", "Excellent"].map(

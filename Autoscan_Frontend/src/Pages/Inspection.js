@@ -214,27 +214,71 @@ function Inspection() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
-    let payload = new FormData();
-    payload.append("model_id", statePayload?.model_id);
-    payload.append("brand_id", statePayload?.brand_id);
-    payload.append("varient_id", statePayload?.varient_id);
-    payload.append("current_location", statePayload?.current_location);
-    payload.append("pincode", statePayload?.pincode);
-    payload.append("kms_driven", statePayload?.kms_driven);
-    payload.append("ownership", statePayload?.ownership);
-    payload.append("manufacturing_year", statePayload?.manufacturing_year);
-    payload.append("registration_number", statePayload?.registration_number);
-    payload.append("car_description", statePayload?.car_description);
-    payload.append("inspection_address", statePayload?.inspection_address);
-    payload.append("inspection_area", statePayload?.inspection_area);
-    payload.append("inspection_landmark", statePayload?.inspection_landmark);
-    payload.append("inspection_date", statePayload?.inspection_date);
-    payload.append("whatsapp_update", statePayload?.whatsapp_update);
-    payload.append("user_fullname", statePayload?.user_fullname);
-    payload.append("email", statePayload?.email);
-    payload.append("phone", statePayload?.phone);
+    let errors = {};
+    if (!statePayload.pincode) {
+      errors.pincode = "Pincode is required";
+    }
+    if (!statePayload.current_location) {
+      errors.current_location = "Current Location is required";
+    }
+    if (!statePayload.brand_id) {
+      errors.brand_id = "Brand is required";
+    }
 
-    createInspection(payload);
+    if (!statePayload.model_id) {
+      errors.model_id = "Model is required";
+    }
+
+    if (!statePayload.varient_id) {
+      errors.varient_id = "Varient is required";
+    }
+    if (!statePayload.kms_driven) {
+      errors.kms_driven = "Kms Driven is required";
+    }
+
+    if (!statePayload.ownership) {
+      errors.ownership = "Ownership is required";
+    }
+
+    if (!statePayload.manufacturing_year) {
+      errors.manufacturing_year = "Manufacturing Year is required";
+    }
+
+    if (!statePayload.registration_number) {
+      errors.registration_number = "Registration Number is required";
+    }
+
+    if (!statePayload.user_fullname) {
+      errors.user_fullname = "User Full Name is required";
+    }
+    if (!statePayload.inspection_address) {
+      errors.inspection_address = "Address is required";
+    }
+
+    setErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      let payload = new FormData();
+      payload.append("model_id", statePayload?.model_id);
+      payload.append("brand_id", statePayload?.brand_id);
+      payload.append("varient_id", statePayload?.varient_id);
+      payload.append("current_location", statePayload?.current_location);
+      payload.append("pincode", statePayload?.pincode);
+      payload.append("kms_driven", statePayload?.kms_driven);
+      payload.append("ownership", statePayload?.ownership);
+      payload.append("manufacturing_year", statePayload?.manufacturing_year);
+      payload.append("registration_number", statePayload?.registration_number);
+      payload.append("car_description", statePayload?.car_description);
+      payload.append("inspection_address", statePayload?.inspection_address);
+      payload.append("inspection_area", statePayload?.inspection_area);
+      payload.append("inspection_landmark", statePayload?.inspection_landmark);
+      payload.append("inspection_date", statePayload?.inspection_date);
+      payload.append("whatsapp_update", statePayload?.whatsapp_update);
+      payload.append("user_fullname", statePayload?.user_fullname);
+      payload.append("email", statePayload?.email);
+      payload.append("phone", statePayload?.phone);
+
+      createInspection(payload);
+    }
   };
 
   const handleCitySelection = async (current_location) => {
@@ -386,6 +430,12 @@ function Inspection() {
                                 );
                               })}
                           </select>
+                          {errors?.current_location && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.current_location}{" "}
+                            </small>
+                          )}
                           <label
                             htmlFor="current_location"
                             className="form__label"
@@ -501,6 +551,12 @@ function Inspection() {
                                 );
                               })}
                           </select>
+                          {errors?.brand_id && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.brand_id}{" "}
+                            </small>
+                          )}
                           <label for="BrandName" className="form__label">
                             Select Brand
                           </label>
@@ -576,13 +632,20 @@ function Inspection() {
                         <div className="form__group field">
                           <input
                             className="form__field"
-                            type="text"
+                            type="number"
+                            min="0"
                             placeholder="Km Driven"
                             name="kms_driven"
                             id="kms_driven"
                             value={statePayload.kms_driven}
                             onChange={handleInput}
                           />
+                          {errors?.kms_driven && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.kms_driven}{" "}
+                            </small>
+                          )}
                           <label for="kms_driven" className="form__label">
                             Km Driven
                           </label>
@@ -802,6 +865,12 @@ function Inspection() {
                               value={statePayload.user_fullname}
                               onChange={handleInput}
                             />
+                                 {errors?.user_fullname && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.user_fullname}{" "}
+                            </small>
+                          )}
                             <label
                               htmlFor="user_fullname"
                               className="form__label"
@@ -859,6 +928,12 @@ function Inspection() {
                               value={statePayload.inspection_address}
                               onChange={handleInput}
                             />
+                             {errors?.inspection_address && (
+                            <small className="text-danger">
+                              {" "}
+                              {errors?.inspection_address}{" "}
+                            </small>
+                          )}
                             <label
                               htmlFor="inspection_address"
                               className="form__label"
