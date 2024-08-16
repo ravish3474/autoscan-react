@@ -9,7 +9,7 @@ const Op = Sequelize.Op;
 const getAllCars = async (req, res) => {
   let { brand = "", kms_driven, min_price, max_price } = req.query;
   let where_query = {
-    status: 1,
+    status: 1,is_deleted:0
   };
 
   if (brand) {
