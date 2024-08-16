@@ -38,9 +38,9 @@ function RecentSearch() {
                   <div className="card-body p-0">
                     <figure className="m-0">
                       <img
-                       src={
-                        car.model.car_img
-                          ? `https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.model.car_img}`
+                      src={
+                        car.front_view
+                          ? `https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`
                           : defaultCarImage
                       }
                         alt=""

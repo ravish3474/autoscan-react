@@ -319,6 +319,7 @@ const createCar = async (req, res) => {
         }
       });
     }
+    
     let newCar = await Car.create({
       ...carObj,
     });

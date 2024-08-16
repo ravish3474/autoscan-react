@@ -144,6 +144,7 @@ function ExploreCar() {
                       <input
                         type="number"
                         name="min_price"
+                        min="0"
                         className="form-control"
                         placeholder="Min Price"
                        
@@ -154,6 +155,7 @@ function ExploreCar() {
                       <input
                         type="number"
                         name="max_price"
+                         min="0"
                         className="form-control"
                         placeholder="Max Price"
                         onChange={(e) => handleSelect(e, "max_price")}
@@ -235,7 +237,7 @@ function ExploreCar() {
               <div className="EmptyBox ">
                 <div className="box"></div>
                 <div className="onclickFilterShow">
-                  <span>Search Manually</span>
+                  <span>Search Manually</span>  
                 </div>
               </div>
             </div>
@@ -253,8 +255,8 @@ function ExploreCar() {
                           <figure className="m-0">
                             <img
                               src={
-                                car.model.car_img
-                                  ? `https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.model.car_img}`
+                                car.front_view
+                                  ? `https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_view}`
                                   : defaultCarImage
                               }
                               alt=""

@@ -600,7 +600,7 @@ function CalculateFinalValue() {
                       <img src={carValuationRight} alt="Car Valuation Right" />
                     </figure>
                     <button>
-                      <Link to="requestCallBack">BOOK AN INSPECTION</Link>
+                      <Link to="inspection-car">BOOK AN INSPECTION</Link>
                     </button>
                   </div>
                   <div className="col-md-2 right-side car-info2 Default">
