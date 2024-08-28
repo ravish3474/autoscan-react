@@ -17,7 +17,7 @@ import RequestCallBack from "./components/RequestCallBack";
 import ThankYou from "./components/ThankYou";
 import InspectionThankYou from "./components/InspectionThankYou";
 import AboutUs from "./Pages/AboutUs"
-
+import TermsCondition from "./Pages/TermsCondition"
 
 function App() {
   const [showUserModal, setShowUserModal] = useState(false);
@@ -47,6 +47,7 @@ function App() {
         <Route path="/finalValue" component={CalculateFinalValue} />
         <Route path="/RequestCallBack" component={RequestCallBack} />
         <Route path="/AboutUs" component={AboutUs} />
+        <Route path="/TermsCondition" component={TermsCondition} />
         <Route path="/ThankYou" component={ThankYou} />
         <Route path="/InspectionThankYou" component={InspectionThankYou} />
       </Switch>

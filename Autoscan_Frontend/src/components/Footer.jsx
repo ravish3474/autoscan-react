@@ -75,7 +75,7 @@ function Footer() {
                     <a href="#">Register as a dealer</a>
                   </li>
                   <li>
-                    <a href="#">Privacy policy and agreement</a>
+                    <a href="/TermsCondition">Terms & Condition</a>
                   </li>
                 </ul>
                 <figure>

@@ -52,17 +52,24 @@ function SellCar() {
   const [rearView, setRearView] = useState([]);
   const [odometer, setOdometer] = useState([]);
   const [chessis, setChessis] = useState([]);
+
+  const [frontViewpreview, setFrontViewpreview] = useState(null);
+  const [frontRightpreview, setFrontRightpreview] = useState(null);
+  const [leftViewpreview, setLeftViewpreview] = useState(null);
+  const [rearViewpreview, setRearViewpreview] = useState(null);
+  const [odometerpreview, setOdometerpreview] = useState(null);
+  const [chessispreview, setChessispreview] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
-  const [formattedRegistrationNumber, setFormattedRegistrationNumber] = useState('');
+  const [formattedRegistrationNumber, setFormattedRegistrationNumber] =
+    useState("");
 
   const handleRegistrationNumberChange = (e) => {
     const inputValue = e.target.value;
-    const formattedValue = inputValue.toUpperCase().replace(
-      /^([A-Z]{2})([0-9]{2})([A-Z]{2})([0-9]{4})$/,
-      "$1$2-$3-$4"
-    );
+    const formattedValue = inputValue
+      .toUpperCase()
+      .replace(/^([A-Z]{2})([0-9]{2})([A-Z]{2})([0-9]{4})$/, "$1$2-$3-$4");
     setFormattedRegistrationNumber(formattedValue);
-    const { name} = e.target;
+    const { name } = e.target;
     setStatePayload((prevState) => ({
       ...prevState,
       [name]: formattedValue,
@@ -77,7 +84,6 @@ function SellCar() {
     ownership: "",
     manufacturing_year: "",
     registration_state: "",
-    car_location: "",
     registration_number: "",
     ex_showroom: "",
     price: "",
@@ -172,18 +178,23 @@ function SellCar() {
 
     if (fieldName === "front_view") {
       setFrontView(files);
+      setFrontViewpreview(URL.createObjectURL(files));
     } else if (fieldName === "front_right") {
       setFrontRight(files);
+      setFrontRightpreview(URL.createObjectURL(files));
     } else if (fieldName === "left_view") {
       setLeftView(files);
+      setLeftViewpreview(URL.createObjectURL(files));
     } else if (fieldName === "rear_view") {
       setRearView(files);
+      setRearViewpreview(URL.createObjectURL(files));
     } else if (fieldName === "odometer") {
       setOdometer(files);
+      setOdometerpreview(URL.createObjectURL(files));
     } else if (fieldName === "chessis") {
       setChessis(files);
+      setChessispreview(URL.createObjectURL(files));
     }
-
     setStatePayload((prevState) => ({
       ...prevState,
       [fieldName]: files,
@@ -244,10 +255,6 @@ function SellCar() {
       errors.registration_state = "Registration State is required";
     }
 
-    if (!statePayload.car_location) {
-      errors.car_location = "Car Location is required";
-    }
-
     if (!statePayload.registration_number) {
       errors.registration_number = "Registration Number is required";
     }
@@ -255,7 +262,6 @@ function SellCar() {
     if (!statePayload.price) {
       errors.price = "Price is required";
     }
-
 
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
@@ -268,7 +274,6 @@ function SellCar() {
       payload.append("ownership", statePayload?.ownership);
       payload.append("manufacturing_year", statePayload?.manufacturing_year);
       payload.append("registration_state", statePayload?.registration_state);
-      payload.append("car_location", statePayload?.car_location);
       payload.append("registration_number", statePayload?.registration_number);
       payload.append("ex_showroom", statePayload?.ex_showroom);
       payload.append("price", statePayload?.price);
@@ -659,13 +664,13 @@ function SellCar() {
                             className="form__field"
                             type="number"
                             placeholder="Km Driven"
-                             min="0"
+                            min="0"
                             name="kms_driven"
                             id="kms_driven"
                             value={statePayload.kms_driven}
                             onChange={handleInput}
                           />
-                           {errors?.kms_driven && (
+                          {errors?.kms_driven && (
                             <small className="text-danger">
                               {" "}
                               {errors?.kms_driven}{" "}
@@ -797,8 +802,8 @@ function SellCar() {
                         <div className="form__group field ">
                           <input
                             className="form__field"
-                           type="number"
-                           min="10000"
+                            type="number"
+                            min="10000"
                             placeholder="Selling Price"
                             name="price"
                             id="price"
@@ -939,32 +944,47 @@ function SellCar() {
                               handleImageFileChange(e, "front_view")
                             }
                           />
-
-                          <div className="preview" id="frontView1">
-                            <img src={frontViewimg} alt="" />
-                          </div>
-                          {errors?.front_view && (
-                            <small className="text-danger">
-                              {" "}
-                              {errors?.front_view}{" "}
-                            </small>
+                          {frontViewpreview && (
+                            <img
+                              src={frontViewpreview}
+                              alt="Front View"
+                              className="preview"
+                            />
+                          )}
+                          {!frontViewpreview && (
+                            <img
+                              src={frontViewimg}
+                              alt="Front View"
+                              className="preview"
+                            />
                           )}
                         </div>
                         <div className="relative">
-                          <label for="frontRightView" className="">
+                          <label for="FrontRightCorner" className="">
                             Front Right Corner
                           </label>
                           <input
                             type="file"
-                            id="frontRightView"
+                            id="FrontRightCorner"
                             accept="image/*"
                             onChange={(e) =>
                               handleImageFileChange(e, "front_right")
                             }
                           />
-                          <div className="preview" id="frontRightView">
-                            <img src={FrontRightCorner} alt="" />
-                          </div>
+                          {frontRightpreview && (
+                            <img
+                              src={frontRightpreview}
+                              alt="Front Right Corner"
+                              className="preview"
+                            />
+                          )}
+                          {!frontRightpreview && (
+                            <img
+                              src={FrontRightCorner}
+                              alt="Front Right Corner"
+                              className="preview"
+                            />
+                          )}
                         </div>
                         <div className="relative">
                           <label for="LeftView" className="">
@@ -978,9 +998,20 @@ function SellCar() {
                               handleImageFileChange(e, "left_view")
                             }
                           />
-                          <div className="preview" id="LeftView">
-                            <img src={LeftView} alt="" />
-                          </div>
+                          {leftViewpreview && (
+                            <img
+                              src={leftViewpreview}
+                              alt="Left View"
+                              className="preview"
+                            />
+                          )}
+                          {!leftViewpreview && (
+                            <img
+                              src={LeftView}
+                              alt="Left View"
+                              className="preview"
+                            />
+                          )}
                         </div>
                         <div className="relative">
                           <label for="Rearview" className="">
@@ -994,9 +1025,20 @@ function SellCar() {
                               handleImageFileChange(e, "rear_view")
                             }
                           />
-                          <div className="preview" id="Rearview">
-                            <img src={Rearview} alt="" />
-                          </div>
+                          {rearViewpreview && (
+                            <img
+                              src={rearViewpreview}
+                              alt="Rear View"
+                              className="preview"
+                            />
+                          )}
+                          {!rearViewpreview && (
+                            <img
+                              src={Rearview}
+                              alt="Rear View"
+                              className="preview"
+                            />
+                          )}
                         </div>
                         <div className="relative">
                           <label for="Odometer" className="">
@@ -1010,9 +1052,20 @@ function SellCar() {
                               handleImageFileChange(e, "odometer")
                             }
                           />
-                          <div className="preview" id="Odometer">
-                            <img src={frontViewimg} alt="" />
-                          </div>
+                          {odometerpreview && (
+                            <img
+                              src={odometerpreview}
+                              alt="Odometer"
+                              className="preview"
+                            />
+                          )}
+                          {!odometerpreview && (
+                            <img
+                              src={frontViewimg}
+                              alt="Odometer"
+                              className="preview"
+                            />
+                          )}
                         </div>
                         <div className="relative">
                           <label for="Others" className="">
@@ -1026,9 +1079,20 @@ function SellCar() {
                               handleImageFileChange(e, "chessis")
                             }
                           />
-                          <div className="preview" id="Others">
-                            <img src={frontViewimg} alt="" />
-                          </div>
+                          {chessispreview && (
+                            <img
+                              src={chessispreview}
+                              alt="Others/chassis"
+                              className="preview"
+                            />
+                          )}
+                          {!chessispreview && (
+                            <img
+                              src={frontViewimg}
+                              alt="Others/chassis"
+                              className="preview"
+                            />
+                          )}
                         </div>
                       </div>
                       <div className="formFooter">
