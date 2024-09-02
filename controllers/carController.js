@@ -7,7 +7,7 @@ const { formatToJSON } = require("../helper/commonMethods");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const getAllCars = async (req, res) => {
-  let { brand = "", kms_driven, min_price, max_price } = req.query;
+  let { brand = "", kms_driven, min_price, max_price,search_text } = req.query;
   let where_query = {
     status: 1,is_deleted:0
   };
@@ -49,27 +49,57 @@ const getAllCars = async (req, res) => {
   });
 
   try {
-    let car = await Car.findAll({
-      include: [
-        {
-          model: Brand,
-          key: "id",
-          attributes: ["brand_name"],
-        },
-        {
-          model: Model,
-          key: "id",
-          attributes: ["model_name","car_img"],
-        },
-        {
-          model: Varient,
-          key: "id",
-          attributes: ["varient_name"],
-        },
-      ],
-      where: where_query,
-      order: [["id", "DESC"]],
-    });
+    let car;
+    if (search_text) {
+      car = await Car.findAll({
+        include: [
+          {
+            model: Brand,
+            key: "id",
+            attributes: ["brand_name"],
+          },
+          {
+            model: Model,
+            key: "id",
+            attributes: ["model_name", "car_img"],
+            where: {
+              model_name: {
+                [Op.like]: `%${search_text}%`
+              }
+            }
+          },
+          {
+            model: Varient,
+            key: "id",
+            attributes: ["varient_name"],
+          },
+        ],
+        where: where_query,
+        order: [["id", "DESC"]],
+      });
+    } else {
+      car = await Car.findAll({
+        include: [
+          {
+            model: Brand,
+            key: "id",
+            attributes: ["brand_name"],
+          },
+          {
+            model: Model,
+            key: "id",
+            attributes: ["model_name", "car_img"],
+          },
+          {
+            model: Varient,
+            key: "id",
+            attributes: ["varient_name"],
+          },
+        ],
+        where: where_query,
+        order: [["id", "DESC"]],
+      });
+    }
     return res.status(200).json({
       success: true,
       car: car,

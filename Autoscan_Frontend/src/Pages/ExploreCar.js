@@ -12,15 +12,17 @@ function ExploreCar() {
     min_price: "",
     max_price: "",
     kms_driven: "",
+    search_text: "",
   });
   const handleSelect = (e, name) => {
+    console.log(e.target.value);
     if (e.target.checked) {
       setFilterData({
         ...filterData,
         [name]: [...(filterData[name] || []), e.target.value],
       });
     }
-    else if (name === 'min_price' || name === 'max_price' || name === 'kms_driven') {
+    else if (name === 'min_price' || name === 'max_price' || name === 'kms_driven'|| name === 'search_text') {
       setFilterData({
         ...filterData,
         [name]: e.target.value
@@ -89,6 +91,7 @@ function ExploreCar() {
 
     fetchBrandData();
     fetchData(filterData);
+
   }, []);
   const fetchData = async (filterDataObj) => {
     // let queryParams = new URLSearchParams(filterDataObj).toString();
@@ -107,9 +110,12 @@ function ExploreCar() {
   if (filterDataObj.kms_driven) {
     queryParams.append('kms_driven', filterDataObj.kms_driven);
   }
+  if (filterDataObj.search_text) {
+    queryParams.append('search_text', filterDataObj.search_text);
+  }
 
   Object.keys(filterDataObj).forEach((key) => {
-    if (key !== 'min_price' && key !== 'max_price' && key !== 'kms_driven') {
+    if (key !== 'min_price' && key !== 'max_price' && key !== 'kms_driven' && key !== 'search_text') {
       queryParams.append(key, filterDataObj[key].join(","));
     }
   });
@@ -129,6 +135,7 @@ function ExploreCar() {
     } catch (error) {
       console.error("Error fetching cars:", error);
     }
+    window.scrollTo(0, 0);
   };
   return (
     <section className="usedCarMainContainer">
@@ -235,9 +242,9 @@ function ExploreCar() {
                 <a href={"/ExploreCar"}>Used Car</a>
               </div>
               <div className="EmptyBox ">
-                <div className="box"></div>
-                <div className="onclickFilterShow">
-                  <span>Search Manually</span>  
+                <div className="box"><input className="form-control px-5" type="text"  onChange={(e) => handleSelect(e, "search_text")} placeholder="Search Model..."></input></div>
+                <div className="new">
+                  <button className="btn btn-primary mx-4"  onClick={handleFilterSubmit}>Search</button>  
                 </div>
               </div>
             </div>

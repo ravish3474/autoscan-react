@@ -32,7 +32,6 @@ function App() {
     <Router>
       <Header
         setShowUserModal={setShowUserModal}
-        setShowDealerModal={setShowDealerModal}
         updateLoginState={updateLoginState}
       />
       <Switch>
@@ -59,12 +58,12 @@ function App() {
           onLogin={() => updateLoginState(true)}
         />
       )}
-      {showDealerModal && (
+      {/* {showDealerModal && (
         <DealerLoginModal
           onClose={() => setShowDealerModal(false)}
           onLogin={() => updateLoginState(true)}
         />
-      )}
+      )} */}
     </Router>
   );
 }

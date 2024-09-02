@@ -36,7 +36,7 @@ function DealerLoginModal({ onClose }) {
                     </button>
                     <div class="modal-body">
                         <figure className="text-center"><img src={dealerLoginImage} alt="" /></figure>
-                        <h5 class="modal-title">LOGIN USING AUTOSCAN <br /> CREDENCIALS</h5>
+                        <h5 class="modal-title">LOGIN USING USEDCARWALE <br /> CREDENCIALS</h5>
                         <p class="s-para">for Better Experience, Order tracking & Regular updates</p>
                         <form id="DealerLoginForm">
                             {showFormGroup && (

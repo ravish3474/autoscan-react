@@ -48,17 +48,29 @@ function SellCar() {
   const [state, setState] = useState([]);
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
+  const [frontLeft, setFrontLeft] = useState([]);
   const [leftView, setLeftView] = useState([]);
+  const [rightView, setRightView] = useState([]);
   const [rearView, setRearView] = useState([]);
+  const [rearLeftView, setRearLeftView] = useState([]);
+  const [rearRightView, setRearRightView] = useState([]);
   const [odometer, setOdometer] = useState([]);
+  const [engineView, setEngine] = useState([]);
   const [chessis, setChessis] = useState([]);
+  const [interiorView, setInterior] = useState([]);
 
   const [frontViewpreview, setFrontViewpreview] = useState(null);
   const [frontRightpreview, setFrontRightpreview] = useState(null);
+  const [frontLeftpreview, setFrontLeftpreview] = useState(null);
   const [leftViewpreview, setLeftViewpreview] = useState(null);
+  const [rightViewpreview, setRightViewpreview] = useState(null);
   const [rearViewpreview, setRearViewpreview] = useState(null);
+  const [rearLeftViewpreview, setRearLeftViewpreview] = useState(null);
+  const [rearRightViewpreview, setRearRightViewpreview] = useState(null);
   const [odometerpreview, setOdometerpreview] = useState(null);
+  const [enginepreview, setEnginepreview] = useState(null);
   const [chessispreview, setChessispreview] = useState(null);
+  const [interiorpreview, setInteriorpreview] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
   const [formattedRegistrationNumber, setFormattedRegistrationNumber] =
     useState("");
@@ -89,11 +101,17 @@ function SellCar() {
     price: "",
     car_description: "",
     front_view: frontView || "",
+    front_left: frontLeft || "",
     front_right: frontRight || "",
     left_view: leftView || "",
+    right_view: rightView || "",
     rear_view: rearView || "",
+    rear_left: rearLeftView || "",
+    rear_right: rearRightView || "",
     odometer: odometer || "",
+    engine: engineView || "",
     chessis: chessis || "",
+    interior: interiorView || "",
     status: "",
   });
   const handleInput = (event) => {
@@ -179,22 +197,50 @@ function SellCar() {
     if (fieldName === "front_view") {
       setFrontView(files);
       setFrontViewpreview(URL.createObjectURL(files));
-    } else if (fieldName === "front_right") {
+    }
+    else if (fieldName === "front_left") {
+      setFrontLeft(files);
+      setFrontLeftpreview(URL.createObjectURL(files));
+    }
+     else if (fieldName === "front_right") {
       setFrontRight(files);
       setFrontRightpreview(URL.createObjectURL(files));
     } else if (fieldName === "left_view") {
       setLeftView(files);
       setLeftViewpreview(URL.createObjectURL(files));
-    } else if (fieldName === "rear_view") {
+    }
+    else if (fieldName === "right_view") {
+      setRightView(files);
+      setRightViewpreview(URL.createObjectURL(files));
+    }  else if (fieldName === "rear_view") {
       setRearView(files);
       setRearViewpreview(URL.createObjectURL(files));
-    } else if (fieldName === "odometer") {
+    }
+    else if (fieldName === "rear_left") {
+      setRearLeftView(files);
+      setRearLeftViewpreview(URL.createObjectURL(files));
+    }
+    else if (fieldName === "rear_right") {
+      setRearRightView(files);
+      setRearRightViewpreview(URL.createObjectURL(files));
+    }
+     else if (fieldName === "odometer") {
       setOdometer(files);
       setOdometerpreview(URL.createObjectURL(files));
-    } else if (fieldName === "chessis") {
+    }
+    else if (fieldName === "engine") {
+      setEngine(files);
+      setEnginepreview(URL.createObjectURL(files));
+    } 
+    else if (fieldName === "chessis") {
       setChessis(files);
       setChessispreview(URL.createObjectURL(files));
     }
+    else if (fieldName === "interior") {
+      setInterior(files);
+      setInteriorpreview(URL.createObjectURL(files));
+    }
+    
     setStatePayload((prevState) => ({
       ...prevState,
       [fieldName]: files,
@@ -203,7 +249,7 @@ function SellCar() {
 
   const createNewCar = (payload) => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/car/create-car`, payload, {
+      .post(`${process.env.REACT_APP_API_URL}/car/create-cars`, payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -286,23 +332,41 @@ function SellCar() {
       if (frontRight) {
         payload.append("front_right", frontRight);
       }
+      if (frontLeft) {
+        payload.append("front_left", frontLeft);
+      }
       if (leftView) {
         payload.append("left_view", leftView);
+      }
+      if (rightView) {
+        payload.append("right_view", rightView);
       }
       if (rearView) {
         payload.append("rear_view", rearView);
       }
+      if (rearLeftView) {
+        payload.append("rear_left", rearLeftView);
+      }
+      if (rearRightView) {
+        payload.append("rear_right", rearRightView);
+      }
       if (odometer) {
         payload.append("odometer", odometer);
       }
+      if (engineView) {
+        payload.append("engine", engineView);
+      }
       if (chessis) {
         payload.append("chessis", chessis);
+      }
+      if (interiorView) {
+        payload.append("interior", interiorView);
       }
 
       if (localStorage.getItem("authUser")) {
         let user_id = localStorage.getItem("user_id");
         payload.append("car_addedby_user_id", user_id);
-        createNewCar(payload);
+         createNewCar(payload);
       } else {
         setShowUserModal(true);
       }
@@ -914,11 +978,16 @@ function SellCar() {
                   </button>
                   <p className="FormValues">
                     <span className="frontView">Front View |</span>{" "}
-                    <span className="frontRightView">Front Right Corner |</span>{" "}
+                    <span className="frontRightView">Front left View |</span>{" "}
+                    <span className="frontRightView">Front Right View |</span>{" "}
                     <span className="LeftView">Left View |</span>{" "}
-                    <span className="Rearview">Rear View |</span>
+                    <span className="RightView">Right View |</span>{" "}
+                    <span className="Rearview">Rear View |</span>{" "}
                     <span className="Odometer">Odometer |</span>{" "}
-                    <span className="Others">Others</span>
+                    <span className="Engine">Engine |</span>{" "}
+                    <span className="Chessis">Chessis |</span>{" "}
+                    <span className="Interior">Interior |</span>{" "}
+                    <span className="Others">Others |</span>{" "}
                   </p>
                 </h2>
                 <div
@@ -960,8 +1029,35 @@ function SellCar() {
                           )}
                         </div>
                         <div className="relative">
+                          <label for="frontleftview" className="">
+                            Front Left View
+                          </label>
+                          <input
+                            type="file"
+                            id="frontleftview"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleImageFileChange(e, "front_left")
+                            }
+                          />
+                          {frontLeftpreview && (
+                            <img
+                              src={frontLeftpreview}
+                              alt="Front Left View"
+                              className="preview"
+                            />
+                          )}
+                          {!frontLeftpreview && (
+                            <img
+                              src={FrontRightCorner}
+                              alt="Front Left View"
+                              className="preview"
+                            />
+                          )}
+                        </div>
+                        <div className="relative">
                           <label for="FrontRightCorner" className="">
-                            Front Right Corner
+                            Front Right View
                           </label>
                           <input
                             type="file"
@@ -1014,6 +1110,33 @@ function SellCar() {
                           )}
                         </div>
                         <div className="relative">
+                          <label for="RightView" className="">
+                            Right View
+                          </label>
+                          <input
+                            type="file"
+                            id="RightView"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleImageFileChange(e, "right_view")
+                            }
+                          />
+                          {rightViewpreview && (
+                            <img
+                              src={rightViewpreview}
+                              alt="Right View"
+                              className="preview"
+                            />
+                          )}
+                          {!rightViewpreview && (
+                            <img
+                              src={FrontRightCorner}
+                              alt="Right View"
+                              className="preview"
+                            />
+                          )}
+                        </div>
+                        <div className="relative">
                           <label for="Rearview" className="">
                             Rear view
                           </label>
@@ -1036,6 +1159,60 @@ function SellCar() {
                             <img
                               src={Rearview}
                               alt="Rear View"
+                              className="preview"
+                            />
+                          )}
+                        </div>
+                        <div className="relative">
+                          <label for="Rearleftview" className="">
+                            Rear Left view
+                          </label>
+                          <input
+                            type="file"
+                            id="Rearleftview"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleImageFileChange(e, "rear_left")
+                            }
+                          />
+                          {rearLeftViewpreview && (
+                            <img
+                              src={rearLeftViewpreview}
+                              alt="Rear Left View"
+                              className="preview"
+                            />
+                          )}
+                          {!rearLeftViewpreview && (
+                            <img
+                              src={FrontRightCorner}
+                              alt="Rear Left View"
+                              className="preview"
+                            />
+                          )}
+                        </div>
+                        <div className="relative">
+                          <label for="Rearrightview" className="">
+                            Rear Right view
+                          </label>
+                          <input
+                            type="file"
+                            id="Rearrightview"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleImageFileChange(e, "rear_right")
+                            }
+                          />
+                          {rearRightViewpreview && (
+                            <img
+                              src={rearRightViewpreview}
+                              alt="Rear Right View"
+                              className="preview"
+                            />
+                          )}
+                          {!rearRightViewpreview && (
+                            <img
+                              src={FrontRightCorner}
+                              alt="Rear Right View"
                               className="preview"
                             />
                           )}
@@ -1068,12 +1245,37 @@ function SellCar() {
                           )}
                         </div>
                         <div className="relative">
-                          <label for="Others" className="">
-                            Others/chassis
+                          <label for="Engine" className="">
+                            Engine
                           </label>
                           <input
                             type="file"
-                            id="Others"
+                            id="Engine"
+                            accept="image/*"
+                            onChange={(e) => handleImageFileChange(e, "engine")}
+                          />
+                          {enginepreview && (
+                            <img
+                              src={enginepreview}
+                              alt="Engine"
+                              className="preview"
+                            />
+                          )}
+                          {!enginepreview && (
+                            <img
+                              src={frontViewimg}
+                              alt="Engine"
+                              className="preview"
+                            />
+                          )}
+                        </div>
+                        <div className="relative">
+                          <label for="chassis" className="">
+                            Chassis
+                          </label>
+                          <input
+                            type="file"
+                            id="chassis"
                             accept="image/*"
                             onChange={(e) =>
                               handleImageFileChange(e, "chessis")
@@ -1089,7 +1291,34 @@ function SellCar() {
                           {!chessispreview && (
                             <img
                               src={frontViewimg}
-                              alt="Others/chassis"
+                              alt="Chassis"
+                              className="preview"
+                            />
+                          )}
+                        </div>
+                        <div className="relative">
+                          <label for="Interior" className="">
+                            Interior
+                          </label>
+                          <input
+                            type="file"
+                            id="Interior"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleImageFileChange(e, "interior")
+                            }
+                          />
+                          {interiorpreview && (
+                            <img
+                              src={interiorpreview}
+                              alt="Interior"
+                              className="preview"
+                            />
+                          )}
+                          {!interiorpreview && (
+                            <img
+                              src={frontViewimg}
+                              alt="Interior"
                               className="preview"
                             />
                           )}

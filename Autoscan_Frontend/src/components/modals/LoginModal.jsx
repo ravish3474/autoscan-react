@@ -107,7 +107,7 @@ function LoginModal({ onClose, pathRoute }) {
             <figure className="text-center">
               <img src={loginDefaultImage} alt="Login" />
             </figure>
-            <h5 className="modal-title">LOGIN USING AUTOSCAN CREDENTIALS</h5>
+            <h5 className="modal-title">LOGIN USING USEDCARWALE CREDENTIALS</h5>
             <form id="loginForm" onSubmit={onSubmit}>
               <div className="form__group field">
                 <input

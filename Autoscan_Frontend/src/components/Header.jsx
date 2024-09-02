@@ -66,7 +66,7 @@ function Header({ setShowUserModal, setShowDealerModal, updateLoginState }) {
                         >
                           <ion-icon name="home-outline"></ion-icon> USER LOGIN
                         </button>
-                        <button
+                        {/* <button
                           className="loginSubitems"
                           onClick={() => {
                             setShowDealerModal(true);
@@ -75,7 +75,7 @@ function Header({ setShowUserModal, setShowDealerModal, updateLoginState }) {
                         >
                           <ion-icon name="person-add-outline"></ion-icon> Dealer
                           LOGIN
-                        </button>
+                        </button> */}
                       </div>
                     </li>
                   </>

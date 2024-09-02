@@ -154,7 +154,7 @@ select {
 }
 
 .carsImageUpload .grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns:1fr 1fr 1fr 1fr;
     gap: 1rem;
 }
 
@@ -174,7 +174,7 @@ select {
 input[type="file"] {
     position: absolute;
     bottom: 8px;
-    left: 115px;
+    left: 75px;
     font-size: 14px;
     width: 100px;
 }
