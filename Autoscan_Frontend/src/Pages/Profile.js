@@ -13,7 +13,9 @@ import ProfileSetting from '../components/InnerComponents/ProfileSetting';
 // import BidReviewStatus from '../components/InnerComponents/BidReviewStatus'
 
 function Profile() {
-
+    const phone = JSON.parse(localStorage.getItem("user_info"))?.phone;
+    const email = JSON.parse(localStorage.getItem("user_info"))?.email;
+    const name= JSON.parse(localStorage.getItem("user_info"))?.name;
     return (
         <div >
 
@@ -29,9 +31,17 @@ function Profile() {
                                         alt="" />
                                 </figure>
                                 <div>
-                                    <h1>AVIRAL BAHUGUNA</h1>
-                                    <Link to="/"><p><ion-icon name="call-outline"></ion-icon> +91 989 699 8989</p> </Link>
-                                    <Link to="/"><p><ion-icon name="mail-unread-outline"></ion-icon> Aviralbahuguna@gmail.com </p></Link>
+                                    <h1>{name}</h1>
+                                    <Link to="/"><p><ion-icon name="call-outline"></ion-icon> +91 {phone}</p> </Link>
+                                    {email && (
+                                    <Link to="/">
+                                        <p>
+                                        <ion-icon name="mail-unread-outline"></ion-icon> {email}
+                                        </p>
+                                    </Link>
+                                    )}
+
+                                
                                 </div>
                             </div>
                         </div>

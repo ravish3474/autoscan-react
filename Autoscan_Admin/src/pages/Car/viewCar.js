@@ -69,6 +69,14 @@ export default function viewCar() {
                 style={{ width: "100%" }}
               >
                 <tbody>
+                <tr>
+                    <th>City Name:</th>
+                    <td>{car?.current_location}</td>
+                  </tr>
+                  <tr>
+                    <th>Pincode:</th>
+                    <td>{car?.pincode}</td>
+                  </tr>
                   <tr>
                     <th>Brand Name:</th>
                     <td>{car?.Brand?.brand_name}</td>
@@ -123,7 +131,20 @@ export default function viewCar() {
                     </td>
                   </tr>
                   <tr>
-                    <th>Front Right:</th>
+                    <th>Front Left View:</th>
+                    <td>
+                      {car?.front_left != "" ? (
+                        <img
+                          style={{ width: "100%", maxWidth: "200px" }}
+                          src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.front_left}`}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Front Right View:</th>
                     <td>
                       {car?.front_right != "" ? (
                         <img
@@ -149,12 +170,51 @@ export default function viewCar() {
                     </td>
                   </tr>
                   <tr>
+                    <th>Right View:</th>
+                    <td>
+                      {car?.right_view != "" ? (
+                        <img
+                          style={{ width: "100%", maxWidth: "200px" }}
+                          src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.right_view}`}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
                     <th>Rear view:</th>
                     <td>
                       {car?.rear_view != "" ? (
                         <img
                           style={{ width: "100%", maxWidth: "200px" }}
                           src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.rear_view}`}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Rear Left View:</th>
+                    <td>
+                      {car?.rear_left != "" ? (
+                        <img
+                          style={{ width: "100%", maxWidth: "200px" }}
+                          src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.rear_left}`}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Rear Right View:</th>
+                    <td>
+                      {car?.rear_right != "" ? (
+                        <img
+                          style={{ width: "100%", maxWidth: "200px" }}
+                          src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.rear_right}`}
                         />
                       ) : (
                         <></>
@@ -175,12 +235,38 @@ export default function viewCar() {
                     </td>
                   </tr>
                   <tr>
+                    <th>Engine:</th>
+                    <td>
+                      {car?.engine != "" ? (
+                        <img
+                          style={{ width: "100%", maxWidth: "200px" }}
+                          src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.engine}`}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
                     <th>Chessis:</th>
                     <td>
                       {car?.chessis != "" ? (
                         <img
                           style={{ width: "100%", maxWidth: "200px" }}
                           src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.chessis}`}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Interior:</th>
+                    <td>
+                      {car?.interior != "" ? (
+                        <img
+                          style={{ width: "100%", maxWidth: "200px" }}
+                          src={`https://usedcarautoscan.s3.ap-south-1.amazonaws.com/${car.interior}`}
                         />
                       ) : (
                         <></>

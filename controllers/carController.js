@@ -265,6 +265,7 @@ const createCar = async (req, res) => {
       model_id,
       brand_id,
       varient_id,
+      current_location,
       pincode,
       kms_driven,
       ownership,
@@ -294,6 +295,9 @@ const createCar = async (req, res) => {
       });
     }
     let carObj = {};
+    if (current_location) {
+      carObj["current_location"] = current_location;
+    }
     if (engine_transmission) {
       carObj["engine_transmission"] = engine_transmission;
     }
@@ -318,6 +322,9 @@ const createCar = async (req, res) => {
     if (car_addedby_dealer_id) {
       carObj["car_addedby_dealer_id"] = car_addedby_dealer_id;
     }
+    if (car_addedby_user_id) {
+      carObj["car_addedby_user_id"] = car_addedby_user_id;
+    }
     carObj["model_id"] = model_id;
     carObj["brand_id"] = brand_id;
     carObj["varient_id"] = varient_id;
@@ -329,7 +336,6 @@ const createCar = async (req, res) => {
     carObj["registration_number"] = registration_number;
     carObj["price"] = price;
     carObj["car_description"] = car_description;
-    carObj["car_addedby_user_id"] = car_addedby_user_id;
     carObj["status"] = status;
     if (req.files && req.files?.length > 0) {
       req.files?.forEach((item) => {
@@ -375,20 +381,58 @@ const updateCar = async (req, res) => {
       model_id,
       brand_id,
       varient_id,
+      current_location,
       pincode,
       kms_driven,
       ownership,
       manufacturing_year,
       registration_state,
-      car_location,
       registration_number,
-      ex_showroom,
       price,
       car_description,
+      car_addedby_user_id,
+      car_addedby_dealer_id,
       status,
+      engine_transmission,
+      dimension,
+      weight,
+      capacity,
+      suspensions,
+      breaks,
+      streering_tires
     } = req.body;
 
     let carObj = {};
+    if (current_location) {
+      carObj["current_location"] = current_location;
+    }
+    if (engine_transmission) {
+      carObj["engine_transmission"] = engine_transmission;
+    }
+    if (dimension) {
+      carObj["dimension"] = dimension;
+    }
+    if (weight) {
+      carObj["weight"] = weight;
+    }
+    if (capacity) {
+      carObj["capacity"] = capacity;
+    }
+    if (suspensions) {
+      carObj["suspensions"] = suspensions;
+    }
+    if (breaks) {
+      carObj["breaks"] = breaks;
+    }
+    if (streering_tires) {
+      carObj["streering_tires"] = streering_tires;
+    }
+    if (car_addedby_dealer_id) {
+      carObj["car_addedby_dealer_id"] = car_addedby_dealer_id;
+    }
+    if (car_addedby_user_id) {
+      carObj["car_addedby_user_id"] = car_addedby_user_id;
+    }
     carObj["model_id"] = model_id;
     carObj["brand_id"] = brand_id;
     carObj["varient_id"] = varient_id;
@@ -397,9 +441,7 @@ const updateCar = async (req, res) => {
     carObj["ownership"] = ownership;
     carObj["manufacturing_year"] = manufacturing_year;
     carObj["registration_state"] = registration_state;
-    carObj["car_location"] = car_location;
     carObj["registration_number"] = registration_number;
-    carObj["ex_showroom"] = ex_showroom;
     carObj["price"] = price;
     carObj["car_description"] = car_description;
     carObj["status"] = status;
@@ -421,9 +463,6 @@ const updateCar = async (req, res) => {
         }
       });
     }
-
-    carObj["car_name"] = car_name;
-    carObj["status"] = status;
 
     let updatedCar = await Car.update(
       {

@@ -315,6 +315,7 @@ function SellCar() {
       payload.append("model_id", statePayload?.model_id);
       payload.append("brand_id", statePayload?.brand_id);
       payload.append("varient_id", statePayload?.varient_id);
+      payload.append("current_location", statePayload?.current_location);
       payload.append("pincode", statePayload?.pincode);
       payload.append("kms_driven", statePayload?.kms_driven);
       payload.append("ownership", statePayload?.ownership);

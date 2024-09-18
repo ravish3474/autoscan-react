@@ -16,8 +16,12 @@ const Car = sequelize.define(
       type: DataTypes.INTEGER(10),
       allowNull: false,
     },
-    pincode: {
+    current_location: {
       type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    pincode: {
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
     car_description: {
@@ -53,6 +57,11 @@ const Car = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    front_left: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
     front_right: {
       type: DataTypes.STRING(255),
       allowNull: true,
@@ -63,7 +72,22 @@ const Car = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    right_view: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
     rear_view: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    rear_left: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    rear_right: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
@@ -73,7 +97,22 @@ const Car = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    engine: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
     chessis: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    interior: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+    },
+    other_img: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,

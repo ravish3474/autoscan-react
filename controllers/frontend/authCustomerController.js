@@ -262,3 +262,103 @@ exports.changePassword = async (req, res) => {
     });
   }
 };
+
+
+function generateOtp() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+async function sendOtp(mobileNumber, otp) {
+  // Implement SMS sending logic using nodemailer or another library
+  console.log(`Sending OTP ${otp} to ${mobileNumber}`);
+}
+
+exports.register = async (req, res) => {
+  const { mobileNumber } = req.body;
+  const otp = generateOtp();
+  const existingCustomer = await Customer.findOne({ where: { mobileNumber } });
+  if (existingCustomer) {
+    await existingCustomer.update({ otp, verified: false });
+  } else {
+    const otpInstance = await Customer.create({ mobileNumber, otp, verified: false });
+  }
+  // await sendOtp(mobileNumber, otp);
+  res.json({ message: 'OTP sent successfully' });
+}
+
+exports.verifyotp = async (req, res) => {
+  const { mobileNumber, otp } = req.body;
+  const otpInstance = await Customer.findOne({ where: { mobileNumber } });
+  if (!otpInstance) {
+    return res.status(404).json({ message: 'OTP not found' });
+  }
+
+  if (otpInstance.otp !== otp) {
+    return res.status(401).json({ message: 'Invalid OTP' });
+  }
+
+  await otpInstance.update({ verified: true });
+
+  let today = new Date();
+  today.setHours(today.getHours() + 2);
+
+  let customerObj = {
+    customerId: otpInstance?.id,
+    customerType: "customer",
+    expiresIn: today,
+    email_id: otpInstance?.email,
+  };
+
+  const token = jwt.sign(customerObj, process.env.JWT_SECRET_KEY);
+
+  return res.status(200).json({
+    status: "success",
+    customer: {
+      id: otpInstance.id,
+      name: otpInstance.name,
+      email: otpInstance.email,
+      phone: otpInstance.mobileNumber,
+      profile_pic: otpInstance.image,
+      tokenDetails: customerObj,
+    },
+    accessToken: token,
+  });
+}
+
+
+
+exports.resendOtp = async (req, res) => {
+  try {
+    const { mobileNumber } = req.body;
+    const otp = generateOtp();
+    const existingCustomer = await Customer.findOne({ where: { mobileNumber } });
+    if (existingCustomer) {
+      await existingCustomer.update({ otp, verified: false });
+    } else {
+      const otpInstance = await Customer.create({ mobileNumber, otp, verified: false });
+    }
+    res.status(200).json({ message: 'OTP resent successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error resending OTP' });
+  }
+};
+
+exports.updateCustomer = async (req, res) => {
+  const { mobileNumber,email, name } = req.body;
+  try {
+      const customer = await Customer.findOne({ where: { mobileNumber } });
+      if (!customer) {
+          return res.status(404).json({ message: 'customer not found' });
+      }
+
+      await Customer.update(
+          { name,email }, 
+          { where: { mobileNumber } } 
+      );
+
+      return res.status(200).json({ message: 'customer updated successfully' });
+  } catch (error) {
+      console.error('Error updating customer:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+  }
+};

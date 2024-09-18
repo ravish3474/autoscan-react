@@ -72,10 +72,7 @@ function Footer() {
                   <Link to="/AboutUs">About Us</Link>
                   </li>
                   <li>
-                    <a href="#">Register as a dealer</a>
-                  </li>
-                  <li>
-                    <a href="/TermsCondition">Terms & Condition</a>
+                    <a href="/TermsCondition">Terms & Conditions</a>
                   </li>
                 </ul>
                 <figure>

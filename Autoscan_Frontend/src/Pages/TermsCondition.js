@@ -9,7 +9,7 @@ const TermsCondition = () => {
   return (
     <div className="container mt-5">
       <div className="row">
-        <h1 className="text-center">Terms and Conditions for UsedCarWale</h1>
+        <h1 className="text-center">Terms and Conditions</h1>
       </div>
       <div className="row mt-3">
         <div className="col-md-12">

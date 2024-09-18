@@ -17,32 +17,59 @@ const CreateCar = (props) => {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [varients, setVarients] = useState([]);
-  const [imageUrl, setImageUrl] = useState("");
-  const [imageFile, setImageFile] = useState(null);
-
+  const [pincodes, setPincodes] = useState([]);
+  const [city, setCity] = useState([]);
+  const [state, setState] = useState([]);
   const [frontView, setFrontView] = useState([]);
   const [frontRight, setFrontRight] = useState([]);
+  const [frontLeft, setFrontLeft] = useState([]);
   const [leftView, setLeftView] = useState([]);
+  const [rightView, setRightView] = useState([]);
   const [rearView, setRearView] = useState([]);
+  const [rearLeftView, setRearLeftView] = useState([]);
+  const [rearRightView, setRearRightView] = useState([]);
   const [odometer, setOdometer] = useState([]);
+  const [engineView, setEngine] = useState([]);
   const [chessis, setChessis] = useState([]);
+  const [interiorView, setInterior] = useState([]);
+
+  const [frontViewpreview, setFrontViewpreview] = useState(null);
+  const [frontRightpreview, setFrontRightpreview] = useState(null);
+  const [frontLeftpreview, setFrontLeftpreview] = useState(null);
+  const [leftViewpreview, setLeftViewpreview] = useState(null);
+  const [rightViewpreview, setRightViewpreview] = useState(null);
+  const [rearViewpreview, setRearViewpreview] = useState(null);
+  const [rearLeftViewpreview, setRearLeftViewpreview] = useState(null);
+  const [rearRightViewpreview, setRearRightViewpreview] = useState(null);
+  const [odometerpreview, setOdometerpreview] = useState(null);
+  const [enginepreview, setEnginepreview] = useState(null);
+  const [chessispreview, setChessispreview] = useState(null);
+  const [interiorpreview, setInteriorpreview] = useState(null);
   const [statePayload, setStatePayload] = useState({
     model_id: "",
     brand_id: "",
     varient_id: "",
     kms_driven: "",
     ownership: "",
+    pincode:"",
+    current_location:"",
     manufacturing_year: "",
     registration_state: "",
     registration_number: "",
     price: "",
     car_description: "",
     front_view: frontView || "",
+    front_left: frontLeft || "",
     front_right: frontRight || "",
     left_view: leftView || "",
+    right_view: rightView || "",
     rear_view: rearView || "",
+    rear_left: rearLeftView || "",
+    rear_right: rearRightView || "",
     odometer: odometer || "",
+    engine: engineView || "",
     chessis: chessis || "",
+    interior: interiorView || "",
     status: "",
   });
 
@@ -60,16 +87,40 @@ const CreateCar = (props) => {
 
     if (fieldName === "front_view") {
       setFrontView(files);
+      setFrontViewpreview(URL.createObjectURL(files));
+    } else if (fieldName === "front_left") {
+      setFrontLeft(files);
+      setFrontLeftpreview(URL.createObjectURL(files));
     } else if (fieldName === "front_right") {
       setFrontRight(files);
+      setFrontRightpreview(URL.createObjectURL(files));
     } else if (fieldName === "left_view") {
       setLeftView(files);
+      setLeftViewpreview(URL.createObjectURL(files));
+    } else if (fieldName === "right_view") {
+      setRightView(files);
+      setRightViewpreview(URL.createObjectURL(files));
     } else if (fieldName === "rear_view") {
       setRearView(files);
+      setRearViewpreview(URL.createObjectURL(files));
+    } else if (fieldName === "rear_left") {
+      setRearLeftView(files);
+      setRearLeftViewpreview(URL.createObjectURL(files));
+    } else if (fieldName === "rear_right") {
+      setRearRightView(files);
+      setRearRightViewpreview(URL.createObjectURL(files));
     } else if (fieldName === "odometer") {
       setOdometer(files);
+      setOdometerpreview(URL.createObjectURL(files));
+    } else if (fieldName === "engine") {
+      setEngine(files);
+      setEnginepreview(URL.createObjectURL(files));
     } else if (fieldName === "chessis") {
       setChessis(files);
+      setChessispreview(URL.createObjectURL(files));
+    } else if (fieldName === "interior") {
+      setInterior(files);
+      setInteriorpreview(URL.createObjectURL(files));
     }
 
     setStatePayload((prevState) => ({
@@ -95,7 +146,7 @@ const CreateCar = (props) => {
           position: toast.POSITION.TOP_RIGHT,
         });
 
-        //  history.push("/car-management");
+        history.push("/car-management");
       })
       .catch(function (error) {
         toast.error(
@@ -111,63 +162,108 @@ const CreateCar = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors({});
-    setIsLoading(true);
-    let errorObj = {};
 
-    // Catching and setting errors;
-    let { car_description, status } = statePayload;
-
-    if (!car_description) {
-      errorObj["car_name"] = "Please choose a valid car_name!";
+    let errors = {};
+    if (!statePayload.pincode) {
+      errors.pincode = "Pincode is required";
     }
-
-    if (!status) {
-      errorObj["status"] = "Please choose a valid status!";
+    if (!statePayload.current_location) {
+      errors.current_location = "Current Location is required";
+    }
+    if (!statePayload.brand_id) {
+      errors.brand_id = "Brand is required";
     }
 
-    // Setting the error object if any errors are present;
-    if (Object.keys(errorObj)?.length > 0) {
-      setErrors((prevState) => ({
-        ...prevState,
-        ...errorObj,
-      }));
-    }
-    let payload = new FormData();
-    payload.append("model_id", statePayload?.model_id);
-    payload.append("brand_id", statePayload?.brand_id);
-    payload.append("varient_id", statePayload?.varient_id);
-    payload.append("kms_driven", statePayload?.kms_driven);
-    payload.append("ownership", statePayload?.ownership);
-    payload.append("manufacturing_year", statePayload?.manufacturing_year);
-    payload.append("registration_state", statePayload?.registration_state);
-    payload.append("registration_number", statePayload?.registration_number);
-    payload.append("price", statePayload?.price);
-    payload.append("car_description", statePayload?.car_description);
-    payload.append("status", statePayload?.status);
-    if (frontView) {
-      payload.append("front_view", frontView);
-    }
-    if (frontRight) {
-      payload.append("front_right", frontRight);
-    }
-    if (leftView) {
-      payload.append("left_view", leftView);
-    }
-    if (rearView) {
-      payload.append("rear_view", rearView);
-    }
-    if (odometer) {
-      payload.append("odometer", odometer);
-    }
-    if (chessis) {
-      payload.append("chessis", chessis);
-    } else {
-      payload.append(key, statePayload[key]);
+    if (!statePayload.model_id) {
+      errors.model_id = "Model is required";
     }
 
-    createNewCar(payload);
+    if (!statePayload.varient_id) {
+      errors.varient_id = "Varient is required";
+    }
+    if (!statePayload.kms_driven) {
+      errors.kms_driven = "Kms Driven is required";
+    }
+
+    if (!statePayload.ownership) {
+      errors.ownership = "Ownership is required";
+    }
+
+    if (!statePayload.manufacturing_year) {
+      errors.manufacturing_year = "Manufacturing Year is required";
+    }
+
+    if (!statePayload.registration_state) {
+      errors.registration_state = "Registration State is required";
+    }
+
+    if (!statePayload.registration_number) {
+      errors.registration_number = "Registration Number is required";
+    }
+
+    if (!statePayload.price) {
+      errors.price = "Price is required";
+    }
+
+    setErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      let payload = new FormData();
+      payload.append("model_id", statePayload?.model_id);
+      payload.append("brand_id", statePayload?.brand_id);
+      payload.append("varient_id", statePayload?.varient_id);
+      payload.append("pincode", statePayload?.pincode);
+      payload.append("current_location", statePayload?.current_location);
+      payload.append("kms_driven", statePayload?.kms_driven);
+      payload.append("ownership", statePayload?.ownership);
+      payload.append("manufacturing_year", statePayload?.manufacturing_year);
+      payload.append("registration_state", statePayload?.registration_state);
+      payload.append("registration_number", statePayload?.registration_number);
+      payload.append("ex_showroom", statePayload?.ex_showroom);
+      payload.append("price", statePayload?.price);
+      payload.append("car_description", statePayload?.car_description);
+      payload.append("status", statePayload?.status);
+
+      if (frontView) {
+        payload.append("front_view", frontView);
+      }
+      if (frontRight) {
+        payload.append("front_right", frontRight);
+      }
+      if (frontLeft) {
+        payload.append("front_left", frontLeft);
+      }
+      if (leftView) {
+        payload.append("left_view", leftView);
+      }
+      if (rightView) {
+        payload.append("right_view", rightView);
+      }
+      if (rearView) {
+        payload.append("rear_view", rearView);
+      }
+      if (rearLeftView) {
+        payload.append("rear_left", rearLeftView);
+      }
+      if (rearRightView) {
+        payload.append("rear_right", rearRightView);
+      }
+      if (odometer) {
+        payload.append("odometer", odometer);
+      }
+      if (engineView) {
+        payload.append("engine", engineView);
+      }
+      if (chessis) {
+        payload.append("chessis", chessis);
+      }
+      if (interiorView) {
+        payload.append("interior", interiorView);
+      }
+      payload.append("car_addedby_user_id", 1);
+      createNewCar(payload);
+  
+    }
   };
-
   const fetchBrandData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/brand/brand-list `)
@@ -236,9 +332,73 @@ const CreateCar = (props) => {
       varient_id: varientId,
     }));
   };
+  const handleCitySelection = async (current_location) => {
+    setPincodes();
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/city/fetch-pincode-by-city/${current_location}`
+      );
+      const { success, allpincodes } = response.data;
+      if (success) {
+        const pincodeOptions = allpincodes.map((item) => ({
+          id: item.pincode,
+          label: item.pincode,
+          value: item.pincode,
+        }));
+        setPincodes(pincodeOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setStatePayload((prevState) => ({
+      ...prevState,
+      current_location: current_location,
+    }));
+  };
+  const handlePincodeSelection = (pincode) => {
+    setStatePayload((prevState) => ({
+      ...prevState,
+      pincode: pincode,
+    }));
+  };
+  const fetchCityData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/city/fetch-city`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allcities } = response.data;
+          let data = allcities?.map((item) => ({
+            id: item?.id,
+            label: item?.city,
+            value: item?.city,
+          }));
+          setCity(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
+  const fetchstateData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/city/fetch-state`)
+      .then((response) => {
+        const { success } = response.data;
+        if (success) {
+          const { allstates } = response.data;
+          let data = allstates?.map((item) => ({
+            id: item?.id,
+            label: item?.state,
+            value: item?.state,
+          }));
+          setState(data);
+        }
+      })
+      .catch((err) => console.log("Error:::", err));
+  };
   useEffect(() => {
     fetchBrandData();
-
+    fetchCityData();
+    fetchstateData();
     return () => {};
   }, []);
 
@@ -275,6 +435,70 @@ const CreateCar = (props) => {
           <Col lg={12}>
             <div className="filter-card-form card-shadow contact-form mt-3">
               <Row>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="float-label">
+                      Select City<sup>*</sup>
+                    </Form.Label>
+                    <select
+                      type="select"
+                      name="current_location"
+                      id="current_location"
+                      className="col-md-6 mb-1 form-control form-select"
+                      style={{ width: "100%" }}
+                      onChange={(e) => handleCitySelection(e.target?.value)}
+                      required
+                    >
+                      <option selected disabled>
+                        Select City
+                      </option>
+                      {city &&
+                        city.map((el) => {
+                          return (
+                            <option key={el?.value} value={el?.value}>
+                              {el?.label}
+                            </option>
+                          );
+                        })}
+                    </select>
+                    {errors?.current_location && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.current_location}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="float-label">
+                      Pincode<sup>*</sup>
+                    </Form.Label>
+                    <select
+                      type="select"
+                      name="pincode"
+                      className="col-md-6 mb-1 form-control form-select"
+                      style={{ width: "100%" }}
+                      onChange={(e) => handlePincodeSelection(e.target?.value)}
+                      required
+                    >
+                      <option selected disabled>
+                        Select Pincode
+                      </option>
+                      {pincodes &&
+                        pincodes.map((el) => {
+                          return (
+                            <option key={el?.value} value={el?.id}>
+                              {el?.label}
+                            </option>
+                          );
+                        })}
+                    </select>
+                    {errors?.pincode && (
+                      <small className="text-danger"> {errors?.pincode} </small>
+                    )}
+                  </Form.Group>
+                </Col>
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -451,27 +675,38 @@ const CreateCar = (props) => {
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
-                      Registration State
-                      <sup>
-                        <sup>*</sup>
-                      </sup>
+                      Registration State<sup>*</sup>
                     </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder=" "
+                    <select
+                      type="select"
                       name="registration_state"
-                      value={statePayload.registration_state}
+                      id="registration_state"
+                      className="col-md-6 mb-1 form-control form-select"
+                      style={{ width: "100%" }}
                       onChange={handleInput}
-                    />
-                    {errors.registration_state && (
+                      required
+                    >
+                      <option selected disabled>
+                        Select Registration State
+                      </option>
+                      {state &&
+                        state.map((el) => {
+                          return (
+                            <option key={el?.value} value={el?.value}>
+                              {el?.label}
+                            </option>
+                          );
+                        })}
+                    </select>
+                    {errors?.registration_state && (
                       <small className="text-danger">
                         {" "}
-                        {errors.registration_state}{" "}
+                        {errors?.registration_state}{" "}
                       </small>
                     )}
                   </Form.Group>
                 </Col>
-              
+
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -495,7 +730,7 @@ const CreateCar = (props) => {
                     )}
                   </Form.Group>
                 </Col>
-             
+
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -516,209 +751,6 @@ const CreateCar = (props) => {
                     )}
                   </Form.Group>
                 </Col>
-
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Front View Image.*
-                    </Form.Label>
-                    <Form.Control
-                      type="file"
-                      className="form-control"
-                      id="image"
-                      name="front_view"
-                      accept=".jpeg, .png, .jpg, .gif"
-                      errorMessage="The file is required."
-                      onChange={(e) => handleImageFileChange(e, "front_view")}
-                    />
-                    {errors?.front_view && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors?.front_view}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-
-                  {statePayload.front_view && (
-                    <>
-                      <div>
-                        <img
-                          src={statePayload.front_view}
-                          alt="Selected Image"
-                          style={{ maxWidth: "20%" }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Front Right Corner.*
-                    </Form.Label>
-                    <Form.Control
-                      type="file"
-                      className="form-control"
-                      id="image"
-                      name="front_right"
-                      accept=".jpeg, .png, .jpg, .gif"
-                      errorMessage="The file is required."
-                      onChange={(e) => handleImageFileChange(e, "front_right")}
-                    />
-                    {errors?.front_right && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors?.front_right}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-
-                  {statePayload.front_right && (
-                    <>
-                      <div>
-                        <img
-                          src={statePayload.front_right}
-                          alt="Selected Image"
-                          style={{ maxWidth: "20%" }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Left View Image.*
-                    </Form.Label>
-                    <Form.Control
-                      type="file"
-                      className="form-control"
-                      id="image"
-                      name="left_view"
-                      accept=".jpeg, .png, .jpg, .gif"
-                      errorMessage="The file is required."
-                      onChange={(e) => handleImageFileChange(e, "left_view")}
-                    />
-                    {errors?.left_view && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors?.left_view}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-
-                  {statePayload.left_view && (
-                    <>
-                      <div>
-                        <img
-                          src={statePayload.left_view}
-                          alt="Selected Image"
-                          style={{ maxWidth: "20%" }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Rear View Image.*
-                    </Form.Label>
-                    <Form.Control
-                      type="file"
-                      className="form-control"
-                      id="image"
-                      name="rear_view"
-                      accept=".jpeg, .png, .jpg, .gif"
-                      errorMessage="The file is required."
-                      onChange={(e) => handleImageFileChange(e, "rear_view")}
-                    />
-                    {errors?.rear_view && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors?.rear_view}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-
-                  {statePayload.rear_view && (
-                    <>
-                      <div>
-                        <img
-                          src={statePayload.rear_view}
-                          alt="Selected Image"
-                          style={{ maxWidth: "20%" }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Odometer Image.*
-                    </Form.Label>
-                    <Form.Control
-                      type="file"
-                      className="form-control"
-                      id="image"
-                      name="odometer"
-                      accept=".jpeg, .png, .jpg, .gif"
-                      errorMessage="The file is required."
-                      onChange={(e) => handleImageFileChange(e, "odometer")}
-                    />
-                    {errors?.odometer && (
-                      <small className="text-danger">
-                        {" "}
-                        {errors?.odometer}{" "}
-                      </small>
-                    )}
-                  </Form.Group>
-
-                  {statePayload.odometer && (
-                    <>
-                      <div>
-                        <img
-                          src={statePayload.odometer}
-                          alt="Selected odometer Image"
-                          style={{ maxWidth: "20%" }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col xl={4} lg={4} md={6}>
-                  <Form.Group className="mb-3 ">
-                    <Form.Label className="float-label">
-                      Chessis Image.*
-                    </Form.Label>
-                    <Form.Control
-                      type="file"
-                      className="form-control"
-                      id="image"
-                      name="chessis"
-                      accept=".jpeg, .png, .jpg, .gif"
-                      errorMessage="The file is required."
-                      onChange={(e) => handleImageFileChange(e, "chessis")}
-                    />
-                    {errors?.chessis && (
-                      <small className="text-danger"> {errors?.chessis} </small>
-                    )}
-                  </Form.Group>
-
-                  {statePayload.chessis && (
-                    <>
-                      <div>
-                        <img
-                          src={statePayload.chessis}
-                          alt="Select chessis Image"
-                          style={{ maxWidth: "20%" }}
-                        />
-                      </div>
-                    </>
-                  )}
-                </Col>
-
                 <Col xl={4} lg={4} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="float-label">
@@ -743,6 +775,391 @@ const CreateCar = (props) => {
                     )}
                   </Form.Group>
                 </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Front View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="front_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "front_view")}
+                    />
+                    {errors?.front_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.front_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {frontViewpreview && (
+                    <div>
+                      <img
+                        src={frontViewpreview}
+                        className="preview"
+                        alt="Select Front view"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Front Left View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="front_left"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "front_left")}
+                    />
+                    {errors?.front_left && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.front_left}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {frontLeftpreview && (
+                    <div>
+                      <img
+                        src={frontLeftpreview}
+                        className="preview"
+                        alt="Select Front Left View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Front Right View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="front_right"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "front_right")}
+                    />
+                    {errors?.front_right && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.front_right}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {frontRightpreview && (
+                    <div>
+                      <img
+                        src={frontRightpreview}
+                        className="preview"
+                        alt="Select Front Right View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">Left View.*</Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="left_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "left_view")}
+                    />
+                    {errors?.left_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.left_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {leftViewpreview && (
+                    <div>
+                      <img
+                        src={leftViewpreview}
+                        className="preview"
+                        alt="Select Left View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Right View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="right_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "right_view")}
+                    />
+                    {errors?.right_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.right_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {rightViewpreview && (
+                    <div>
+                      <img
+                        src={rightViewpreview}
+                        className="preview"
+                        alt="Select Right View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">Rear View.*</Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="rear_view"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "rear_view")}
+                    />
+                    {errors?.rear_view && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.rear_view}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {rearViewpreview && (
+                    <div>
+                      <img
+                        src={rearViewpreview}
+                        className="preview"
+                        alt="Select Rear View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Rear Left View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="rear_left"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "rear_left")}
+                    />
+                    {errors?.rear_left && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.rear_left}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {rearLeftViewpreview && (
+                    <div>
+                      <img
+                        src={rearLeftViewpreview}
+                        className="preview"
+                        alt="Select Rear Left View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Rear Right View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="rear_right"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "rear_right")}
+                    />
+                    {errors?.rear_right && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.rear_right}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {rearRightViewpreview && (
+                    <div>
+                      <img
+                        src={rearRightViewpreview}
+                        className="preview"
+                        alt="Select Rear Right View"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Odometer Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="odometer"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "odometer")}
+                    />
+                    {errors?.odometer && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.odometer}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {odometerpreview && (
+                    <div>
+                      <img
+                        src={odometerpreview}
+                        className="preview"
+                        alt="Select Odometer Image"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">Engine.*</Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="engine"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "engine")}
+                    />
+                    {errors?.engine && (
+                      <small className="text-danger"> {errors?.engine} </small>
+                    )}
+                  </Form.Group>
+
+                  {enginepreview && (
+                    <div>
+                      <img
+                        src={enginepreview}
+                        className="preview"
+                        alt="Select Engine Image"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Chessis Image.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="chessis"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "chessis")}
+                    />
+                    {errors?.chessis && (
+                      <small className="text-danger"> {errors?.chessis} </small>
+                    )}
+                  </Form.Group>
+
+                  {chessispreview && (
+                    <div>
+                      <img
+                        src={chessispreview}
+                        className="preview"
+                        alt="Select chessis Image"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+                <Col xl={4} lg={4} md={6}>
+                  <Form.Group className="mb-3 ">
+                    <Form.Label className="float-label">
+                      Interior View.*
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      name="interior"
+                      accept=".jpeg, .png, .jpg, .gif"
+                      errorMessage="The file is required."
+                      onChange={(e) => handleImageFileChange(e, "interior")}
+                    />
+                    {errors?.interior && (
+                      <small className="text-danger">
+                        {" "}
+                        {errors?.interior}{" "}
+                      </small>
+                    )}
+                  </Form.Group>
+
+                  {interiorpreview && (
+                    <div>
+                      <img
+                        src={interiorpreview}
+                        className="preview"
+                        alt="Select Interior Image"
+                        style={{ maxWidth: "20%" }}
+                      />
+                    </div>
+                  )}
+                </Col>
+              
                 <Col lg={12}>
                   <Form.Group
                     className="mb-3 d-flex flex-column"

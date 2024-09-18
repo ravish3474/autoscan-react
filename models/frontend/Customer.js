@@ -6,36 +6,30 @@ const Customer = sequelize.define(
   {
     name: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
-    username: {
-      type: DataTypes.STRING(100),
+    mobileNumber: {
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
     email: {
       type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue:null
+    },
+    otp: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    phone: {
-      type: DataTypes.STRING(30),
+    verified: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false
     },
     image: {
       type: DataTypes.TEXT,
       allowNull: true,
       comment: "Profile Image",
-    },
-    password_hash: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    resetToken: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    passwordUpdationDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
     },
     status: {
       type: DataTypes.INTEGER,

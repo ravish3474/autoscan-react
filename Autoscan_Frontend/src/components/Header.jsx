@@ -29,10 +29,9 @@ function Header({ setShowUserModal, setShowDealerModal, updateLoginState }) {
   };
 
   const handleLogin = () => {
-    setIsLoggedIn(true);
     updateLoginState(true);
   };
-
+console.log(isLoggedIn);
   return (
     <section className="header" id="header">
       <div className="container">
